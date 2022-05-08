@@ -11,7 +11,7 @@ The project has 3 parts - Front, Back, Agent.
 
 <h2>Front-</h2>
 
-Desktop app enable the feasibility of controlling and controlling the fleet
+Desktop app enable the feasibility of controlling and controlling the fleet.
 
 ![front](https://user-images.githubusercontent.com/94534918/167295686-eb0b0996-744f-4e24-9f90-02f24f7264fa.jpg)
 
