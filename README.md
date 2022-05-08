@@ -24,8 +24,9 @@ The project has 3 parts - Front, Back, Agent.
   
   <h2>Build with</h2>
   <ul>
-    Eclipse - Java IDE
-    Scene Builder - Scene Builder 8.5.0
+  <li>Intellij</li>
+  <li>  Scene Builder</li>
+ 
   </ul>
 
 
