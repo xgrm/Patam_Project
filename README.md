@@ -1,6 +1,7 @@
 # FlightGear Simulator Project 
 
 This project is a part of an advance software programming course in our 2nd year.
+
 The goal of the FlightGear project is to create a sophisticated and open flight simulator framework.
 
 This project requires a high level of knowledge in programming, with emphasis on design patterns and programming principles such as SOLID and GRASP, 
