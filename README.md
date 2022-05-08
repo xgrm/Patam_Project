@@ -9,7 +9,14 @@ architectural pattern such as MVVM, MVC and developing our own JavaFX desktop ap
 The project has 3 parts - Front, Back, Agent.
 
 Front-
-(Architecture)
+
+![front](https://user-images.githubusercontent.com/94534918/167295686-eb0b0996-744f-4e24-9f90-02f24f7264fa.jpg)
+
+![compomemt](https://user-images.githubusercontent.com/94534918/167295737-9c5d89c4-7c5f-4288-b5c1-23e0678869aa.jpg)
+
+Back-
+
+![back](https://user-images.githubusercontent.com/94534918/167295757-20a40517-d57d-4fbb-8193-161583c4833d.jpg)
 
 Agent - 
 
