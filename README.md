@@ -21,13 +21,15 @@ Desktop app enable the feasibility of controlling and controlling the fleet.
 
 <h2>Back-</h2>
 
- Collects information about aircraft activity, streams data during flight and transmits various commands.
+Stores the information collected from the fleet (on a DB server) and provides them with managed access.
 
 ![back](https://user-images.githubusercontent.com/94534918/167295757-20a40517-d57d-4fbb-8193-161583c4833d.jpg)
 
 <h2>Agent -</h2> 
 
-Installed on any aircraft (on any computer on which we run a flight simulator instance).
+Installed on any aircraft (on any computer on which we run a flight simulator instance),
+ Collects information about aircraft activity,
+ streams data during flight and transmits various commands.
 
 ![agent](https://user-images.githubusercontent.com/94534918/167295647-cc75e06c-e20f-4aff-96bd-8a25d40a4596.jpg)
   
