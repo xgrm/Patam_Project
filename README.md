@@ -8,7 +8,7 @@ architectural pattern such as MVVM, MVC and developing our own JavaFX desktop ap
 
 The project has 3 parts - Front, Back, Agent.
 
-Front-
+<b>Front-<b>
 
 ![front](https://user-images.githubusercontent.com/94534918/167295686-eb0b0996-744f-4e24-9f90-02f24f7264fa.jpg)
 
