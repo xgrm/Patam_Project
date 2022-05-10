@@ -13,7 +13,7 @@ The project has 3 parts - Front, Back, Agent.
 
 Desktop app enable the feasibility of controlling and controlling the fleet.
 
-![front](https://user-images.githubusercontent.com/94534918/167295686-eb0b0996-744f-4e24-9f90-02f24f7264fa.jpg)
+<img width="593" alt="צילום מסך 2022-05-10 155307" src="https://user-images.githubusercontent.com/94534918/167671565-ad2940a0-618f-43b0-8b75-316eae9fe1fd.png">
 
 <h3>components - </h3>
 
