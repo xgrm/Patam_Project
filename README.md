@@ -12,19 +12,17 @@ The project has 3 parts - Front, Back, Agent.
 <h2>Front-</h2>
 
 Desktop app enable the feasibility of controlling and controlling the fleet.
-![front]
+
 <img alt="Front architecture" src="./images/architecture/Front.svg">
 
 <h3>components - </h3>
 
-![compomemt]
 <img alt="Front Component architecture" src="./images/architecture/Front Component.svg">
 
 <h2>Back-</h2>
 
 Stores the information collected from the fleet (on a DB server) and provides them with managed access.
 
-![back]
 <img alt="BackEnd architecture" src="./images/architecture/BackEnd.svg">
 
 <h2>Agent -</h2>
@@ -33,7 +31,6 @@ Installed on any aircraft (on any computer on which we run a flight simulator in
 Collects information about aircraft activity,
 streams data during flight and transmits various commands.
 
-![agent]
 <img alt="Agent architecture" src="./images/architecture/Agent.svg">
 
   <h2>Build with</h2>
