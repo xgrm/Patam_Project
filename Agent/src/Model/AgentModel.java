@@ -123,4 +123,8 @@ public class AgentModel extends Observable implements Model, ClientHandler {
         } catch (IOException e) {throw new RuntimeException(e);}
         timeSeries.exportCSV("FlightData.csv");
     }
+    @Override
+    public void finalize(){
+        this.closeModel();
+    }
 }
