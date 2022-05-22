@@ -114,7 +114,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
         } catch (IOException | InterruptedException e) {throw new RuntimeException(e);}
     }
 
-    public void closeAgent(){
+    public void closeModel(){
         modelServer.stop();
         this.stop = true;
         outToFG.close();
@@ -122,5 +122,9 @@ public class AgentModel extends Observable implements Model, ClientHandler {
             FlightGear.close();
         } catch (IOException e) {throw new RuntimeException(e);}
         timeSeries.exportCSV("FlightData.csv");
+    }
+    @Override
+    public void finalize(){
+        this.closeModel();
     }
 }
