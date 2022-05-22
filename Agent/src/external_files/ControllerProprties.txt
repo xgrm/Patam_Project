@@ -1,0 +1,3 @@
+backEndIP,127.0.0.1
+backEndPort,3000
+controllerPort,3001
