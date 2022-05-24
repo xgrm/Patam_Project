@@ -1,7 +1,5 @@
 package Interpreter.Expressions;
 
-import java.util.ArrayList;
-
 public class Div extends BinaryExpression {
 
     public Div(Expression left, Expression right) {
@@ -9,7 +7,7 @@ public class Div extends BinaryExpression {
     }
 
     @Override
-    public double calculate(ArrayList<String> args, int index) {
-        return left.calculate(args, index) / right.calculate(args, index);
+    public double calculate() {
+        return left.calculate() / right.calculate();
     }
 }
