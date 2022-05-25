@@ -12,7 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class AgentModel extends Observable implements Model, ClientHandler {
+public class AgentModel extends Observable implements Model {
     String[] symbols;
     HashMap<String,Float> symbolMap;
     HashMap<String,String> properties;

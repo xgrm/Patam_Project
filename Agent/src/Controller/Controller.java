@@ -1,9 +1,9 @@
 package Controller;
 
-import IO.BackEndIO;
-import Model.AgentModel;
-import Server.ClientHandler;
-import Server.Server;
+import IO.*;
+import Model.*;
+import Server.*;
+import Server.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -21,7 +21,7 @@ public class Controller implements Observer, ClientHandler {
     Server controllerServer;
     BackEndIO outToBackEnd;
     volatile boolean stop;
-
+    boolean back;
 
 
     public Controller(AgentModel model,String propertiesPath) {
@@ -39,6 +39,15 @@ public class Controller implements Observer, ClientHandler {
         } catch (IOException e) {throw new RuntimeException(e);}
         this.controllerServer.start(Integer.parseInt(properties.get("controllerPort")),this);
         connectToBackEnd();
+    }
+
+    public Controller(AgentModel model,String propertiesPath,boolean back) {
+        this.back = back;
+        this.model = model;
+        this.model.addObserver(this);
+        this.statics = new HashMap<>();
+        this.commands = new Commands(model);
+        this.properties = new HashMap<>();
     }
 
     private void createPropMap(String propertiesPath){
@@ -63,13 +72,18 @@ public class Controller implements Observer, ClientHandler {
     }
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("update!");
         if(o.equals(model)){
             String line = (String) arg;
-            outToBackEnd.write(line);
+            System.out.println(line);
+            if(!(outToBackEnd==null))
+                outToBackEnd.write(line);
         }
 
     }
-
+    public void exe(String command){
+        this.commands.executeCommand(command);
+    }
     @Override
     public void handle(InputStream in, OutputStream out) {
         Scanner inFromBackend = new Scanner(in);
@@ -83,6 +97,8 @@ public class Controller implements Observer, ClientHandler {
 
     public void close(){
         model.closeModel();
+        if(!back)
+            return;
         try {
             outToBackEnd.write("close");
             backEnd.close();
