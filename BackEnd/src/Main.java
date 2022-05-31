@@ -1,5 +1,9 @@
+import model.db.DBQueries;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        DBQueries db = new DBQueries("dbDetails.txt");
+
     }
 }
