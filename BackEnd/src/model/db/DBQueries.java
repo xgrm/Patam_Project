@@ -89,7 +89,7 @@ public class DBQueries {
         }
     }
 
-    public void getFlightById(int id) {
+    public String getFlightById(int id) {
         Statement statement;
         ResultSet rs = null;
         String columns = this.flight_data_cols.substring(flight_data_cols.indexOf("(")+1,flight_data_cols.indexOf(")"));
@@ -104,11 +104,12 @@ public class DBQueries {
                     sb.append(rs.getString(col) +",");
                 }
                 sb.deleteCharAt(sb.length() - 1);
-                System.out.println(sb.toString());
+                return sb.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "problem";
     }
 
     public void deleteFlightById(int id) {
@@ -125,5 +126,12 @@ public class DBQueries {
         }
     }
 
+    public void close(){
+        try {
+            db_connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
