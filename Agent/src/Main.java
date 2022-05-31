@@ -1,35 +1,21 @@
 import Controller.Controller;
+import Controller.Test;
 import Model.*;
 
 public class Main {
     public static void main(String[] args) {
-        AgentModel model = new AgentModel("src/external_files/ModelProprties.txt","src/external_files/Symbols.txt");
-        Controller cn = new Controller(model,"src/external_files/ControllerProprties.txt",false);
+        AgentModel model = new AgentModel("src/external_files/ModelProprties.txt", "src/external_files/Symbols.txt");
+//        Controller cn = new Controller(model,"src/external_files/ControllerProprties.txt",false);
+        Test cn = new Test(model, "src/external_files/ControllerProprties.txt");
 
-
-//        this.commandMap.put("Aileron",new Controller.Commands.AileronCommand());
-//        this.commandMap.put("Elevator",new Controller.Commands.ElevatorCommand());
-//        this.commandMap.put("Rudder",new Controller.Commands.RudderCommand());
-//        this.commandMap.put("Throttle",new Controller.Commands.ThrottleCommand());
-        try {
-            for (int i = 0; i < 3; i++) {
-                cn.exe("Aileron -1");
-                cn.exe("Elevator -1");
-                cn.exe("Rudder -1");
-                cn.exe("Throttle -1");
-
-                Thread.sleep(2*1000);
-                cn.exe("Aileron 1");
-                cn.exe("Elevator 1");
-                cn.exe("Rudder 1");
-                cn.exe("Throttle 1");
-                Thread.sleep(2*1000);
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000 * 20);
+                cn.close();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            Thread.sleep(45*1000);
-            cn.close();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        cn.close();
+        }).start();
+
     }
 }
