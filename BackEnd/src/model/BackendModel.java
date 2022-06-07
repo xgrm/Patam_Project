@@ -35,8 +35,8 @@ public class BackendModel extends Observable implements Model {
     }
 
     @Override
-    public String getKPI(int id) { //TODO: need to implement
-        return null;
+    public String getKPI() { //TODO: need to implement
+        return db.getKPI();
     }
 
     @Override
@@ -47,5 +47,10 @@ public class BackendModel extends Observable implements Model {
     @Override
     public void close() {
         db.close();
+    }
+
+    @Override
+    public void finalize() {
+        this.close();
     }
 }

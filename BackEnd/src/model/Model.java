@@ -5,7 +5,7 @@ public interface Model {
     public void insertRow(int id,String line);
     public String getFlightById(int id);
     public void deleteFlightById(int id);
-    public String getKPI(int id);
+    public String getKPI();
     public void runInterpreter(String code);
     public void close();
 }

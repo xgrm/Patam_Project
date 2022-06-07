@@ -121,7 +121,7 @@ public class AgentModel extends Observable implements Model {
         try {
             FlightGear.close();
         } catch (IOException e) {throw new RuntimeException(e);}
-        timeSeries.exportCSV("FlightData.csv");
+        timeSeries.exportCSV("src/external_files/FlightData.csv");
     }
     @Override
     public void finalize(){

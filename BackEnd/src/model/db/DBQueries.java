@@ -83,7 +83,6 @@ public class DBQueries {
             String query = String.format("insert into flight_data %s values(%s);", this.flight_data_cols, data);
             statement = this.db_connection.createStatement();
             statement.executeUpdate(query);
-//            System.out.println("Row has been created successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,6 +91,8 @@ public class DBQueries {
     public String getFlightById(int id) {
         Statement statement;
         ResultSet rs = null;
+        StringBuilder table = new StringBuilder();
+        StringBuilder sb;
         String columns = this.flight_data_cols.substring(flight_data_cols.indexOf("(")+1,flight_data_cols.indexOf(")"));
         String[] cols = columns.split(",");
         try {
@@ -99,17 +100,17 @@ public class DBQueries {
             statement = this.db_connection.createStatement();
             rs = statement.executeQuery(query);
             while(rs.next()) {
-                StringBuilder sb = new StringBuilder();
+                sb = new StringBuilder();
                 for (String col: cols) {
                     sb.append(rs.getString(col) +",");
                 }
-                sb.deleteCharAt(sb.length() - 1);
-                return sb.toString();
+                sb.replace(sb.length() - 1,sb.length(),"\r\n");
+                table.append(sb.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "problem";
+        return table.toString();
     }
 
     public void deleteFlightById(int id) {
@@ -125,7 +126,25 @@ public class DBQueries {
             e.printStackTrace();
         }
     }
-
+    public String getKPI(){
+        Statement statement;
+        ResultSet rs = null;
+        StringBuilder table = new StringBuilder();
+        StringBuilder sb;
+        String columns = "flight_id";
+        try {
+            String query = String.format("select %s from flights",columns);
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            while(rs.next()) {
+                table.append(rs.getString(columns)).append(",");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        table.deleteCharAt(table.length()-1);
+        return table.toString();
+    }
     public void close(){
         try {
             db_connection.close();

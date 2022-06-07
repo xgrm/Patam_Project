@@ -1,9 +1,10 @@
 package Controller;
 
-import IO.*;
-import Model.*;
-import Server.*;
-import Server.*;
+
+import IO.IO;
+import IO.SocketIO;
+import Model.AgentModel;
+
 
 import java.io.*;
 import java.net.Socket;
@@ -12,44 +13,39 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class Controller implements Observer, ClientHandler {
+public class Controller implements Observer {
     AgentModel model;
     Commands commands;
     HashMap<String,Float> statics;
     HashMap<String,String> properties;
     Socket backEnd;
-    Server controllerServer;
-    BackEndIO outToBackEnd;
-    volatile boolean stop;
-    boolean back;
+    IO BackEndIO;
+    boolean standAlone;
 
 
-    public Controller(AgentModel model,String propertiesPath) {
+
+    public Controller(AgentModel model, String propertiesPath, boolean standAlone) {
+        this.standAlone = standAlone;
         this.model = model;
         this.model.addObserver(this);
         this.statics = new HashMap<>();
         this.commands = new Commands(model);
         this.properties = new HashMap<>();
-        this.controllerServer = new Server();
-        stop = false;
         createPropMap(propertiesPath);
-        try {
-            this.backEnd = new Socket(properties.get("backEndIP"),Integer.parseInt(properties.get("backEndPort")));
-            outToBackEnd = new BackEndIO(backEnd.getInputStream(),backEnd.getOutputStream());
-        } catch (IOException e) {throw new RuntimeException(e);}
-        this.controllerServer.start(Integer.parseInt(properties.get("controllerPort")),this);
-        connectToBackEnd();
-    }
+        if(!standAlone) {
+            try {
+                this.backEnd = new Socket(properties.get("backEndIP"), Integer.parseInt(properties.get("backEndPort")));
+                BackEndIO = new SocketIO(backEnd.getInputStream(), backEnd.getOutputStream());
+                connectToBackEnd();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-    public Controller(AgentModel model,String propertiesPath,boolean back) {
-        this.back = back;
-        this.model = model;
-        this.model.addObserver(this);
-        this.statics = new HashMap<>();
-        this.commands = new Commands(model);
-        this.properties = new HashMap<>();
     }
-
+    public Controller(AgentModel model, String propertiesPath){
+        this(model,propertiesPath,false);
+    }
     private void createPropMap(String propertiesPath){
         try {
             Scanner propFile = new Scanner(new File(propertiesPath));
@@ -68,43 +64,41 @@ public class Controller implements Observer, ClientHandler {
         }
     }
     private void connectToBackEnd(){
-        outToBackEnd.write("Socket 127.0.0.1 "+properties.get("controllerPort"));
+        BackEndIO.write("agent~"+this.properties.get("agentDestination"));
+        if(BackEndIO.readLine().equals("ok"))
+            new Thread(()->inFromBack()).start();
+    }
+    private void inFromBack(){
+        String line;
+        while (BackEndIO.hasNext()){
+            line = BackEndIO.readLine();
+            System.out.println(line);
+            this.exe(line);
+        }
     }
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("update!");
         if(o.equals(model)){
             String line = (String) arg;
-            System.out.println(line);
-            if(!(outToBackEnd==null))
-                outToBackEnd.write(line);
+            if(!this.standAlone)
+                BackEndIO.write(line);
+            else System.out.println(line);
         }
 
     }
     public void exe(String command){
         this.commands.executeCommand(command);
     }
-    @Override
-    public void handle(InputStream in, OutputStream out) {
-        Scanner inFromBackend = new Scanner(in);
-        while (!stop){
-            while (!stop && inFromBackend.hasNext()){
-                this.commands.executeCommand(inFromBackend.nextLine());
-            }
-        }
-        inFromBackend.close();
-    }
 
-    public void close(){
+
+
+    public void close() {
         model.closeModel();
-        if(!back)
-            return;
-        try {
-            outToBackEnd.write("close");
-            backEnd.close();
-            outToBackEnd.close();
-        } catch (IOException e) {throw new RuntimeException(e);}
-        this.controllerServer.stop();
-        this.stop=true;
+        if (!this.standAlone) {
+            BackEndIO.close();
+            try {
+                backEnd.close();
+            } catch (IOException e) {throw new RuntimeException(e);}
+        }
     }
 }

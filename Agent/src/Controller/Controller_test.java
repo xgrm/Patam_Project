@@ -1,11 +1,8 @@
 package Controller;
 
-import IO.BackEndIO;
-import IO.IO;
-import IO.TestIO;
-import Model.AgentModel;
-import Server.ClientHandler;
-import Server.Server;
+import IO.*;
+import Model.*;
+import Server.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,31 +11,42 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class Test implements Observer {
+public class Controller_test implements Observer, ClientHandler {
     AgentModel model;
     Commands commands;
     HashMap<String,Float> statics;
     HashMap<String,String> properties;
     Socket backEnd;
-    IO BackEndIO;
+    Server controllerServer;
+    BackEndIO outToBackEnd;
     volatile boolean stop;
     boolean back;
 
 
-    public Test(AgentModel model,String propertiesPath) {
+    public Controller_test(AgentModel model, String propertiesPath) {
         this.model = model;
         this.model.addObserver(this);
         this.statics = new HashMap<>();
         this.commands = new Commands(model);
         this.properties = new HashMap<>();
+        this.controllerServer = new Server();
         stop = false;
         createPropMap(propertiesPath);
         try {
             this.backEnd = new Socket(properties.get("backEndIP"),Integer.parseInt(properties.get("backEndPort")));
-            BackEndIO = new TestIO(backEnd.getInputStream(),backEnd.getOutputStream());
-            connectToBackEnd();
+            outToBackEnd = new BackEndIO(backEnd.getInputStream(),backEnd.getOutputStream());
         } catch (IOException e) {throw new RuntimeException(e);}
+        this.controllerServer.start(Integer.parseInt(properties.get("controllerPort")),this);
+        connectToBackEnd();
+    }
 
+    public Controller_test(AgentModel model, String propertiesPath, boolean back) {
+        this.back = back;
+        this.model = model;
+        this.model.addObserver(this);
+        this.statics = new HashMap<>();
+        this.commands = new Commands(model);
+        this.properties = new HashMap<>();
     }
 
     private void createPropMap(String propertiesPath){
@@ -59,37 +67,43 @@ public class Test implements Observer {
         }
     }
     private void connectToBackEnd(){
-        BackEndIO.write("TLV-JFK");
-        new Thread(()->{
-            String line;
-            while ((line=BackEndIO.readLine()).intern()!=("close").intern()){
-                this.exe(line);
-            }
-            System.out.println("OUT READ WHILE");
-            BackEndIO.close();
-            try {
-                backEnd.close();
-            } catch (IOException e) {throw new RuntimeException(e);}
-        }).start();
+        outToBackEnd.write("Socket 127.0.0.1 "+properties.get("controllerPort"));
     }
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("update!");
         if(o.equals(model)){
             String line = (String) arg;
-            BackEndIO.write(line);
+            System.out.println(line);
+            if(!(outToBackEnd==null))
+                outToBackEnd.write(line);
         }
 
     }
     public void exe(String command){
         this.commands.executeCommand(command);
     }
-
-
+    @Override
+    public void handle(InputStream in, OutputStream out) {
+        Scanner inFromBackend = new Scanner(in);
+        while (!stop){
+            while (!stop && inFromBackend.hasNext()){
+                this.commands.executeCommand(inFromBackend.nextLine());
+            }
+        }
+        inFromBackend.close();
+    }
 
     public void close(){
         model.closeModel();
-        BackEndIO.write("close");
-        System.out.println("Write close to backend");
+        if(!back)
+            return;
+        try {
+            outToBackEnd.write("close");
+            backEnd.close();
+            outToBackEnd.close();
+        } catch (IOException e) {throw new RuntimeException(e);}
+        this.controllerServer.stop();
         this.stop=true;
     }
 }

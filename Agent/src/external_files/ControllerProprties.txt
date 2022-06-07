@@ -1,3 +1,4 @@
 backEndIP,127.0.0.1
 backEndPort,5500
 controllerPort,3001
+agentDestination,TLV-JFK
