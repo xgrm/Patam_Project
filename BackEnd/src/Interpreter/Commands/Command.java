@@ -1,12 +1,14 @@
 package Interpreter.Commands;
 
-import java.util.List;
-import Interpreter.Expressions.Expression;
+import java.util.ArrayList;
 
 public interface Command {
-    // list of the data needed in order to execute the command
-    public int execute(List<Expression> args);
+    // list of the args needed in order to execute the command
+    public int execute(ArrayList<String> args);
 
     // the expected amount of args
-    public int expectedArgs();
+    public int numOfArgs();
+
+    // check if the args are valid
+    public boolean validArgs(ArrayList<String> args);
 }
