@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="" />
+    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/BindCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/BindCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/ConnectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/ConnectCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/ExpressionCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/ExpressionCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/OpenServerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/OpenServerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/PrintCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/PrintCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/SleepCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/SleepCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/VarCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/VarCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/BinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/BinaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Div.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Div.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Minus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Minus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Mul.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Mul.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Number.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Number.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Plus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Plus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Parser.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,13 +38,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Agent/src" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

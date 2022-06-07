@@ -11,10 +11,12 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AgentModel extends Observable implements Model, ClientHandler {
     String[] symbols;
-    HashMap<String,Float> symbolMap;
+    ConcurrentHashMap<String,Float> symbolMap;
+
     HashMap<String,String> properties;
     TimeSeries timeSeries;
     IO outToFG;
@@ -24,7 +26,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
 
     public AgentModel(String propPath,String symbolPath) {
         stop = false;
-        this.symbolMap = new HashMap<>();
+        this.symbolMap = new ConcurrentHashMap<>();
         this.properties = new HashMap<>();
         this.createMapsFromFiles(propPath,symbolPath);
         timeSeries = new TimeSeries(symbols);
@@ -52,7 +54,10 @@ public class AgentModel extends Observable implements Model, ClientHandler {
     public void setThrottle(double x) {
         outToFG.write(properties.get("throttle")+" "+x);
     }
-
+    public void sendToFG(String path, Float value) {
+        outToFG.write(path+" "+value.toString());
+        System.out.println("Model sent to fg: "+path+" "+value.toString());
+    }
     @Override
     public TimeSeries getTimeSeries() {
         return timeSeries;
