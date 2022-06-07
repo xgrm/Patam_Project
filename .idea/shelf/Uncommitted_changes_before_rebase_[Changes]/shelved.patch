@@ -1,0 +1,532 @@
+Index: BackEnd/src/Interpreter/Commands/ConnectCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/ConnectCommand.java b/BackEnd/src/Interpreter/Commands/ConnectCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/ConnectCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,38 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-public class ConnectCommand implements Command {
+-
+-    private String ip;
+-    private int port;
+-
+-    public ConnectCommand(ArrayList<String> args) {
+-        if (!validArgs(args))
+-            return;
+-        this.ip = args.get(0);
+-        this.port = Integer.parseInt(args.get(1));
+-    }
+-
+-    @Override
+-    public int execute(ArrayList<String> args) {
+-
+-        return 0;
+-    }
+-
+-    @Override
+-    public int numOfArgs() {
+-        return 2;
+-    }
+-
+-    @Override
+-    public boolean validArgs(ArrayList<String> args) {
+-        try {
+-            Integer.parseInt(args.get(1));
+-        } catch (Exception e) {
+-            return false;
+-        }
+-        return true;
+-    }
+-
+-}
+Index: BackEnd/src/Interpreter/Commands/Command.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/Command.java b/BackEnd/src/Interpreter/Commands/Command.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/Command.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,14 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-public interface Command {
+-    // list of the args needed in order to execute the command
+-    public int execute(ArrayList<String> args);
+-
+-    // the expected amount of args
+-    public int numOfArgs();
+-
+-    // check if the args are valid
+-    public boolean validArgs(ArrayList<String> args);
+-}
+Index: BackEnd/src/Interpreter/Commands/VarCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/VarCommand.java b/BackEnd/src/Interpreter/Commands/VarCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/VarCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,32 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-import java.util.Map;
+-
+-public class VarCommand implements Command {
+-
+-    String varName;
+-    Map<String, Double> sym;
+-
+-    public VarCommand(ArrayList<String> args, Map<String, Double> symbolTable) {
+-        this.varName = args.get(0);
+-        this.sym = symbolTable;
+-    }
+-
+-    @Override
+-    public int execute(ArrayList<String> args) {
+-        sym.put(varName, 0.00);
+-        return 0;
+-    }
+-
+-    @Override
+-    public int numOfArgs() {
+-        return 1;
+-    }
+-
+-    @Override
+-    public boolean validArgs(ArrayList<String> args) {
+-        return true;
+-    }
+-
+-}
+Index: BackEnd/src/Interpreter/Commands/PrintCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/PrintCommand.java b/BackEnd/src/Interpreter/Commands/PrintCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/PrintCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,23 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-public class PrintCommand implements Command {
+-
+-    @Override
+-    public int execute(ArrayList<String> args) {
+-        System.out.println(args.get(0));
+-        return 0;
+-    }
+-
+-    @Override
+-    public int numOfArgs() {
+-        return 1;
+-    }
+-
+-    @Override
+-    public boolean validArgs(ArrayList<String> args) {
+-        return true;
+-    }
+-
+-}
+Index: BackEnd/src/Interpreter/Expressions/Div.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/Div.java b/BackEnd/src/Interpreter/Expressions/Div.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/Div.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,13 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public class Div extends BinaryExpression {
+-
+-    public Div(Expression left, Expression right) {
+-        super(left, right);
+-    }
+-
+-    @Override
+-    public double calculate() {
+-        return left.calculate() / right.calculate();
+-    }
+-}
+Index: BackEnd/src/Interpreter/Expressions/Mul.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/Mul.java b/BackEnd/src/Interpreter/Expressions/Mul.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/Mul.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,13 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public class Mul extends BinaryExpression {
+-
+-    public Mul(Expression left, Expression right) {
+-        super(left, right);
+-    }
+-
+-    @Override
+-    public double calculate() {
+-        return left.calculate() * right.calculate();
+-    }
+-}
+Index: BackEnd/src/Interpreter/Expressions/BinaryExpression.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/BinaryExpression.java b/BackEnd/src/Interpreter/Expressions/BinaryExpression.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/BinaryExpression.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,11 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public abstract class BinaryExpression implements Expression {
+-    protected Expression left;
+-    protected Expression right;
+-
+-    public BinaryExpression(Expression left, Expression right) {
+-        this.left = left;
+-        this.right = right;
+-    }
+-}
+\ No newline at end of file
+Index: BackEnd/src/Interpreter/Commands/BindCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/BindCommand.java b/BackEnd/src/Interpreter/Commands/BindCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/BindCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,28 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-public class BindCommand implements Command {
+-
+-    String value;
+-
+-    public BindCommand(ArrayList<String> args) {
+-        this.value = args.get(0);
+-    }
+-
+-    @Override
+-    public int execute(ArrayList<String> args) {
+-        return 0;
+-    }
+-
+-    @Override
+-    public int numOfArgs() {
+-        return 1;
+-    }
+-
+-    @Override
+-    public boolean validArgs(ArrayList<String> args) {
+-        return true;
+-    }
+-
+-}
+Index: BackEnd/src/Interpreter/Expressions/Minus.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/Minus.java b/BackEnd/src/Interpreter/Expressions/Minus.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/Minus.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,13 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public class Minus extends BinaryExpression {
+-
+-    public Minus(Expression left, Expression right) {
+-        super(left, right);
+-    }
+-
+-    @Override
+-    public double calculate() {
+-        return left.calculate() - right.calculate();
+-    }
+-}
+Index: BackEnd/src/Interpreter/Expressions/Plus.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/Plus.java b/BackEnd/src/Interpreter/Expressions/Plus.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/Plus.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,13 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public class Plus extends BinaryExpression {
+-
+-    public Plus(Expression left, Expression right) {
+-        super(left, right);
+-    }
+-
+-    @Override
+-    public double calculate() {
+-        return left.calculate() + right.calculate();
+-    }
+-}
+Index: BackEnd/src/Interpreter/Commands/OpenServerCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/OpenServerCommand.java b/BackEnd/src/Interpreter/Commands/OpenServerCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/OpenServerCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,37 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-public class OpenServerCommand implements Command {
+-
+-    private int port;
+-    private int refresh;
+-
+-    public OpenServerCommand(ArrayList<String> args) {
+-        if (!validArgs(args))
+-            return;
+-        this.port = Integer.parseInt(args.get(0));
+-        this.refresh = Integer.parseInt(args.get(1));
+-    }
+-
+-    @Override
+-    public int execute(ArrayList<String> args) {
+-        return 0;
+-    }
+-
+-    @Override
+-    public int numOfArgs() {
+-        return 2;
+-    }
+-
+-    @Override
+-    public boolean validArgs(ArrayList<String> args) {
+-        try {
+-            Integer.parseInt(args.get(0));
+-            Integer.parseInt(args.get(1));
+-        } catch (Exception e) {
+-            return false;
+-        }
+-        return true;
+-    }
+-}
+Index: BackEnd/src/Interpreter/Lexer.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Lexer.java b/BackEnd/src/Interpreter/Lexer.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Lexer.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,16 +0,0 @@
+-package Interpreter;
+-
+-import java.util.LinkedList;
+-import java.util.List;
+-import java.util.Scanner;
+-
+-public class Lexer {
+-    public static List<String> getTokens(String code) {
+-        List<String> tokens = new LinkedList<String>();
+-        Scanner scan = new Scanner(code);
+-        while (scan.hasNext())
+-            tokens.add(scan.next());
+-        scan.close();
+-        return tokens;
+-    }
+-}
+Index: BackEnd/src/Interpreter/Interpreter.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Interpreter.java b/BackEnd/src/Interpreter/Interpreter.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Interpreter.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,18 +0,0 @@
+-package Interpreter;
+-
+-import java.util.Queue;
+-
+-import Interpreter.Commands.Command;
+-
+-public class Interpreter {
+-
+-    Parser parser;
+-
+-    public Interpreter() {
+-        parser = new Parser();
+-    }
+-
+-    public Queue<Command> getCommands(String code) {
+-        return null;
+-    }
+-}
+Index: BackEnd/src/Interpreter/Commands/SleepCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/SleepCommand.java b/BackEnd/src/Interpreter/Commands/SleepCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/SleepCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,27 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-public class SleepCommand implements Command {
+-
+-    @Override
+-    public int execute(ArrayList<String> args) {
+-        try {
+-            Thread.sleep(Long.parseLong(args.get(0)));
+-        } catch (Exception e) {
+-            System.out.println("error in sleep command");
+-        }
+-        return 0;
+-    }
+-
+-    @Override
+-    public int numOfArgs() {
+-        return 1;
+-    }
+-
+-    @Override
+-    public boolean validArgs(ArrayList<String> args) {
+-        return true;
+-    }
+-
+-}
+Index: BackEnd/src/Interpreter/Expressions/Number.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/Number.java b/BackEnd/src/Interpreter/Expressions/Number.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/Number.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,15 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public class Number implements Expression {
+-
+-    private double value;
+-
+-    public Number(double value) {
+-        this.value = value;
+-    }
+-
+-    @Override
+-    public double calculate() {
+-        return this.value;
+-    }
+-}
+\ No newline at end of file
+Index: BackEnd/src/Interpreter/Expressions/Expression.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Expressions/Expression.java b/BackEnd/src/Interpreter/Expressions/Expression.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Expressions/Expression.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,5 +0,0 @@
+-package Interpreter.Expressions;
+-
+-public interface Expression {
+-    public double calculate();
+-}
+\ No newline at end of file
+Index: BackEnd/src/Interpreter/Commands/ExpressionCommand.java
+===================================================================
+diff --git a/BackEnd/src/Interpreter/Commands/ExpressionCommand.java b/BackEnd/src/Interpreter/Commands/ExpressionCommand.java
+deleted file mode 100644
+--- a/BackEnd/src/Interpreter/Commands/ExpressionCommand.java	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ /dev/null	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
+@@ -1,18 +0,0 @@
+-package Interpreter.Commands;
+-
+-import java.util.ArrayList;
+-
+-import Interpreter.Expressions.Expression;
+-
+-public abstract class ExpressionCommand implements Expression {
+-
+-    protected Command c;
+-
+-    public ExpressionCommand(Command c) {
+-        this.c = c;
+-    }
+-
+-    public double calculate(ArrayList<String> args) {
+-        return (double) c.execute(args);
+-    }
+-}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"80a3b053-1cca-4fe4-8cb5-f94df1d69373\" name=\"Changes\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"29WdPWOucUE2Y5XNB0YdVnN09RT\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\"\n  }\n}]]></component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"80a3b053-1cca-4fe4-8cb5-f94df1d69373\" name=\"Changes\" comment=\"\" />\n      <created>1653232751724</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1653232751724</updated>\n      <workItem from=\"1653232754128\" duration=\"66000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c54b2816098ee60a58d1c93defd0122a8233761a)
++++ b/.idea/workspace.xml	(date 1654599890005)
+@@ -1,7 +1,27 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="" />
++    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/BindCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/BindCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/Command.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/ConnectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/ConnectCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/ExpressionCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/ExpressionCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/OpenServerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/OpenServerCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/PrintCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/PrintCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/SleepCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/SleepCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/VarCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/VarCommand.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/BinaryExpression.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Div.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Expression.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Minus.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Mul.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Number.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Plus.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Interpreter.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Lexer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Parser.java" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -19,13 +39,19 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "WebServerToolWindowFactoryState": "false"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;/Users/saarmoseri/Library/CloudStorage/OneDrive-cs.colman.ac.il/2end Year/Patam/2end semester/Project/Project&quot;
+   }
+-}]]></component>
++}</component>
++  <component name="RecentsManager">
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="$PROJECT_DIR$/Agent/src" />
++    </key>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -35,6 +61,8 @@
+       <option name="presentableId" value="Default" />
+       <updated>1653232751724</updated>
+       <workItem from="1653232754128" duration="66000" />
++      <workItem from="1654599768831" duration="32000" />
++      <workItem from="1654599824344" duration="66000" />
+     </task>
+     <servers />
+   </component>
+diff --git a/BackEnd/src/Interpreter/Parser.java b/BackEnd/src/Interpreter/Parser.java
+deleted file mode 100644
