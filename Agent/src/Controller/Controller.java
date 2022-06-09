@@ -4,19 +4,17 @@ package Controller;
 import IO.IO;
 import IO.SocketIO;
 import Model.AgentModel;
+import TimeSeries.TimeSeries;
 
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller implements Observer {
     AgentModel model;
     Commands commands;
-    HashMap<String,Float> statics;
+    HashMap<String,Float> statistics;
     HashMap<String,String> properties;
     Socket backEnd;
     IO BackEndIO;
@@ -28,7 +26,7 @@ public class Controller implements Observer {
         this.standAlone = standAlone;
         this.model = model;
         this.model.addObserver(this);
-        this.statics = new HashMap<>();
+        this.statistics = new HashMap<>();
         this.commands = new Commands(model);
         this.properties = new HashMap<>();
         createPropMap(propertiesPath);
@@ -93,7 +91,12 @@ public class Controller implements Observer {
 
 
     public void close() {
+        TimeSeries ts = model.getTimeSeries();
         model.closeModel();
+        statistics.put("sumInMiles"
+                ,Statistics.sumDistanceInMiles(ts.getProp(properties.get("longitude")),
+                        ts.getProp(properties.get("latitude"))));
+
         if (!this.standAlone) {
             BackEndIO.close();
             try {
