@@ -62,7 +62,7 @@ public class Controller implements Observer {
         }
     }
     private void connectToBackEnd(){
-        BackEndIO.write("agent~"+this.properties.get("agentDestination"));
+        BackEndIO.write("agent~"+this.properties.get("aircraftName"));
         if(BackEndIO.readLine().equals("ok"))
             new Thread(()->inFromBack()).start();
     }
