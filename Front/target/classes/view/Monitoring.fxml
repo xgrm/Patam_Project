@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<SplitPane dividerPositions="0.20814732142857145" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MonitoringController">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="200.0">
+            <fx:include fx:id="listF" source="FeatureList.fxml" />
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
+            <children>
+                <SplitPane dividerPositions="0.4949919871794871" prefHeight="770.0" prefWidth="1000.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="500.0">
+                            <children>
+                                <SplitPane dividerPositions="0.48022892819979185" orientation="VERTICAL" prefHeight="770.0" prefWidth="500.0">
+                                    <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="500.0">
+                                            <children>
+                                                <SplitPane dividerPositions="0.5176848874598071" layoutX="-13.0" layoutY="-25.0" prefHeight="411.0" prefWidth="500.0">
+                                                    <items>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="250.0">
+                                                            <fx:include fx:id="changeChart" source="Charts/LineChart.fxml" />
+                                                        </AnchorPane>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="250.0">
+                                                            <fx:include fx:id="correlationChart" source="Charts/LineChart.fxml" />
+                                                        </AnchorPane>
+                                                    </items>
+                                                </SplitPane>
+                                            </children></AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="500.0">
+                                            <fx:include fx:id="regChart" source="Charts/RegChart.fxml" />
+                                        </AnchorPane>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="48.0">
+                            <children>
+                                <SplitPane dividerPositions="0.5" layoutX="3.0" layoutY="-22.0" orientation="VERTICAL" prefHeight="782.0" prefWidth="446.0">
+                                    <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="445.0">
+                                            <fx:include fx:id="staticJoystick" layoutX="90.0" layoutY="70.0" source="Joystick.fxml" />
+                                        </AnchorPane>
+                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="272.0">
+                                             <fx:include fx:id="clockBoardMonitoring" layoutX="-200.0" layoutY="-200.0" source="ClockBoard.fxml" />
+                                         </AnchorPane>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children></AnchorPane>
+    </items>
+</SplitPane>

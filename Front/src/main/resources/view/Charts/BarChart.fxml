@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<BarChart prefHeight="235.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Charts.BarChart">
+    <xAxis>
+        <CategoryAxis side="BOTTOM" />
+    </xAxis>
+    <yAxis>
+        <NumberAxis prefHeight="195.0" prefWidth="12.0" side="LEFT" />
+    </yAxis>
+</BarChart>
