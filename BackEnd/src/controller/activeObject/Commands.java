@@ -76,7 +76,7 @@ public class Commands{
         @Override
         public void execute(String command) {
             String[] tokens = command.split(" ");
-            agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+" "+tokens[2]);
+            agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+"~"+tokens[2]);
         }
     }
     private class activeAgentsCommand extends Command{
