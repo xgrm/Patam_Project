@@ -1,16 +1,22 @@
-
+import Interpreter.Interpreter;
+import Interpreter.ShuntingYardAlgorithm;
 import Controller.*;
 import Model.*;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         AgentModel model = new AgentModel("src/external_files/ModelProprties.txt", "src/external_files/Symbols.txt");
         Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt",true);
 
@@ -22,6 +28,5 @@ public class Main {
                 throw new RuntimeException(e);
             }
         }).start();
-
     }
 }
