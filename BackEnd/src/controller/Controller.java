@@ -54,7 +54,7 @@ public class Controller implements Observer, ClientHandler {
             String[] tokens = in.readLine().split("~");
             int id;
             if(tokens[0].equals("agent")){ //agent~TLV-TLV
-                id = model.addFlight(tokens[1]);
+                id = model.addFlight2(tokens[1],"yes",-1f);
                 AgentHandler ag = new AgentHandler(client,id,this.ac);
                 this.agents.put(id,ag);
             }

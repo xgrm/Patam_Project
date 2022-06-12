@@ -102,6 +102,14 @@ public class Commands{
         }
 
     }
+    private class updateFlight extends Command{
+        @Override
+        public void execute(String command) {
+            String[] tokens = command.split(" ");
+            model.updateFlight(Integer.parseInt(tokens[0]),tokens[1],Float.parseFloat(tokens[2]));
+        }
+
+    }
 
     private class getKPICommand extends Command{
         @Override

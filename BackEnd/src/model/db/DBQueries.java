@@ -84,6 +84,29 @@ public class DBQueries {
 
         return id;
     }
+    public void createTable_2() {
+        Statement statement;
+        String table = "";
+        try {
+            Scanner prop = new Scanner(new File("Symbols.txt"));
+            StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS flight_data_2(id SERIAL NOT NULL PRIMARY KEY,flight_id int,FOREIGN KEY (flight_id) REFERENCES flights_2(flight_id),");
+            while (prop.hasNext()) {
+                sb.append(prop.nextLine() + " float,");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append(")");
+            table = sb.toString();
+            prop.close();
+            statement = this.db_connection.createStatement();
+            statement.executeUpdate(table);
+            System.out.println("Table Created!");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     public int addFlight2(String name,String active,float miles) {
         Statement statement;
         int id = 0;
