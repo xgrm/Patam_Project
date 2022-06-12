@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public class Number implements Expression {
     private double value;

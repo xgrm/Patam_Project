@@ -1,6 +1,7 @@
 package Model;
 
 import IO.*;
+import Model.Interpreter.Interpreter;
 import Server.ClientHandler;
 import Server.Server;
 import TimeSeries.TimeSeries;
@@ -54,9 +55,14 @@ public class AgentModel extends Observable implements Model {
     public void setThrottle(double x) {
         outToFG.write(properties.get("throttle")+" "+x);
     }
+    public void startInterpreter(String code){
+        Interpreter interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
+        new Thread(()->{
+            interpreter.run(code);
+        }).start();
+    }
     public void sendToFG(String path, Float value) {
         outToFG.write(path+" "+value.toString());
-//        System.out.println("Model sent to fg: "+path+" "+value.toString());
     }
     @Override
     public TimeSeries getTimeSeries() {

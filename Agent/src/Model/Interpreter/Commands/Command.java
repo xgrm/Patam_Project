@@ -1,4 +1,4 @@
-package Interpreter.Commands;
+package Model.Interpreter.Commands;
 
 import java.util.ArrayList;
 

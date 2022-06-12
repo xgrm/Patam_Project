@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public class Div extends BinaryExpression {
     public Div(Expression left, Expression right) {

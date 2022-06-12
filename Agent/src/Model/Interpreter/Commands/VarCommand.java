@@ -1,6 +1,6 @@
-package Interpreter.Commands;
+package Model.Interpreter.Commands;
 
-import Interpreter.Variable;
+import Model.Interpreter.Variable;
 
 import java.util.ArrayList;
 import java.util.HashMap;

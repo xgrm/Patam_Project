@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public class Or extends BinaryExpression{
     public Or(Expression left, Expression right) {

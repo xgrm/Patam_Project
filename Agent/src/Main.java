@@ -1,18 +1,8 @@
-import Interpreter.Interpreter;
-import Interpreter.ShuntingYardAlgorithm;
 import Controller.*;
 import Model.*;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -22,9 +12,19 @@ public class Main {
 
         new Thread(() -> {
             try {
-                Thread.sleep(1000 * 60 * 2);
+                Scanner scanner = new Scanner(new File("src/external_files/code.txt"));
+                StringBuilder sb = new StringBuilder();
+                while (scanner.hasNext()){
+                    sb.append(scanner.nextLine()+" \n");
+                }
+                Thread.sleep(1000 * 30);
+                cn.exe("Interpreter~"+sb.toString());
+                Thread.sleep(1000 * 60 * 10);
+
                 cn.close();
             } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }).start();

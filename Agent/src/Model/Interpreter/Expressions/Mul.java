@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public class Mul extends BinaryExpression {
     public Mul(Expression left, Expression right) {

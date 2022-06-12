@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public class Minus extends BinaryExpression {
     public Minus(Expression left, Expression right) {

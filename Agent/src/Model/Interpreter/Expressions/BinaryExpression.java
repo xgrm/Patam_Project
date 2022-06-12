@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public abstract class BinaryExpression implements Expression {
     protected Expression left;

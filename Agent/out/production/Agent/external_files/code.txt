@@ -16,6 +16,7 @@ rudder = ( h0 - heading ) / 20
 aileron = - roll / 70
 elevator = pitch / 50
 print alt
+alt = alt * 2
 sleep 250
 }
 print "exit"

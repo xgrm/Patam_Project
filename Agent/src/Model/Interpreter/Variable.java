@@ -1,4 +1,4 @@
-package Interpreter;
+package Model.Interpreter;
 
 import Model.AgentModel;
 

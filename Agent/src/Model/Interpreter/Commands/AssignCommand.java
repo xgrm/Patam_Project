@@ -1,7 +1,7 @@
-package Interpreter.Commands;
+package Model.Interpreter.Commands;
 
-import Interpreter.ShuntingYardAlgorithm;
-import Interpreter.Variable;
+import Model.Interpreter.ShuntingYardAlgorithm;
+import Model.Interpreter.Variable;
 import Model.AgentModel;
 
 import java.util.ArrayList;

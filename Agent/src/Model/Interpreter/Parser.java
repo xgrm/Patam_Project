@@ -1,7 +1,7 @@
-package Interpreter;
+package Model.Interpreter;
 
-import Interpreter.Commands.Command;
-import Interpreter.Commands.CommandFactory;
+import Model.Interpreter.Commands.Command;
+import Model.Interpreter.Commands.CommandFactory;
 import Model.AgentModel;
 import java.util.ArrayList;
 import java.util.HashMap;

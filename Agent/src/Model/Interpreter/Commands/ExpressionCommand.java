@@ -1,7 +1,7 @@
-package Interpreter.Commands;
+package Model.Interpreter.Commands;
 
 import java.util.ArrayList;
-import Interpreter.Expressions.Expression;
+import Model.Interpreter.Expressions.Expression;
 
 public abstract class ExpressionCommand implements Expression {
    protected Command c;

@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 public class ConditionExpression extends BinaryExpression{
 
     String operator;

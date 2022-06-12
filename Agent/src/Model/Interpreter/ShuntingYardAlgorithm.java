@@ -1,7 +1,7 @@
-package Interpreter;
+package Model.Interpreter;
 
-import Interpreter.Expressions.*;
-import Interpreter.Expressions.Number;
+import Model.Interpreter.Expressions.*;
+import Model.Interpreter.Expressions.Number;
 import java.util.*;
 
 public class ShuntingYardAlgorithm {

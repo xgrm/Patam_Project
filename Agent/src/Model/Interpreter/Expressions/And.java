@@ -1,4 +1,4 @@
-package Interpreter.Expressions;
+package Model.Interpreter.Expressions;
 
 public class And extends BinaryExpression {
     public And(Expression left, Expression right) {
