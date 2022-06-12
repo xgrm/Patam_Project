@@ -29,7 +29,6 @@ public class Commands{
         this.commandsMap.put("removeAgent",new removeAgentCommand());
         this.commandsMap.put("getKpi",new getKPICommand());
 
-
     }
 
     public void executeCommand(String command){
@@ -77,7 +76,7 @@ public class Commands{
         @Override
         public void execute(String command) {
             String[] tokens = command.split(" ");
-            agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+" "+tokens[2]);
+            agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+"~"+tokens[2]);
         }
     }
     private class activeAgentsCommand extends Command{
@@ -100,6 +99,14 @@ public class Commands{
         public void execute(String command) {
             int id = Integer.parseInt(command);
             agents.remove(id,agents.get(id));
+        }
+
+    }
+    private class updateFlight extends Command{
+        @Override
+        public void execute(String command) {
+            String[] tokens = command.split(" ");
+            model.updateFlight(Integer.parseInt(tokens[0]),tokens[1],Float.parseFloat(tokens[2]));
         }
 
     }
