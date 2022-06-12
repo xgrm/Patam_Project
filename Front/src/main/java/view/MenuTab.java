@@ -15,7 +15,7 @@ public class MenuTab extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuTab.class.getResource("MenuTab.fxml"));
         MenuTabController mwc = fxmlLoader.getController();
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
         stage.setTitle("Patam Project!");
         stage.setScene(scene);
         stage.show();

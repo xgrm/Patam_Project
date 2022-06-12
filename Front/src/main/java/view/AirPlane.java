@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 public class AirPlane extends BaseController {
     private String airplaneName;
     private float  height, direction, speed;
+    public float imageHeight, imageWidth;
     Position p;
 
     public AirPlane(String airplaneName, float height, float dir, float speed, Position p) {
@@ -16,6 +17,8 @@ public class AirPlane extends BaseController {
         this.direction = dir;
         this.speed = speed;
         this.p = p;
+        this.imageHeight=50;
+        this.imageWidth=50;
     }
 
 

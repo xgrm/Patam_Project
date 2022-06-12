@@ -3,6 +3,7 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import view.AirPlane;
 
@@ -22,6 +23,7 @@ public class WorldMapController extends BaseController {
         Map<String, AirPlane> planeMap;
         Double heightMap;
         Double widthMap;
+
 
         @Override
         public void updateUi(Object obj) {}
@@ -58,7 +60,7 @@ public class WorldMapController extends BaseController {
                         System.out.println("no airplanes");
                 } else {
                         for (AirPlane p : planeMap.values()) {
-                                this.canvasGc.drawImage(this.airplane, p.getP().getX(), p.getP().getY(), 50, 50);
+                                this.canvasGc.drawImage(this.airplane, p.getP().getX(), p.getP().getY(), p.imageHeight, p.imageWidth);
                         }
                 }
         }
@@ -68,8 +70,12 @@ public class WorldMapController extends BaseController {
                 heightMap+=50;
                 widthMap+=50;
                 this.canvasGc.clearRect(0,0,1000,1000);
+                for (AirPlane p : planeMap.values()) {
+                p.imageWidth+=5;
+                p.imageHeight+=5;
+                p.setP(new Position(p.getP().getX()+10,p.getP().getY()+10));
+                }
                 this.drawAirplane(heightMap,widthMap);
-
 
         }
 
@@ -80,6 +86,11 @@ public class WorldMapController extends BaseController {
                 if(heightMap==0 || widthMap==0) return;
                 heightMap-=50;
                 widthMap-=50;
+                for (AirPlane p : planeMap.values()) {
+                        p.imageWidth-=5;
+                        p.imageHeight-=5;
+                        p.setP(new Position(p.getP().getX()-10,p.getP().getY()-10));
+                }
                 this.drawAirplane(heightMap,widthMap);
 
         }
