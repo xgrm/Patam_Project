@@ -56,7 +56,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
     }
     public void sendToFG(String path, Float value) {
         outToFG.write(path+" "+value.toString());
-        System.out.println("Model sent to fg: "+path+" "+value.toString());
+//        System.out.println("Model sent to fg: "+path+" "+value.toString());
     }
     @Override
     public TimeSeries getTimeSeries() {
@@ -127,6 +127,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
             FlightGear.close();
         } catch (IOException e) {throw new RuntimeException(e);}
         timeSeries.exportCSV("FlightData.csv");
+        System.out.println("closed");
     }
     @Override
     public void finalize(){

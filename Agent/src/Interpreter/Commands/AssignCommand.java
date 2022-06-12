@@ -44,7 +44,8 @@ public class AssignCommand extends Command{
            symbolTable.put(varName,new Variable(varName,0f,args.get(index+2),model));
         }
         else {
-            symbolTable.getOrDefault(varName,new Variable(varName,0f)).setValue(calcTheExp(args,index));
+            symbolTable.put(varName,symbolTable.getOrDefault(varName,new Variable(varName,0f)));
+            symbolTable.get(varName).setValue(calcTheExp(args,index));
         }
         return indexCount;
     }

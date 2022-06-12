@@ -19,7 +19,8 @@ public class BindCommand extends Command {
 
     @Override
     public int execute(ArrayList<String> args, int index) {
-        bindTable.put(args.get(index+1),symbolTable.get(args.get(index-2)));
+        String token = args.get(index+1);
+        bindTable.put(token.substring(1,token.length()-1),symbolTable.get(args.get(index-2)));
         return 2;
     }
 }

@@ -4,7 +4,7 @@ import Model.AgentModel;
 
 public class Variable {
     String name;
-    Float value;
+    volatile float value;
     String bindTo;
     AgentModel model;
 
@@ -22,7 +22,7 @@ public class Variable {
         this.value = value;
         if(this.bindTo != null){
             model.sendToFG(bindTo,value);
-            System.out.println("send to model: "+bindTo+" "+ value);
+//            System.out.println("send to model: "+bindTo+" "+ value);
         }
     }
 
