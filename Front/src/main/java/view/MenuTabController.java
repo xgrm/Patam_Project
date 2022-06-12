@@ -19,6 +19,7 @@ public class MenuTabController implements Initializable, Observer {
     @FXML
     Tab FleetOverView_Tab;
 
+
     public MenuTabController() {}
 
     public void setViewModel(ViewModel vm) {

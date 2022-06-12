@@ -70,18 +70,24 @@ public class WorldMapController extends BaseController {
                         page.setOnMouseClicked(mouseEvent -> {
                                 boolean found = false;
                                 for (AirPlane ap: this.planeMap.values()) {
-                                        if(mouseEvent.getX() >= ap.getP().getX()-5 &&mouseEvent.getX() <= ap.getP().getX()+40
-                                                && mouseEvent.getY() >= ap.getP().getY()-5 && mouseEvent.getY() <= ap.getP().getY()+40) {
-                                                found = true;
-                                                lblName.setText(" name: " +ap.getAirplaneName());
-                                                lblDirection.setText(" direction: " + ap.getDir()+"");
-                                                lblHeight.setText(" height: " +ap.getHeight()+"");
-                                                lblSpeed.setText(" speed: " + ap.getSpeed()+"");
-                                                popOver.show(this.background, mouseEvent.getX()+190, mouseEvent.getY()+60);
+                                        if (mouseEvent.getClickCount() == 1) {
+                                                if (mouseEvent.getX() >= ap.getP().getX() - 5 && mouseEvent.getX() <= ap.getP().getX() + 40
+                                                        && mouseEvent.getY() >= ap.getP().getY() - 5 && mouseEvent.getY() <= ap.getP().getY() + 40) {
+                                                        found = true;
+                                                        lblName.setText(" name: " + ap.getAirplaneName());
+                                                        lblDirection.setText(" direction: " + ap.getDir() + "");
+                                                        lblHeight.setText(" height: " + ap.getHeight() + "");
+                                                        lblSpeed.setText(" speed: " + ap.getSpeed() + "");
+                                                        popOver.show(this.background, mouseEvent.getX() + 190, mouseEvent.getY() + 60);
+                                                }
                                         }
+                                        if(mouseEvent.getClickCount() ==2){
+                                                System.out.println("2");
+                                        }
+                                        if (!found) popOver.hide();
                                 }
-                                if (!found) popOver.hide();
                         });
+
 
 //                        this.background.setOnMouseExited(mouseEvent -> { if (popOver.isShowing()) popOver.hide(Duration.millis(5000)); });
 
