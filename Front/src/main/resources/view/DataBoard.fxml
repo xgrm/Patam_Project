@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.DataBoardController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <SplitPane dividerPositions="0.49316628701594534" orientation="VERTICAL" prefHeight="288.0" prefWidth="383.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="450.0">
+                    <children>
+                        <SplitPane dividerPositions="0.5" layoutX="-5.0" layoutY="-1.0" prefHeight="142.0" prefWidth="392.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="139.0" prefWidth="200.0">
+                                    <fx:include fx:id="activeFlight" source="Charts/PieChart.fxml" />
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="286.0" prefWidth="225.0">
+                                    <fx:include fx:id="nauticalMiles" source="Charts/BarChart.fxml" />
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="81.0" prefWidth="381.0">
+                    <children>
+                        <SplitPane dividerPositions="0.5" layoutX="-6.0" layoutY="-4.0" prefHeight="150.0" prefWidth="392.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="147.0" prefWidth="193.0">
+                                    <fx:include fx:id="nauticalMilesAvg" source="Charts/BarChart.fxml" />
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="222.0" prefWidth="225.0">
+                                    <fx:include fx:id="fleetSize" source="Charts/LineChart.fxml" />
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <Button fx:id="refreshBut" layoutX="166.0" layoutY="300.0" mnemonicParsing="false" text="refresh" />
+    </children>
+
+</AnchorPane>
