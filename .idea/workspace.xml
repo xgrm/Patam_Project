@@ -20,6 +20,9 @@
       <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Lexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEnd/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/src/Model/AgentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Model/AgentModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Model/Model.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +30,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -38,11 +46,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/saarmoseri/Library/CloudStorage/OneDrive-cs.colman.ac.il/2end Year/Patam/2end semester/Project/Project"
   }
 }</component>
   <component name="RecentsManager">
@@ -59,6 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1653232751724</updated>
       <workItem from="1653232754128" duration="66000" />
+      <workItem from="1653487279621" duration="128000" />
     </task>
     <servers />
   </component>

@@ -13,7 +13,7 @@ import java.util.Observer;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class AgentModel extends Observable implements Model, ClientHandler {
+public class AgentModel extends Observable implements Model {
     String[] symbols;
     ConcurrentHashMap<String,Float> symbolMap;
 
@@ -126,7 +126,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
         try {
             FlightGear.close();
         } catch (IOException e) {throw new RuntimeException(e);}
-        timeSeries.exportCSV("FlightData.csv");
+        timeSeries.exportCSV("src/external_files/FlightData.csv");
         System.out.println("closed");
     }
     @Override

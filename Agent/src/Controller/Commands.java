@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Model;
+import Model.*;
 
 import java.util.HashMap;
 
