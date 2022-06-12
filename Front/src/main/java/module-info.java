@@ -6,6 +6,9 @@ module com.example.front {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
 
-    opens com.example.front to javafx.fxml;
-    exports com.example.front;
+//    opens com.example.front to javafx.fxml;
+//    exports com.example.front;
+
+    opens view to javafx.fxml;
+    exports view;
 }
