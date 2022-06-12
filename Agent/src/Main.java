@@ -27,14 +27,17 @@ public class Main {
             System.out.println("end the sleep");
             Interpreter interpreter = new Interpreter(model);
             interpreter.run("var throttle = bind '/controls/engines/current-engine/throttle'\n" +
-                    "throttle = 1\n" +
-                    "while throttle >= 0 {\n" +
-                    "throttle = throttle - 0.1\n" +
-                    "print 'exit'\n" +
-                    "print throttle + 1\n" +
+                    "throttle = 1 \n" +
+                    "while throttle >= 0 { \n" +
+                    "throttle = throttle - 0.1 \n" +
+                    "print \"exit\" \n" +
+                    "print throttle + 1 \n" +
                     "}" );
             model.closeModel();
         }).start();
+//String exit = "\"exit\"";
+//System.out.println(exit.contains("\""));
+//        System.out.println(exit.substring(1,exit.length()-1));
 
     }
 }

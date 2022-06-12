@@ -36,9 +36,11 @@ public class PrintCommand extends Command {
     }
     @Override
     public int execute(ArrayList<String> args, int index) { //TODO: FIX MULTI STRING AND EXECUTE IN GENERAL!
-        if(args.get(index+1).contains("'")){
+
+
+        if(args.get(index+1).charAt(0)=='"'){
             String line = args.get(index+1);
-            System.out.println(line);
+            System.out.println(line.substring(1,line.length()-1));
             return 2;
         }
         Float[] returnValue = calcTheExp(args,index);
