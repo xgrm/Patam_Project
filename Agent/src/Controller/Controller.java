@@ -79,8 +79,8 @@ public class Controller implements Observer {
         if(o.equals(model)){
             String line = (String) arg;
             if(!this.standAlone)
-                BackEndIO.write(line);
-//            else System.out.println(line);
+                BackEndIO.write("addRow~"+line);
+           else System.out.println(line);
         }
 
     }
@@ -98,6 +98,7 @@ public class Controller implements Observer {
                         ts.getProp(properties.get("latitude"))));
 
         if (!this.standAlone) {
+            BackEndIO.write("sumMiles~"+statistics.get("sumInMiles"));
             BackEndIO.close();
             try {
                 backEnd.close();
