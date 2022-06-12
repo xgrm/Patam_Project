@@ -4,19 +4,17 @@ package Controller;
 import IO.IO;
 import IO.SocketIO;
 import Model.AgentModel;
+import TimeSeries.TimeSeries;
 
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller implements Observer {
     AgentModel model;
     Commands commands;
-    HashMap<String,Float> statics;
+    HashMap<String,Float> statistics;
     HashMap<String,String> properties;
     Socket backEnd;
     IO BackEndIO;
@@ -28,7 +26,7 @@ public class Controller implements Observer {
         this.standAlone = standAlone;
         this.model = model;
         this.model.addObserver(this);
-        this.statics = new HashMap<>();
+        this.statistics = new HashMap<>();
         this.commands = new Commands(model);
         this.properties = new HashMap<>();
         createPropMap(propertiesPath);
@@ -64,7 +62,7 @@ public class Controller implements Observer {
         }
     }
     private void connectToBackEnd(){
-        BackEndIO.write("agent~"+this.properties.get("agentDestination"));
+        BackEndIO.write("agent~"+this.properties.get("aircraftName"));
         if(BackEndIO.readLine().equals("ok"))
             new Thread(()->inFromBack()).start();
     }
@@ -81,8 +79,8 @@ public class Controller implements Observer {
         if(o.equals(model)){
             String line = (String) arg;
             if(!this.standAlone)
-                BackEndIO.write(line);
-            else System.out.println(line);
+                BackEndIO.write("addRow~"+line);
+           else System.out.println(line);
         }
 
     }
@@ -93,8 +91,14 @@ public class Controller implements Observer {
 
 
     public void close() {
+        TimeSeries ts = model.getTimeSeries();
         model.closeModel();
+        statistics.put("sumInMiles"
+                ,Statistics.sumDistanceInMiles(ts.getProp(properties.get("longitude")),
+                        ts.getProp(properties.get("latitude"))));
+
         if (!this.standAlone) {
+            BackEndIO.write("sumMiles~"+statistics.get("sumInMiles"));
             BackEndIO.close();
             try {
                 backEnd.close();

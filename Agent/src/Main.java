@@ -1,5 +1,9 @@
-import Controller.Controller;
+import Controller.*;
 import Model.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +22,12 @@ public class Main {
 //        Play play = new Play();
 //        play.openCSV("src/external_files/FlightData.csv");
 //        play.play();
-
+                cn.close();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 }

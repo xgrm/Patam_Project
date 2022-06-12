@@ -33,12 +33,15 @@ public class Play {
             TelnetIO io = new TelnetIO(socket.getInputStream(),socket.getOutputStream());
             Scanner csv = new Scanner(new File(this.file));
             csv.nextLine();
+            boolean valid = true;
             while (!this.stop){
-                while (!this.pause&& csv.hasNext()){
+                while (!this.pause&& (valid=csv.hasNext())){
                     String line = csv.nextLine();
                     io.write(line);
-                    Thread.sleep(100*speed);
+                    Thread.sleep(100/speed);
                 }
+                if(!valid)
+                    this.stop();
             }
             io.close();
             csv.close();
