@@ -11,4 +11,6 @@ module com.example.front {
 
     opens view to javafx.fxml;
     exports view;
+
+    exports view.Charts;
 }

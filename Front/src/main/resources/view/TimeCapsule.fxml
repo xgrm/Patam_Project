@@ -9,35 +9,35 @@
         <HBox prefHeight="319.0" prefWidth="946.0">
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0">
-<!--                    <fx:include fx:id="featureListTC" source="FeatureList.fxml" />-->
+                    <fx:include fx:id="featureListTC" source="FeatureList.fxml" />
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <Pane prefHeight="161.0" prefWidth="103.0">
-<!--                            <fx:include fx:id="regChart" source="RegChart.fxml" />-->
+                            <fx:include fx:id="regChart" source="Charts/RegChart.fxml" />
                         </Pane>
                         <Pane layoutY="164.0" prefHeight="147.0" prefWidth="200.0">
-<!--                            <fx:include fx:id="changeChart" source="LineChart.fxml" />-->
+                            <fx:include fx:id="changeChart" source="Charts/LineChart.fxml" />
                         </Pane>
                         <Pane layoutX="94.0" prefHeight="161.0" prefWidth="109.0">
-<!--                            <fx:include fx:id="correlationChart" source="LineChart.fxml" />-->
+                            <fx:include fx:id="correlationChart" source="Charts/LineChart.fxml" />
                         </Pane>
                     </children>
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="154.0" prefWidth="200.0">
-<!--                            <fx:include fx:id="clockBoardTC" source="ClockBoard.fxml" />-->
+                            <fx:include fx:id="clockBoardTC" source="ClockBoard.fxml" />
                         </Pane>
                     </children>
                 </Pane>
                 <Pane prefHeight="67.0" prefWidth="109.0">
-<!--                    <fx:include fx:id="staticJoystick" source="Joystick.fxml" />-->
+                    <fx:include fx:id="staticJoystick" source="Joystick.fxml" />
                 </Pane>
             </children>
         </HBox>
         <Pane prefHeight="299.0" prefWidth="948.0">
-<!--            <fx:include fx:id="playBoard" source="PlayBoard.fxml" />-->
+            <fx:include fx:id="playBoard" source="PlayBoard.fxml" />
         </Pane>
     </children>
 </FlowPane>

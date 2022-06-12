@@ -16,21 +16,21 @@
     <Tab text="Monitoring">
       <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-<!--              <fx:include fx:id="monitoring" source="Monitoring.fxml" />-->
+              <fx:include fx:id="monitoring" source="Monitoring.fxml" />
           </AnchorPane>
       </content>
     </Tab>
       <Tab text="Teleoperation">
         <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-<!--                <fx:include fx:id="teleopration" source="Teleopration.fxml" />-->
+                <fx:include fx:id="teleopration" source="Teleopration.fxml" />
             </AnchorPane>
         </content>
       </Tab>
       <Tab text="Time Capsule">
         <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-<!--                <fx:include fx:id="timeCapsule" source="TimeCapsule.fxml" />-->
+                <fx:include fx:id="timeCapsule" source="TimeCapsule.fxml" />
             </AnchorPane>
         </content>
       </Tab>

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
 
-<BarChart prefHeight="100.0" prefWidth="100.0"
-          xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="view.Charts.BarChart"
-          >
+<ScatterChart prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/17"
+              xmlns:fx="http://javafx.com/fxml/1"
+              fx:controller="view.Charts.RegChart">
     <xAxis>
         <CategoryAxis side="BOTTOM" />
     </xAxis>
     <yAxis>
         <NumberAxis side="LEFT" />
     </yAxis>
-</BarChart>
+</ScatterChart>

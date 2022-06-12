@@ -6,7 +6,7 @@
 <SplitPane dividerPositions="0.20814732142857145" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="200.0">
-<!--            <fx:include fx:id="listF" source="FeatureList.fxml" />-->
+            <fx:include fx:id="listF" source="FeatureList.fxml" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
             <children>
@@ -21,16 +21,16 @@
                                                 <SplitPane dividerPositions="0.5176848874598071" layoutX="-13.0" layoutY="-25.0" prefHeight="400.0" prefWidth="500.0">
                                                     <items>
                                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="250.0">
-<!--                                                            <fx:include fx:id="changeChart" source="LineChart.fxml" />-->
+                                                            <fx:include fx:id="changeChart" source="Charts/LineChart.fxml" />
                                                         </AnchorPane>
                                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="250.0">
-<!--                                                            <fx:include fx:id="correlationChart" source="LineChart.fxml" />-->
+                                                            <fx:include fx:id="correlationChart" source="Charts/LineChart.fxml" />
                                                         </AnchorPane>
                                                     </items>
                                                 </SplitPane>
                                             </children></AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="500.0">
-<!--                                            <fx:include fx:id="regChart" source="RegChart.fxml" />-->
+                                            <fx:include fx:id="regChart" source="Charts/RegChart.fxml" />
                                         </AnchorPane>
                                     </items>
                                 </SplitPane>
@@ -41,9 +41,9 @@
                                 <SplitPane layoutX="-63.0" layoutY="-22.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="410.0">
                                     <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="599.0" prefWidth="207.0">
-<!--                                            <fx:include fx:id="staticJoystick" source="Joystick.fxml" />-->
+                                            <fx:include fx:id="staticJoystick" source="Joystick.fxml" />
                                             <AnchorPane layoutX="-213.0" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="272.0">
-<!--                                                <fx:include fx:id="clockBoardMonitoring" source="ClockBoard.fxml" />-->
+                                                <fx:include fx:id="clockBoardMonitoring" source="ClockBoard.fxml" />
                                             </AnchorPane>
                                         </AnchorPane>
                                     </items>

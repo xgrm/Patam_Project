@@ -6,6 +6,7 @@
 
 <BarChart prefHeight="100.0" prefWidth="100.0"
           xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="view.Charts.BarChart"
           >
     <xAxis>
         <CategoryAxis side="BOTTOM" />
