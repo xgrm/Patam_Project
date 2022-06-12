@@ -2,14 +2,9 @@ package Interpreter;
 
 import Interpreter.Expressions.*;
 import Interpreter.Expressions.Number;
-
-
 import java.util.*;
 
 public class ShuntingYardAlgorithm {
-
-
-
     public static double calc(List<String> exp){
         LinkedList<String> queue = new LinkedList<>();
         Stack<String> stack = new Stack<>();
@@ -161,7 +156,6 @@ public class ShuntingYardAlgorithm {
                 break;
             }
         }
-
         return expression;
     }
 }

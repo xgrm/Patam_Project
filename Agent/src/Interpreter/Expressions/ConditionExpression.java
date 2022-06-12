@@ -1,7 +1,4 @@
 package Interpreter.Expressions;
-
-
-
 public class ConditionExpression extends BinaryExpression{
 
     String operator;
@@ -32,5 +29,4 @@ public class ConditionExpression extends BinaryExpression{
         }
         return -1;
     }
-
 }

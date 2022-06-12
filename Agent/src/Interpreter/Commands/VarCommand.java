@@ -4,11 +4,11 @@ import Interpreter.Variable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class VarCommand extends Command {
     HashMap<String, Variable> symbolTable;
-
+    
+    // gets the sym table and updates it on execute
     public VarCommand(HashMap<String, Variable> symbolTable) {
         this.symbolTable = symbolTable;
     }

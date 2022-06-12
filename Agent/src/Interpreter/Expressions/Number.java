@@ -1,7 +1,6 @@
 package Interpreter.Expressions;
 
 public class Number implements Expression {
-
     private double value;
 
     public Number(double value) {

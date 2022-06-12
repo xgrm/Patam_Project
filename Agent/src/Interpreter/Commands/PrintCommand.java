@@ -2,7 +2,6 @@ package Interpreter.Commands;
 
 import Interpreter.ShuntingYardAlgorithm;
 import Interpreter.Variable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +12,8 @@ public class PrintCommand extends Command {
         this.symbolTable = symbolTable;
     }
 
-    private Float[] calcTheExp(ArrayList<String> args, int index){ //TODO: FIND ELEGANT SOLUTION TO THIS FUNC!
+    // calcs value in case its an expression
+    private float[] calcTheExp(ArrayList<String> args, int index){
         int argsSize = args.size();
         String token;
         ArrayList<String> list = new ArrayList<>();
@@ -29,21 +29,20 @@ public class PrintCommand extends Command {
             }
             list.add(token);
         }
-        Float[] returnValue = new Float[2];
+        float[] returnValue = new float[2];
         returnValue[0]=(float) ShuntingYardAlgorithm.calc(list);
         returnValue[1] = (float) list.size();
         return returnValue;
     }
     @Override
-    public int execute(ArrayList<String> args, int index) { //TODO: FIX MULTI STRING AND EXECUTE IN GENERAL!
-        if(args.get(index+1).contains("'")){
+    public int execute(ArrayList<String> args, int index) {
+        if(args.get(index+1).charAt(0) == '"'){
             String line = args.get(index+1);
-            System.out.println(line);
+            System.out.println(line.substring(1, line.length()-1));
             return 2;
         }
-        Float[] returnValue = calcTheExp(args,index);
+        float[] returnValue = calcTheExp(args,index);
         System.out.println(returnValue[0]);
         return (int) Math.floor(returnValue[1])+1;
     }
-
 }

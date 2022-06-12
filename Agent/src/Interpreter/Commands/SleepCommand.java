@@ -13,5 +13,4 @@ public class SleepCommand extends Command {
         }
         return 1;
     }
-
 }

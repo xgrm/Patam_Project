@@ -1,7 +1,6 @@
 package Interpreter.Expressions;
 
 public class Mul extends BinaryExpression {
-
     public Mul(Expression left, Expression right) {
         super(left, right);
     }

@@ -14,6 +14,8 @@ public class AssignCommand extends Command{
         this.symbolTable = symbolTable;
         this.model = model;
     }
+
+    //calculates the value of the input in case its an expressiom/symbol
     private float calcTheExp(ArrayList<String> args, int index){
         int argsSize = args.size();
         String token;
@@ -32,6 +34,7 @@ public class AssignCommand extends Command{
         }
         return (float) ShuntingYardAlgorithm.calc(list);
     }
+
     @Override
     public int execute(ArrayList<String> args, int index) {
         int indexCount = 1;

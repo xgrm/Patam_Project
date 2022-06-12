@@ -3,10 +3,7 @@ package Interpreter.Commands;
 import java.util.ArrayList;
 
 public abstract class Command {
-
-
-
-    // list of the args needed in order to execute the command
+    // gets the tokens list and current command index,
+    // returns the amount of args "used"
     public abstract int execute(ArrayList<String> args, int index);
-
 }
