@@ -10,7 +10,8 @@ public class BindCommand extends Command {
 
     HashMap<String, Variable> symbolTable;
     ConcurrentHashMap<String, Variable> bindTable;
-
+    
+    // binds code var to fg var
     public BindCommand(HashMap<String, Variable> symbolTable, ConcurrentHashMap<String, Variable> bindTable) {
         this.symbolTable = symbolTable;
         this.bindTable = bindTable;

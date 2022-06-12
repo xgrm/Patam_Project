@@ -1,10 +1,6 @@
 package Interpreter.Expressions;
 
-import java.util.function.BinaryOperator;
-
 public class And extends BinaryExpression {
-
-
     public And(Expression left, Expression right) {
         super(left, right);
     }

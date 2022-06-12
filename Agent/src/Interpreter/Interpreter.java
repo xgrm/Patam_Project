@@ -12,8 +12,9 @@ import Model.AgentModel;
 public class Interpreter implements Observer {
 
     Parser parser;
+    // maps vars to values
     HashMap<String,Variable> symbolTable;
-
+    // code var to fg var map
     ConcurrentHashMap<String,Variable> bindTable;
     AgentModel model;
 

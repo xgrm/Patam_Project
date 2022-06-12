@@ -6,7 +6,6 @@ public class Variable {
     String name;
     Float value;
     String bindTo;
-
     AgentModel model;
 
     public Variable(String name, Float value, String bindTo, AgentModel model) {
@@ -24,12 +23,10 @@ public class Variable {
         if(this.bindTo != null){
             model.sendToFG(bindTo,value);
             System.out.println("send to model: "+bindTo+" "+ value);
-
         }
-
     }
 
-    public Float getValue() {
+    public float getValue() {
         return value;
     }
 }
