@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Circle?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.JoystickController"
+            prefHeight="300.0" prefWidth="300.0">
+    <children>
+        <Circle fill="#c8c8c8" layoutX="133.0" layoutY="125.0" radius="100.0" stroke="TRANSPARENT" strokeType="INSIDE"/>
+        <Circle fx:id="_smallCircle" fill="#525150" layoutX="133.0" layoutY="125.0" radius="47.0" stroke="WHITE"
+                strokeType="INSIDE"/>
+        <Slider disable="true" fx:id="_rudder" layoutX="41.0" layoutY="234.0" prefHeight="16.0" prefWidth="206.0"/>
+        <Slider fx:id="_throttle" layoutX="14.0" layoutY="18.0" orientation="VERTICAL" prefHeight="200.0"
+                disable="true" prefWidth="16.0"/>
+    </children>
+</AnchorPane>

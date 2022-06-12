@@ -2,7 +2,7 @@
   <library name="eu.hansolo.Medusa" type="repository">
     <properties maven-id="eu.hansolo:Medusa:7.9" />
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/eu/hansolo/Medusa/7.9/Medusa-7.9.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/eu/hansolo/medusa/7.9/Medusa-7.9.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
