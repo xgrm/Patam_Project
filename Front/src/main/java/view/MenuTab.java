@@ -3,10 +3,8 @@ package view;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
-import model.MainModel;
-import viewModel.ViewModel;
+
 
 import java.io.IOException;
 

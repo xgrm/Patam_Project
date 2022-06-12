@@ -1,17 +1,18 @@
 package model;
 
 
-import model.AnomalyDetection.AnomalyDetection;
-import model.AnomalyDetection.TimeSeries;
-import model.Server.Server;
+
+import model.utils.Config;
+import model.utils.Play;
 
 import java.net.Socket;
 
 public class MainModel implements Model{
     Socket fg;
-    Server server;
-    AnomalyDetection am;
-    TimeSeries ts;
+    private Play player;
+//    Server server;
+//    AnomalyDetection am;
+//    TimeSeries ts;
 
     private void connectToFG(){}
     private void openServer(){}
@@ -20,19 +21,26 @@ public class MainModel implements Model{
     private void startClient(){}
     public void close(){}
 
-    @Override
-    public void setAileron() {}
-
-    @Override
-    public void setElevator() {}
-
-    @Override
-    public void setThrottle() {}
-
-    @Override
-    public void setRudder() {}
+    public MainModel() {
+        this.player = new Play();
+    }
 
     @Override
     public void setNewAlgo() {}
+    public void startPlay(int speed, String path){
+        this.setPlayerPath(path);
+        this.setPlayerSpeed(speed);
+        this.player.play();
+    }
 
+    public void setPlayerSpeed(int speed) { this.player.setSpeed(speed); }
+    public void setPlayerPath(String path) {
+        this.player.setPath(path);
+    }
+    public void setPlayerPause(){
+        this.player.pause();
+    }
+    public void setPlayerStop(){
+        this.player.stop();
+    }
 }
