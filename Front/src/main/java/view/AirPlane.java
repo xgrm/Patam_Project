@@ -2,12 +2,16 @@ package view;
 
 
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AirPlane extends BaseController {
     private String airplaneName;
     private float  height, direction, speed;
+    public float imageHeight, imageWidth;
     Position p;
 
     public AirPlane(String airplaneName, float height, float dir, float speed, Position p) {
@@ -16,6 +20,8 @@ public class AirPlane extends BaseController {
         this.direction = dir;
         this.speed = speed;
         this.p = p;
+        this.imageHeight=50;
+        this.imageWidth=50;
     }
 
 
@@ -26,7 +32,7 @@ public class AirPlane extends BaseController {
 
     public String getAirplaneName() {return airplaneName;}
     public void setAirplaneName(String airplaneName) {this.airplaneName = airplaneName;}
-    public float getHeight() {return height;}
+    public float getPlaneHeight() {return height;}
     public void setHeight(float height) {this.height = height;}
     public float getDir() {return direction;}
     public void setDir(float dir) {this.direction = dir;}

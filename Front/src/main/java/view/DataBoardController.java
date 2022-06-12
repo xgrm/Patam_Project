@@ -36,12 +36,13 @@ public class DataBoardController extends BaseController{
         nauticalMilesAvg.getData().addAll(setL);
 
         ObservableList<PieChart.Data> pieChartData= FXCollections.observableArrayList(
-                new PieChart.Data("available", 39),
-                new PieChart.Data("not available",61));
+                new PieChart.Data("active", 39),
+                new PieChart.Data("not active",61));
         activeFlight.setData(pieChartData);
         XYChart.Series setLineChart=new XYChart.Series<>();
         setLineChart.getData().add(new XYChart.Data<>("1",133));
         setLineChart.getData().add(new XYChart.Data<>("2",98));
+        setLineChart.getData().add(new XYChart.Data<>("3",40));
 
         fleetSize.getData().add(setLineChart);
 
