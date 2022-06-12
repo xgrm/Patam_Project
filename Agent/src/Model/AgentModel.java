@@ -12,7 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class AgentModel extends Observable implements Model, ClientHandler {
+public class AgentModel extends Observable implements Model {
     String[] symbols;
     HashMap<String,Float> symbolMap;
     HashMap<String,String> properties;
@@ -121,7 +121,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
         try {
             FlightGear.close();
         } catch (IOException e) {throw new RuntimeException(e);}
-        timeSeries.exportCSV("FlightData.csv");
+        timeSeries.exportCSV("src/external_files/FlightData.csv");
     }
     @Override
     public void finalize(){
