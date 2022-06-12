@@ -24,7 +24,7 @@ public class PrintCommand extends Command {
                 break;
             tempVar = symbolTable.get(token);
             if(tempVar != null){
-                token = tempVar.getValue().toString();
+                token = "" + tempVar.getValue();
                 tempVar = null;
             }
             list.add(token);

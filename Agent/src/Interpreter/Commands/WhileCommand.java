@@ -20,7 +20,7 @@ public class WhileCommand extends Command{
         for (String token:condition){
             Variable temp = symbolTable.get(token);
             if(temp != null){
-                parsedCondition.add(temp.getValue().toString());
+                parsedCondition.add("" + temp.getValue());
                 continue;
             }
             parsedCondition.add(token);
