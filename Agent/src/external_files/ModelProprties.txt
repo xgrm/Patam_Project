@@ -1,0 +1,44 @@
+serverPort,5401
+fgIp,127.0.0.1
+fgPort,5402
+aileron,set /controls/flight/aileron[0]
+elevator,set /controls/flight/elevator
+rudder,set /controls/flight/rudder
+flaps,set /controls/flight/flaps
+slats,set /controls/flight/slats
+speedbrake,set /controls/flight/speedbrake
+throttle,set /controls/engines/current-engine/throttle
+engine-pump0,set /controls/hydraulic/system[0]/engine-pump
+engine-pump1,set /controls/hydraulic/system[1]/engine-pump
+electric-pump0,set /controls/hydraulic/system[0]/electric-pump
+electric-pump1,set /controls/hydraulic/system[1]/electric-pump
+external-power,set /controls/electric/external-power
+APU-generator,set /controls/electric/APU-generator
+latitude-deg,set /position/latitude-deg
+longitude-deg,set /position/longitude-deg
+altitude-ft,set /position/altitude-ft
+roll-deg,set /orientation/roll-deg
+pitch-deg,set /orientation/pitch-deg
+heading-deg,set /orientation/heading-deg
+side-slip-deg,set /orientation/side-slip-deg
+airspeed-kt,set /velocities/airspeed-kt
+glideslope,set /velocities/glideslope
+vertical-speed-fps,set /velocities/vertical-speed-fps
+airspeed-indicator_indicated-speed-kt,set /instrumentation/airspeed-indicator/indicated-speed-kt
+altimeter_indicated-altitude-ft,set /instrumentation/altimeter/indicated-altitude-ft
+altimeter_pressure-alt-ft,set /instrumentation/altimeter/pressure-alt-ft
+attitude-indicator_indicated-pitch-deg,set /instrumentation/attitude-indicator/indicated-pitch-deg
+attitude-indicator_indicated-roll-deg,set /instrumentation/attitude-indicator/indicated-roll-deg
+attitude-indicator_internal-pitch-deg,set /instrumentation/attitude-indicator/internal-pitch-deg
+attitude-indicator_internal-roll-deg,set /instrumentation/attitude-indicator/internal-roll-deg
+encoder_indicated-altitude-ft,set /instrumentation/encoder/indicated-altitude-ft
+encoder_pressure-alt-ft,set /instrumentation/encoder/pressure-alt-ft
+gps_indicated-altitude-ft,set /instrumentation/gps/indicated-altitude-ft
+gps_indicated-ground-speed-kt,set /instrumentation/gps/indicated-ground-speed-kt
+gps_indicated-vertical-speed,set /instrumentation/gps/indicated-vertical-speed
+indicated-heading-deg,set /instrumentation/heading-indicator/indicated-heading-deg
+magnetic-compass_indicated-heading-deg,set /instrumentation/magnetic-compass/indicated-heading-deg
+slip-skid-ball_indicated-slip-skid,set /instrumentation/slip-skid-ball/indicated-slip-skid
+turn-indicator_indicated-turn-rate,set /instrumentation/turn-indicator/indicated-turn-rate
+vertical-speed-indicator_indicated-speed-fpm,set /instrumentation/vertical-speed-indicator/indicated-speed-fpm
+engine_rpm,set /engines/engine/rpm
