@@ -29,7 +29,6 @@ public class Commands{
         this.commandsMap.put("removeAgent",new removeAgentCommand());
         this.commandsMap.put("getKpi",new getKPICommand());
 
-
     }
 
     public void executeCommand(String command){
