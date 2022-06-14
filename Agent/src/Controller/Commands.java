@@ -1,26 +1,29 @@
 package Controller;
 
-import Model.Model;
+import Model.*;
 
 import java.util.HashMap;
 
+// this class  handles all the commands for the agent.
 public class Commands {
-    Model model;
+    AgentModel model;
     HashMap<String,Command> commandMap;
-    public Commands(Model model) {
+    public Commands(AgentModel model) {
         this.model = model;
         this.commandMap = new HashMap<>();
         this.commandMap.put("Aileron",new AileronCommand());
         this.commandMap.put("Elevator",new ElevatorCommand());
         this.commandMap.put("Rudder",new RudderCommand());
         this.commandMap.put("Throttle",new ThrottleCommand());
+        this.commandMap.put("Interpreter",new InterpreterCommand());
+
     }
 
     public void executeCommand(String command){
-        String[] tokens = command.split(" ");
+        String[] tokens = command.split("~");
         if(tokens.length != 2)
             return;
-        this.commandMap.get(tokens[0]).execute(Float.parseFloat(tokens[1]));
+        this.commandMap.get(tokens[0]).execute(tokens[1]);
     }
     public abstract class Command {
         protected String description;
@@ -29,7 +32,7 @@ public class Commands {
             this.description = description;
         }
 
-        public abstract void execute(float value);
+        public abstract void execute(String value);
     }
 
     public class AileronCommand extends Command {
@@ -39,8 +42,8 @@ public class Commands {
         }
 
         @Override
-        public void execute(float value) {
-            model.setAileron(value);
+        public void execute(String value) {
+            model.setAileron(Float.parseFloat(value));
         }
     }
     public class ElevatorCommand extends Command {
@@ -50,8 +53,8 @@ public class Commands {
         }
 
         @Override
-        public void execute(float value) {
-            model.setElevator(value);
+        public void execute(String value) {
+            model.setElevator(Float.parseFloat(value));
         }
     }
     public class RudderCommand extends Command {
@@ -61,8 +64,8 @@ public class Commands {
         }
 
         @Override
-        public void execute(float value) {
-            model.setRudder(value);
+        public void execute(String value) {
+            model.setRudder(Float.parseFloat(value));
         }
     }
     public class ThrottleCommand extends Command {
@@ -72,8 +75,19 @@ public class Commands {
         }
 
         @Override
-        public void execute(float value) {
-            model.setThrottle(value);
+        public void execute(String value) {
+            model.setThrottle(Float.parseFloat(value));
+        }
+    }
+    public class InterpreterCommand extends Command {
+
+        public InterpreterCommand() {
+            super("Start Interpreter");
+        }
+
+        @Override
+        public void execute(String value) {
+            model.startInterpreter(value);
         }
     }
 }

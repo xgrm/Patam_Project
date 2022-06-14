@@ -48,4 +48,7 @@ public class TimeSeries {
             throw new RuntimeException(e);
         }
     }
+    public ArrayList<Float> getProp(String propName){
+        return map.get(propName);
+    }
 }

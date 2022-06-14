@@ -1,6 +1,7 @@
 package Model;
 
 import IO.*;
+import Model.Interpreter.Interpreter;
 import Server.ClientHandler;
 import Server.Server;
 import TimeSeries.TimeSeries;
@@ -11,10 +12,12 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class AgentModel extends Observable implements Model, ClientHandler {
+public class AgentModel extends Observable implements Model {
     String[] symbols;
-    HashMap<String,Float> symbolMap;
+    ConcurrentHashMap<String,Float> symbolMap;
+
     HashMap<String,String> properties;
     TimeSeries timeSeries;
     IO outToFG;
@@ -24,7 +27,7 @@ public class AgentModel extends Observable implements Model, ClientHandler {
 
     public AgentModel(String propPath,String symbolPath) {
         stop = false;
-        this.symbolMap = new HashMap<>();
+        this.symbolMap = new ConcurrentHashMap<>();
         this.properties = new HashMap<>();
         this.createMapsFromFiles(propPath,symbolPath);
         timeSeries = new TimeSeries(symbols);
@@ -52,7 +55,15 @@ public class AgentModel extends Observable implements Model, ClientHandler {
     public void setThrottle(double x) {
         outToFG.write(properties.get("throttle")+" "+x);
     }
-
+    public void startInterpreter(String code){
+        Interpreter interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
+        new Thread(()->{
+            interpreter.run(code);
+        }).start();
+    }
+    public void sendToFG(String path, Float value) {
+        outToFG.write("set "+path+" "+value.toString());
+    }
     @Override
     public TimeSeries getTimeSeries() {
         return timeSeries;
@@ -121,7 +132,8 @@ public class AgentModel extends Observable implements Model, ClientHandler {
         try {
             FlightGear.close();
         } catch (IOException e) {throw new RuntimeException(e);}
-        timeSeries.exportCSV("FlightData.csv");
+        timeSeries.exportCSV("src/external_files/FlightData.csv");
+        System.out.println("closed");
     }
     @Override
     public void finalize(){
