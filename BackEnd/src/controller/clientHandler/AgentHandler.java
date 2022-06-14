@@ -29,8 +29,10 @@ public class AgentHandler{
         this.io.write(command);
     }
     public void inFromAgent() {
+        String[] tokens;
         while (io.hasNext()){
-            ac.execute("addRow~"+id+" "+io.readLine());
+            tokens = io.readLine().split("~");
+            ac.execute(tokens[0]+"~"+id+" "+tokens[1]);
         }
         io.close();
         try {

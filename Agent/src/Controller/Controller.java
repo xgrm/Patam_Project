@@ -96,9 +96,9 @@ public class Controller implements Observer {
         statistics.put("sumInMiles"
                 ,Statistics.sumDistanceInMiles(ts.getProp(properties.get("longitude")),
                         ts.getProp(properties.get("latitude"))));
-
+        System.out.println(statistics.get("sumInMiles"));
         if (!this.standAlone) {
-            BackEndIO.write("sumMiles~"+statistics.get("sumInMiles"));
+            BackEndIO.write("updateFlight~"+"no "+statistics.get("sumInMiles"));
             BackEndIO.close();
             try {
                 backEnd.close();

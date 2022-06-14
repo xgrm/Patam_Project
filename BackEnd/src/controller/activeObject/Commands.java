@@ -22,13 +22,12 @@ public class Commands{
         this.commandsMap = new ConcurrentHashMap<>();
         this.commandsMap.put("exp",new expCommand());
         this.commandsMap.put("addRow",new addRowCommand());
-        this.commandsMap.put("addFlight",new addFlightCommand());
         this.commandsMap.put("getFlight",new getFlightCommand());
         this.commandsMap.put("setCommand",new setCommand());
         this.commandsMap.put("activeAgents",new activeAgentsCommand());
         this.commandsMap.put("removeAgent",new removeAgentCommand());
         this.commandsMap.put("getKpi",new getKPICommand());
-
+        this.commandsMap.put("updateFlight",new updateFlightCommand());
 
     }
 
@@ -60,12 +59,6 @@ public class Commands{
             model.insertRow(Integer.parseInt(tokens[0]),tokens[1]);
         }
     }
-    private class addFlightCommand extends Command{ // command is: "flightName"
-        @Override
-        public void execute(String command) {
-            id = model.addFlight(command);
-        }
-    }
     private class getFlightCommand extends Command{ // command is: "id"
         @Override
         public void execute(String command) {
@@ -77,7 +70,7 @@ public class Commands{
         @Override
         public void execute(String command) {
             String[] tokens = command.split(" ");
-            agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+" "+tokens[2]);
+            agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+"~"+tokens[2]);
         }
     }
     private class activeAgentsCommand extends Command{
@@ -100,6 +93,14 @@ public class Commands{
         public void execute(String command) {
             int id = Integer.parseInt(command);
             agents.remove(id,agents.get(id));
+        }
+
+    }
+    private class updateFlightCommand extends Command{
+        @Override
+        public void execute(String command) {
+            String[] tokens = command.split(" ");
+            model.updateFlight(Integer.parseInt(tokens[0]),tokens[1],Float.parseFloat(tokens[2]));
         }
 
     }

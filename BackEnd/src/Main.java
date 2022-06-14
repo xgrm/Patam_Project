@@ -1,5 +1,6 @@
 import controller.Controller;
 import model.BackendModel;
+import model.db.DBQueries;
 
 
 public class Main {
@@ -9,7 +10,22 @@ public class Main {
         BackendModel model = new BackendModel("dbDetails.txt");
         Controller cn = new Controller(model);
 
+        new Thread(()->{
+            try {
+                Thread.sleep(1000*60*10);
+                cn.close();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
 
+
+
+//        DBQueries db = new DBQueries("dbDetails.txt");
+//        db.createTable_2();
+        //db.createFlightDataTable();
+//        db.addFlight2("saarAirCRAFT","YES",-1F);
+//        db.updateFlight2(1,"NO",100F);
 
 //        new Thread(()->{
 //            Thread.currentThread().setName("Front Thread");

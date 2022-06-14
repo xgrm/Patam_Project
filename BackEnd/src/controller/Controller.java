@@ -28,7 +28,7 @@ public class Controller implements Observer, ClientHandler {
         this.agents = new ConcurrentHashMap<>();
         this.ac = new ActiveObject(5,model,this.agents);
         server = new Server();
-        server.start(5500,this);
+        server.start(5500,this);    //TODO: FRON PROP FILE
         endTime = System.nanoTime();
         System.out.println("The total time in nano: "+(endTime-startTime));
     }
@@ -54,7 +54,7 @@ public class Controller implements Observer, ClientHandler {
             String[] tokens = in.readLine().split("~");
             int id;
             if(tokens[0].equals("agent")){ //agent~TLV-TLV
-                id = model.addFlight(tokens[1]);
+                id = model.addFlight(tokens[1],"yes",-1f);
                 AgentHandler ag = new AgentHandler(client,id,this.ac);
                 this.agents.put(id,ag);
             }
