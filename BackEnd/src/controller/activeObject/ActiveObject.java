@@ -24,7 +24,6 @@ public class ActiveObject {
     public void addToThreadPool(Runnable r){
         threadPool.execute(r);
     }
-
     public void close(){
         threadPool.shutdown();
     }

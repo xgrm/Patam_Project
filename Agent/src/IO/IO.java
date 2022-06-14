@@ -1,5 +1,5 @@
 package IO;
-
+// this class handles the io operations .
 public interface IO {
     public String readLine();
     public void write(String text);

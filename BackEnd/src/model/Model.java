@@ -6,6 +6,5 @@ public interface Model {
     public String getFlightById(int id);
     public void deleteFlightById(int id);
     public String getKPI();
-    public void runInterpreter(String code);
     public void close();
 }

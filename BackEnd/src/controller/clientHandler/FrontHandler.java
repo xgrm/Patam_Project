@@ -17,8 +17,8 @@ public class FrontHandler {
             this.io = new SocketIO(front.getInputStream(),front.getOutputStream());
             ac.commands.setFrontHandler(this);
             ac.addToThreadPool(()->{
-                        outToFront("ok");
-                        inFromFront();
+                        outToFront("ok");  // sending to front that the connection is ok and the back can receive data from him.
+                        inFromFront(); // start getting data from front in a different thread
                     });
 
         } catch (IOException e) {throw new RuntimeException(e);}

@@ -21,7 +21,6 @@ public class Controller implements Observer {
     boolean standAlone;
 
 
-
     public Controller(AgentModel model, String propertiesPath, boolean standAlone) {
         this.standAlone = standAlone;
         this.model = model;
@@ -32,9 +31,9 @@ public class Controller implements Observer {
         createPropMap(propertiesPath);
         if(!standAlone) {
             try {
-                this.backEnd = new Socket(properties.get("backEndIP"), Integer.parseInt(properties.get("backEndPort")));
+                this.backEnd = new Socket(properties.get("backEndIP"), Integer.parseInt(properties.get("backEndPort"))); //connect to backend
                 BackEndIO = new SocketIO(backEnd.getInputStream(), backEnd.getOutputStream());
-                connectToBackEnd();
+                connectToBackEnd(); //handle the connection protocol to the back
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -42,7 +41,7 @@ public class Controller implements Observer {
 
     }
     public Controller(AgentModel model, String propertiesPath){
-        this(model,propertiesPath,false);
+        this(model,propertiesPath,false); // run the agent in standAlone
     }
     private void createPropMap(String propertiesPath){
         try {
@@ -62,24 +61,23 @@ public class Controller implements Observer {
         }
     }
     private void connectToBackEnd(){
-        BackEndIO.write("agent~"+this.properties.get("aircraftName"));
+        BackEndIO.write("agent~"+this.properties.get("aircraftName")); //sending to back the aircraftName
         if(BackEndIO.readLine().equals("ok"))
-            new Thread(()->inFromBack()).start();
+            new Thread(()->inFromBack()).start(); // starting to get data from backend in a different thread
     }
     private void inFromBack(){
         String line;
         while (BackEndIO.hasNext()){
             line = BackEndIO.readLine();
-            System.out.println(line);
-            this.exe(line);
+            this.exe(line); // execute the command from back
         }
     }
     @Override
     public void update(Observable o, Object arg) {
-        if(o.equals(model)){
+        if(o.equals(model)){ //getting data from the model
             String line = (String) arg;
             if(!this.standAlone)
-                BackEndIO.write("addRow~"+line);
+                BackEndIO.write("addRow~"+line); // sending the data to back
            else System.out.println(line);
         }
 
@@ -95,11 +93,10 @@ public class Controller implements Observer {
         model.closeModel();
         statistics.put("sumInMiles"
                 ,Statistics.sumDistanceInMiles(ts.getProp(properties.get("longitude")),
-                        ts.getProp(properties.get("latitude"))));
-        System.out.println(statistics.get("sumInMiles"));
+                        ts.getProp(properties.get("latitude")))); // clac the sum miles with the sumDistanceInMiles() method from the Statistics calss and adding it into the StatisticsMap
         if (!this.standAlone) {
-            BackEndIO.write("updateFlight~"+"no "+statistics.get("sumInMiles"));
-            BackEndIO.close();
+            BackEndIO.write("updateFlight~"+"no "+statistics.get("sumInMiles")); // sending to back the sum in miles
+            BackEndIO.close(); // closing the io for back
             try {
                 backEnd.close();
             } catch (IOException e) {throw new RuntimeException(e);}
