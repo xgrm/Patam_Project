@@ -5,10 +5,10 @@ import java.util.HashMap;
 import Model.Interpreter.Utils.SharedMemory;
 
 public class CommandFactory {
-
     private HashMap<String,Command> cmds;
 
     public CommandFactory(SharedMemory sm){
+        sm.setCommandFactory(this);
         this.cmds = new HashMap<>();
         cmds.put("=",new AssignCommand(sm));
         cmds.put("bind",new BindCommand(sm));
