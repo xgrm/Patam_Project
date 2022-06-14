@@ -1,15 +1,15 @@
 package Model.Interpreter.Commands;
 
-import Model.Interpreter.ShuntingYardAlgorithm;
-import Model.Interpreter.Variable;
+import Model.Interpreter.Utils.SharedMemory;
+import Model.Interpreter.Utils.ShuntingYardAlgorithm;
+import Model.Interpreter.Utils.Variable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PrintCommand extends Command {
-    HashMap<String,Variable> symbolTable;
+    SharedMemory sm;
 
-    public PrintCommand(HashMap<String, Variable> symbolTable) {
-        this.symbolTable = symbolTable;
+    public PrintCommand(SharedMemory sm) {
+        this.sm = sm;
     }
 
     // calcs value in case its an expression
@@ -22,7 +22,7 @@ public class PrintCommand extends Command {
             token =args.get(i);
             if(token.equals("\n"))
                 break;
-            tempVar = symbolTable.get(token);
+            tempVar = sm.getSymTable().get(token);
             if(tempVar != null){
                 token = "" + tempVar.getValue();
                 tempVar = null;
