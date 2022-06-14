@@ -62,7 +62,7 @@ public class AgentModel extends Observable implements Model {
         }).start();
     }
     public void sendToFG(String path, Float value) {
-        outToFG.write(path+" "+value.toString());
+        outToFG.write("set "+path+" "+value.toString());
     }
     @Override
     public TimeSeries getTimeSeries() {

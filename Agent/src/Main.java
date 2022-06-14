@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         AgentModel model = new AgentModel("src/external_files/ModelProprties.txt", "src/external_files/Symbols.txt");
-        Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt");
+       //Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt");
+        Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt",true);
 
     new Thread(()->{
         try {
@@ -17,7 +18,8 @@ public class Main {
             while (scanner.hasNext()){
                 sb.append(scanner.nextLine()+" \n");
             }
-            Thread.sleep(1000*30);
+            Thread.sleep(1000);
+            System.out.println("after sleep");
             model.startInterpreter(sb.toString());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
