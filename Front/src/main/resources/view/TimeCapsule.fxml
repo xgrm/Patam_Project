@@ -4,7 +4,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="770.0" prefWidth="1200.0"
+          xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="view.TimeCapsuleController">
     <children>
         <HBox prefHeight="634.0" prefWidth="733.0">
             <children>
@@ -27,8 +30,8 @@
                 <Pane prefHeight="634.0" prefWidth="0.0">
                     <children>
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="154.0" prefWidth="200.0">
-                            <fx:include fx:id="clockBoardTC" layoutX="-170.0" layoutY="100.0" source="ClockBoard.fxml" />
-                          <fx:include fx:id="staticJoystick" layoutX="100.0" layoutY="20.0" source="Joystick.fxml" />
+                             <fx:include fx:id="clockBoardTC" layoutX="-170.0" layoutY="100.0" source="ClockBoard.fxml" />
+                             <fx:include fx:id="staticJoystick" layoutX="100.0" layoutY="20.0" source="Joystick.fxml" />
                         </Pane>
                     </children>
                 </Pane>

@@ -3,7 +3,10 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.20814732142857145" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MonitoringController">
+<SplitPane dividerPositions="0.20814732142857145" maxHeight="-Infinity"
+           maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MonitoringController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="200.0">
             <fx:include fx:id="listF" source="FeatureList.fxml" />
@@ -30,7 +33,7 @@
                                                 </SplitPane>
                                             </children></AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="500.0">
-                                            <fx:include fx:id="regChart" source="Charts/RegChart.fxml" />
+                                            <fx:include fx:id="scatterc" source="Charts/RegChart.fxml" />
                                         </AnchorPane>
                                     </items>
                                 </SplitPane>

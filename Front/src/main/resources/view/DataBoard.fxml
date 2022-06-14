@@ -44,7 +44,7 @@
                 </AnchorPane>
             </items>
         </SplitPane>
-        <Button fx:id="refreshBut" layoutX="174.0" layoutY="584.0" mnemonicParsing="false" text="refresh">
+        <Button fx:id="refreshBut" layoutX="174.0" layoutY="584.0" mnemonicParsing="false" onAction="#refresh" text="refresh">
          <font>
             <Font name="Tahoma Bold" size="14.0" />
          </font></Button>
