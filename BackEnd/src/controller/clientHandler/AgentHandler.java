@@ -32,7 +32,7 @@ public class AgentHandler{
         String[] tokens;
         while (io.hasNext()){
             tokens = io.readLine().split("~");
-            ac.execute(tokens[0]+"~"+id+" no "+tokens[1]);
+            ac.execute(tokens[0]+"~"+id+" "+tokens[1]);
         }
         io.close();
         try {
