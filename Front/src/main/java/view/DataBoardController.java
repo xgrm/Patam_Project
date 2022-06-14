@@ -50,7 +50,6 @@ public class DataBoardController extends BaseController{
 
     public void enterPieChart(String data){
         String[] str=data.split(" ");
-        System.out.println("enter pie chart");
         ObservableList<PieChart.Data> pieChartData=FXCollections.observableArrayList(
                 new PieChart.Data("active", Double.parseDouble(str[0])),
                 new PieChart.Data("not active", Double.parseDouble(str[1])));
@@ -61,7 +60,6 @@ public class DataBoardController extends BaseController{
     public void enterLineChart(String data){
         XYChart.Series setLineChart=new XYChart.Series<>();
         String[] str=data.split(" ");
-        System.out.println("enter line chart");
         int i=0;
         for(String s:str){
             setLineChart.getData().add(new XYChart.Data<>(month[i],Double.parseDouble(str[i])));
@@ -72,7 +70,6 @@ public class DataBoardController extends BaseController{
 
     public void enterBarNauticalMiles(String data){
         String[] str=data.split(" ");
-        System.out.println("enter Bar chart");
         XYChart.Series setL=new XYChart.Series<>();
         for(int i=0; i< str.length; i+=2){
             setL.getData().add(new XYChart.Data<>(str[i],Double.parseDouble((str[i+1]))));
@@ -82,7 +79,6 @@ public class DataBoardController extends BaseController{
 
     public void enterBarNauticalMilesAvg(String data){
         String[] str=data.split(" ");
-        System.out.println("enter Bar chart");
         XYChart.Series setL=new XYChart.Series<>();
         for(int i=0; i < str.length; i++){
             setL.getData().add(new XYChart.Data<>(month[i],Double.parseDouble((str[i]))));

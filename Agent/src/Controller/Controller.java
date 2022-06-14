@@ -70,6 +70,7 @@ public class Controller implements Observer {
         while (BackEndIO.hasNext()){
             line = BackEndIO.readLine();
             this.exe(line); // execute the command from back
+            System.out.println(line);
         }
     }
     @Override

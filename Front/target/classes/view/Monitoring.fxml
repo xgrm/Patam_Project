@@ -5,8 +5,7 @@
 
 <SplitPane dividerPositions="0.20814732142857145" maxHeight="-Infinity"
            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MonitoringController">
+           prefHeight="770.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.MonitoringController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="200.0">
             <fx:include fx:id="listF" source="FeatureList.fxml" />

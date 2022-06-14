@@ -27,6 +27,7 @@ public class Commands{
         this.commandsMap.put("removeAgent",new removeAgentCommand());
         this.commandsMap.put("getKpi",new getKPICommand());
         this.commandsMap.put("updateFlight",new updateFlightCommand());
+        this.commandsMap.put("getData",new getDataCommand());
     }
 
     public void executeCommand(String command){
@@ -48,11 +49,19 @@ public class Commands{
             System.out.println(command);
         }
     }
+    private class getDataCommand extends Command{ //
+
+        @Override
+        public void execute(String command) {//id
+            frontHandler.outToFront("agentData~"+agents.get(Integer.parseInt(command)).getValues());
+        }
+    }
     private class addRowCommand extends Command{ // command is: "1 ....flightData..."
         @Override
         public void execute(String command) {
             String[] tokens = command.split(" ");
             model.insertRow(Integer.parseInt(tokens[0]),tokens[1]);
+            agents.get(Integer.parseInt(tokens[0])).setValues(tokens[1]);
         }
     }
     private class getFlightCommand extends Command{ // command is: "id"
@@ -66,6 +75,7 @@ public class Commands{
         public void execute(String command) {
             String[] tokens = command.split(" ");
             agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+"~"+tokens[2]);
+            System.out.println(tokens[1]+"~"+tokens[2]);
         }
     }
     private class activeAgentsCommand extends Command{

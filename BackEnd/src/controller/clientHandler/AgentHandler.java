@@ -10,8 +10,17 @@ public class AgentHandler{
     SocketIO io;
     public int id;
     ActiveObject ac;
+    String values;
 
-    public AgentHandler(Socket agent,int id, ActiveObject ac) {
+    public String getValues() {
+        return values;
+    }
+
+    public void setValues(String values) {
+        this.values = values;
+    }
+
+    public AgentHandler(Socket agent, int id, ActiveObject ac) {
         try {
             this.id = id;
             this.ac =ac;

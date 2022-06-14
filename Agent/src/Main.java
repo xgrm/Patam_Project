@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         AgentModel model = new AgentModel("src/external_files/ModelProprties.txt", "src/external_files/Symbols.txt");
-       //Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt");
-        Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt",true);
+       Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt");
+        //Controller cn = new Controller(model, "src/external_files/ControllerProprties.txt",true);
 
     new Thread(()->{
         try {
@@ -29,7 +29,7 @@ public class Main {
     }).start();
     new Thread(()->{
         try {
-            Thread.sleep(1000*60*3);
+            Thread.sleep(1000*60*30);
             cn.close();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

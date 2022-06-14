@@ -48,7 +48,6 @@ public class TimeCapsuleController extends BaseController{
     public void enterLineChartChange(String data){
         XYChart.Series setLineChart=new XYChart.Series<>();
         String[] str=data.split(" ");
-        System.out.println("enter line chart");
         int i=0;
         for(String s:str){
             setLineChart.getData().add(new XYChart.Data<>("7",Double.parseDouble(str[i])));
@@ -59,7 +58,6 @@ public class TimeCapsuleController extends BaseController{
     public void enterLineChartCorrelation(String data){
         XYChart.Series setLineChart=new XYChart.Series<>();
         String[] str=data.split(" ");
-        System.out.println("enter line chart");
         int i=0;
         for(String s:str){
             setLineChart.getData().add(new XYChart.Data<>("7",Double.parseDouble(str[i])));
@@ -70,7 +68,6 @@ public class TimeCapsuleController extends BaseController{
 
     public void enterRegChart(String data) {
         String[] str=data.split(" ");
-        System.out.println("enter to reg chart");
         XYChart.Series series=new XYChart.Series();
         for(int i=0; i< str.length; i+=2){
             series.getData().add(new XYChart.Data(str[i],Double.parseDouble((str[i+1]))));

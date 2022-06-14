@@ -90,12 +90,10 @@ public class WorldMapController extends BaseController {
                 }
         }
         public void drawMap(Double height, Double width){
-                System.out.println("draw map");
                 this.canvasGc.drawImage(this.map,0,0,height, width);
         }
 
         public void drawAirplane( Double height, Double width) {
-                System.out.println("draw airplane");
                 this.drawMap(height, width);
                 if (planeMap.isEmpty()) {
                         System.out.println("no airplanes");
