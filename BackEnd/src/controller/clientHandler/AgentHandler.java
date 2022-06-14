@@ -18,8 +18,8 @@ public class AgentHandler{
             this.agent = agent;
             this.io = new SocketIO(agent.getInputStream(),agent.getOutputStream());
             ac.addToThreadPool(()->{
-                outToAgent("ok");
-                inFromAgent();
+                outToAgent("ok"); // sending to agent that the connection is ok and the back can receive data from him.
+                inFromAgent();  // start getting data from agent in a different thread
             });
 
         } catch (IOException e) {throw new RuntimeException(e);}
@@ -37,7 +37,7 @@ public class AgentHandler{
         io.close();
         try {
             agent.close();
-            ac.execute("removeAgent~"+id);
+            ac.execute("removeAgent~"+id); // removing agent from agent map.
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
