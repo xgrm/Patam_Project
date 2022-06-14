@@ -22,41 +22,30 @@ public class Controller implements Observer, ClientHandler {
     ConcurrentHashMap<Integer, AgentHandler> agents;
     Server server;
     public Controller(BackendModel model) {
-        long startTime,endTime;
-        startTime = System.nanoTime();
         this.model = model;
         this.agents = new ConcurrentHashMap<>();
         this.ac = new ActiveObject(5,model,this.agents);
         server = new Server();
-        server.start(5500,this);    //TODO: FRON PROP FILE
-        endTime = System.nanoTime();
-        System.out.println("The total time in nano: "+(endTime-startTime));
+        server.start(5500,this);    //TODO: FROm PROP FILE
     }
 
-
-
-    public void testCommands(String commnad){
-        ac.execute(commnad);
-    }
     @Override
     public void update(Observable o, Object arg) {
 
     }
-
     @Override
     public void handel(Socket client) {
-        ac.addToThreadPool(()->addNewClient(client));
+        ac.addToThreadPool(()->addNewClient(client)); // adding a task to add new client into the activeObject
     }
-
     public void addNewClient(Socket client){
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String[] tokens = in.readLine().split("~");
+            String[] tokens = in.readLine().split("~");  // getting the command from the clinet
             int id;
-            if(tokens[0].equals("agent")){ //agent~TLV-TLV
-                id = model.addFlight(tokens[1],"yes",-1f);
-                AgentHandler ag = new AgentHandler(client,id,this.ac);
-                this.agents.put(id,ag);
+            if(tokens[0].equals("agent")){ // ex for command: "agent~Name"
+                id = model.addFlight(tokens[1],"yes",-1f);  // addind a new flight to db and gets the flight id
+                AgentHandler ag = new AgentHandler(client,id,this.ac); // creating a new agent handler with the flight id
+                this.agents.put(id,ag); // adding the agent into the agent map.
             }
             else{
                 new FrontHandler(client,ac);
@@ -65,12 +54,10 @@ public class Controller implements Observer, ClientHandler {
             throw new RuntimeException(e);
         }
     }
-
     public void close(){
         ac.close();
         server.stop();
     }
-
     @Override
    public void finalize() {
         this.close();

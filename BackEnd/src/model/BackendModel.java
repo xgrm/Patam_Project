@@ -1,17 +1,14 @@
 package model;
 
 import model.db.DBQueries;
-import model.interpreter.Interpreter;
 
 import java.util.Observable;
 
+
 public class BackendModel extends Observable implements Model {
     DBQueries db;
-    Interpreter interpreter;
-
     public BackendModel(String DBdetailPath) {
         this.db = new DBQueries(DBdetailPath);
-        this.interpreter = new Interpreter();
     }
 
     @Override
@@ -40,11 +37,6 @@ public class BackendModel extends Observable implements Model {
     @Override
     public String getKPI() { //TODO: need to implement
         return db.getKPI();
-    }
-
-    @Override
-    public void runInterpreter(String code) {
-        interpreter.run(code);
     }
 
     @Override

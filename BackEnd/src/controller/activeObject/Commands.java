@@ -11,7 +11,6 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Commands{
-    int id;
     ConcurrentHashMap<String,Command> commandsMap;
     ConcurrentHashMap<Integer, AgentHandler> agents;
     FrontHandler frontHandler;
@@ -28,18 +27,15 @@ public class Commands{
         this.commandsMap.put("removeAgent",new removeAgentCommand());
         this.commandsMap.put("getKpi",new getKPICommand());
         this.commandsMap.put("updateFlight",new updateFlightCommand());
-
     }
 
     public void executeCommand(String command){
         String[] regx = command.split("~");
         this.commandsMap.get(regx[0]).execute(regx[1]);
     }
-
     public void setFrontHandler(FrontHandler fh) {
         this.frontHandler = fh;
     }
-
     private abstract class Command {
         public Command() {}
         public abstract void execute(String command);
@@ -63,7 +59,6 @@ public class Commands{
         @Override
         public void execute(String command) {
         System.out.println(model.getFlightById(Integer.parseInt(command)));
-
         }
     }
     private class setCommand extends Command{ // command is: "id alieron 1"
@@ -104,7 +99,6 @@ public class Commands{
         }
 
     }
-
     private class getKPICommand extends Command{
         @Override
         public void execute(String command) {

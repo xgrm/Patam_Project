@@ -17,17 +17,13 @@ public class Server {
     }
 
     private void startServer(int port, ClientHandler ch) {
-        long startTime,endTime;
         try {
             this.server = new ServerSocket(port);
             this.server.setSoTimeout(1000);
             while (!stop){
                 try {
                     Socket client = server.accept();
-                    startTime = System.nanoTime();
-                    ch.handel(client);
-                    endTime = System.nanoTime();
-                    System.out.println("The total time in nano: "+(endTime-startTime));
+                    ch.handel(client); // handel the client in a different thread(the controller is the handler)
                 }
                 catch (SocketTimeoutException r){}
             }
@@ -37,7 +33,7 @@ public class Server {
             e.printStackTrace();
         }
     }
-    public void start(int port,ClientHandler ch){
+    public void start(int port,ClientHandler ch){ //run the server in a different thread
         if(stop){
             this.stop = false;
             this.mainThread = new Thread(()->startServer(port,ch));

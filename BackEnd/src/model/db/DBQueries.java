@@ -13,7 +13,6 @@ public class DBQueries {
     public String getFlight_data_cols() {
         return flight_data_cols;
     }
-
     public DBQueries(String detailPath) {
         try {
             Scanner scanner = new Scanner(new File(detailPath));
@@ -50,7 +49,7 @@ public class DBQueries {
         Statement statement;
         String table = "";
         try {
-            Scanner prop = new Scanner(new File("Symbols.txt"));
+            Scanner prop = new Scanner(new File("src/model/db/SymbolsForColums.data"));
             StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS flight_data(id SERIAL NOT NULL PRIMARY KEY,flight_id int,FOREIGN KEY (flight_id) REFERENCES flights(flight_id),");
             while (prop.hasNext()) {
                 sb.append(prop.nextLine() + " float,");
@@ -107,7 +106,6 @@ public class DBQueries {
             e.printStackTrace();
         }
     }
-
     public String getFlightById(int id) {
         Statement statement;
         ResultSet rs = null;
@@ -132,7 +130,6 @@ public class DBQueries {
         }
         return table.toString();
     }
-
     public void deleteFlightById(int id) {
         Statement statement;
         try {
@@ -172,5 +169,4 @@ public class DBQueries {
             throw new RuntimeException(e);
         }
     }
-
 }

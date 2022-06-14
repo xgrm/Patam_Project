@@ -4,6 +4,7 @@ import Model.*;
 
 import java.util.HashMap;
 
+// this class  handles all the commands for the agent.
 public class Commands {
     AgentModel model;
     HashMap<String,Command> commandMap;
