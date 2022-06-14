@@ -4,7 +4,6 @@ import model.db.DBQueries;
 
 
 public class Main {
-    static volatile boolean stop = false;
     public static void main(String[] args) {
 
         BackendModel model = new BackendModel("dbDetails.txt");

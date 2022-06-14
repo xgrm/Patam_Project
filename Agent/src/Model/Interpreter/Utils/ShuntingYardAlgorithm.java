@@ -1,4 +1,4 @@
-package Model.Interpreter;
+package Model.Interpreter.Utils;
 
 import Model.Interpreter.Expressions.*;
 import Model.Interpreter.Expressions.Number;

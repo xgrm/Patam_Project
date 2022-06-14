@@ -1,28 +1,23 @@
 package Model.Interpreter.Commands;
 
-
-
-import Model.Interpreter.Variable;
-import Model.AgentModel;
-
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
+import Model.Interpreter.Utils.SharedMemory;
 
 public class CommandFactory {
-
     private HashMap<String,Command> cmds;
 
-    public CommandFactory(HashMap<String, Variable> symbolTable, ConcurrentHashMap<String, Variable> bindTable, AgentModel model) {
+    public CommandFactory(SharedMemory sm){
+        sm.setCommandFactory(this);
         this.cmds = new HashMap<>();
-        cmds.put("=",new AssignCommand(symbolTable,model));
-        cmds.put("bind",new BindCommand(symbolTable,bindTable));
-        cmds.put("while",new WhileCommand(this,symbolTable));
+        cmds.put("=",new AssignCommand(sm));
+        cmds.put("bind",new BindCommand(sm));
+        cmds.put("while",new WhileCommand(sm));
         cmds.put("sleep",new SleepCommand());
-        cmds.put("print",new PrintCommand(symbolTable));
+        cmds.put("print",new PrintCommand(sm));
     }
 
-    public  Command getCommnd(String commandName){
+    public Command getCommnd(String commandName){
       return cmds.get(commandName);
     }
 }

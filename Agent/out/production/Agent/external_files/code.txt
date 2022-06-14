@@ -1,5 +1,5 @@
 var brakes = bind "/controls/speedbreak"
-var throttle = bind "/controls/engines/engine/throttle"
+var throttle = bind "/controls/engines/current-engine/throttle"
 var heading = bind "/instrumentation/heading-indicator/offset-deg"
 var airspeed = bind "/instrumentation/airspeed-indicator/indicated-speed-kt"
 var roll = bind "/instrumentation/attitude-indicator/indicated-roll-deg"
