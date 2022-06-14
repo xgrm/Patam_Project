@@ -22,12 +22,12 @@ public class Commands{
         this.commandsMap = new ConcurrentHashMap<>();
         this.commandsMap.put("exp",new expCommand());
         this.commandsMap.put("addRow",new addRowCommand());
-        this.commandsMap.put("addFlight",new addFlightCommand());
         this.commandsMap.put("getFlight",new getFlightCommand());
         this.commandsMap.put("setCommand",new setCommand());
         this.commandsMap.put("activeAgents",new activeAgentsCommand());
         this.commandsMap.put("removeAgent",new removeAgentCommand());
         this.commandsMap.put("getKpi",new getKPICommand());
+        this.commandsMap.put("updateFlight",new updateFlightCommand());
 
     }
 
@@ -57,12 +57,6 @@ public class Commands{
         public void execute(String command) {
             String[] tokens = command.split(" ");
             model.insertRow(Integer.parseInt(tokens[0]),tokens[1]);
-        }
-    }
-    private class addFlightCommand extends Command{ // command is: "flightName"
-        @Override
-        public void execute(String command) {
-            id = model.addFlight(command);
         }
     }
     private class getFlightCommand extends Command{ // command is: "id"
@@ -102,7 +96,7 @@ public class Commands{
         }
 
     }
-    private class updateFlight extends Command{
+    private class updateFlightCommand extends Command{
         @Override
         public void execute(String command) {
             String[] tokens = command.split(" ");
