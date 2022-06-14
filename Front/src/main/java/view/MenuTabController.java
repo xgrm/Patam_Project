@@ -4,7 +4,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import viewModel.ViewModel;
 
 import java.net.URL;
@@ -17,7 +19,11 @@ public class MenuTabController implements Initializable, Observer {
     ViewModel vm;
 
     @FXML
-    Tab FleetOverView_Tab;
+    TabPane menuTab;
+
+    @FXML
+    Tab monitoringTab;
+
 
     public MenuTabController() {}
 
@@ -36,7 +42,18 @@ public class MenuTabController implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println(menuTab);
 
+
+//       menuTab= new TabPane();
+//       menuTab.getTabs().add(monitoringTab);
+//       menuTab.getTabs().add(fleetOverViewTab);
+//        System.out.println(monitoringTab);
+//        monitoringTab.getTabPane().;
+
+    }
+    public void switchToMonitoring(){
+        this.menuTab.getSelectionModel().selectNext();
     }
 
 }

@@ -1,11 +1,15 @@
 package view;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -16,6 +20,7 @@ import javafx.scene.transform.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +30,8 @@ public class WorldMapController extends BaseController {
         Canvas background;
         @FXML
         AnchorPane page;
+
+
 
         GraphicsContext canvasGc;
         Image map;
@@ -73,16 +80,30 @@ public class WorldMapController extends BaseController {
                                 for (AirPlane ap: this.planeMap.values()) {
                                         if(mouseEvent.getX() >= ap.getP().getX()-5 &&mouseEvent.getX() <= ap.getP().getX()+40
                                                 && mouseEvent.getY() >= ap.getP().getY()-5 && mouseEvent.getY() <= ap.getP().getY()+40) {
-                                                found = true;
-                                                lblName.setText(" name: " +ap.getAirplaneName());
-                                                lblDirection.setText(" direction: " + ap.getDir()+"");
-                                                lblHeight.setText(" height: " +ap.getHeight()+"");
-                                                lblSpeed.setText(" speed: " + ap.getSpeed()+"");
-                                                popOver.show(this.background, mouseEvent.getX()+190, mouseEvent.getY()+60);
+                                                if(mouseEvent.getClickCount()==1) {
+                                                        found = true;
+                                                        lblName.setText(" name: " + ap.getAirplaneName());
+                                                        lblDirection.setText(" direction: " + ap.getDir() + "");
+                                                        lblHeight.setText(" height: " + ap.getHeight() + "");
+                                                        lblSpeed.setText(" speed: " + ap.getSpeed() + "");
+                                                        popOver.show(this.background, mouseEvent.getX() + 190, mouseEvent.getY() + 60);
+                                                }
+                                                else
+                                                        if(mouseEvent.getClickCount()==2){
+                                                                System.out.println("2");
+                                                            try {
+                                                                Parent root= FXMLLoader.load(getClass().getResource("MenuTab.fxml"));
+                                                            } catch (IOException e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                        }
                                         }
                                 }
                                 if (!found) popOver.hide();
                         });
+
+
 
 //                        this.background.setOnMouseExited(mouseEvent -> { if (popOver.isShowing()) popOver.hide(Duration.millis(5000)); });
 
@@ -102,10 +123,9 @@ public class WorldMapController extends BaseController {
                         System.out.println("no airplanes");
                 } else {
                         for (AirPlane p : planeMap.values()) {
-                                this.canvasGc.rotate(p.getDir());
-                                this.canvasGc.drawImage(this.airplane, p.getP().getX(), p.getP().getY(), p.imageHeight, p.imageWidth);
-                                this.canvasGc.restore();
-                                this.canvasGc.save();
+
+                            this.canvasGc.drawImage(this.airplane, p.getP().getX(), p.getP().getY(), p.imageHeight, p.imageWidth);
+
                         }
                 }
         }
