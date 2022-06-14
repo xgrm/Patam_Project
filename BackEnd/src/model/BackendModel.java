@@ -15,11 +15,8 @@ public class BackendModel extends Observable implements Model {
     }
 
     @Override
-    public int addFlight(String flight) {
-        return db.addFlight(flight);
-    }
-    public int addFlight2(String flightName,String active,float miles) {
-        return db.addFlight2(flightName,active,miles);
+    public int addFlight(String flightName,String active,float miles) {
+        return db.addFlight(flightName,active,miles);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class BackendModel extends Observable implements Model {
         db.deleteFlightById(id);
     }
     public void updateFlight(int id,String active, float miles) {
-        this.db.updateFlight2(id,active,miles);
+        this.db.updateFlight(id,active,miles);
     }
 
     @Override

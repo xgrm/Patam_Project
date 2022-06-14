@@ -25,6 +25,8 @@ public class DBQueries {
                 System.out.println("Connection is established!");
             else System.out.println("Connection failed!");
             scanner.close();
+//            createFlightsTable();
+//            createFlightDataTable();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -33,9 +35,9 @@ public class DBQueries {
             throw new RuntimeException(e);
         }
     }
-    public void createFlightDataTable() {
+    public void createFlightsTable() {
         Statement statement;
-        String table = new String("CREATE TABLE IF NOT EXISTS flights_2(flight_id SERIAL NOT NULL PRIMARY KEY,aircraft_name varchar(100) ,isActive varchar (100),totalMiles float )");
+        String table = new String("CREATE TABLE IF NOT EXISTS flights(flight_id SERIAL NOT NULL PRIMARY KEY,aircraft_name varchar(100) ,isActive varchar (100),totalMiles float )");
         try {
             statement = this.db_connection.createStatement();
             statement.executeUpdate(table);
@@ -44,7 +46,7 @@ public class DBQueries {
             throw new RuntimeException(ex);
         }
     }
-    private void createTable() {
+    public void createFlightDataTable() {
         Statement statement;
         String table = "";
         try {
@@ -67,12 +69,11 @@ public class DBQueries {
             System.out.println(e);
         }
     }
-
-    public int addFlight(String name) {
+    public int addFlight(String name,String active,float miles) {
         Statement statement;
         int id = 0;
         try {
-            String query = String.format("insert into flights(aircraft_name) values('%s');", name);
+            String query = String.format("insert into flights(aircraft_name, isActive ,totalMiles) values('%s','%s','%f');", name,active,miles);
             statement = this.db_connection.createStatement();
             statement.executeUpdate(query,Statement.RETURN_GENERATED_KEYS);
             ResultSet result = statement.getGeneratedKeys();
@@ -84,56 +85,16 @@ public class DBQueries {
 
         return id;
     }
-    public void createTable_2() {
-        Statement statement;
-        String table = "";
-        try {
-            Scanner prop = new Scanner(new File("Symbols.txt"));
-            StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS flight_data_2(id SERIAL NOT NULL PRIMARY KEY,flight_id int,FOREIGN KEY (flight_id) REFERENCES flights_2(flight_id),");
-            while (prop.hasNext()) {
-                sb.append(prop.nextLine() + " float,");
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            sb.append(")");
-            table = sb.toString();
-            prop.close();
-            statement = this.db_connection.createStatement();
-            statement.executeUpdate(table);
-            System.out.println("Table Created!");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    public int addFlight2(String name,String active,float miles) {
-        Statement statement;
-        int id = 0;
-        try {
-            String query = String.format("insert into flights_2(aircraft_name, isActive ,totalMiles) values('%s','%s','%f');", name,active,miles);
-            statement = this.db_connection.createStatement();
-            statement.executeUpdate(query,Statement.RETURN_GENERATED_KEYS);
-            ResultSet result = statement.getGeneratedKeys();
-            if (result.next())
-                id = (int)result.getObject(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return id;
-    }
-    public void updateFlight2(int id,String active,float miles) {
+    public void updateFlight(int id,String active,float miles) {
         Statement statement;
         try {
-            String query = String.format("update flights_2 set isActive = '%s' ,totalMiles = '%f' where flight_id = %d;",active,miles,id);
+            String query = String.format("update flights set isActive = '%s' ,totalMiles = '%f' where flight_id = %d;",active,miles,id);
             statement = this.db_connection.createStatement();
             statement.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public void insertRow(int id,String data) {
         StringBuilder sb = new StringBuilder("'"+id+"',");
         data = sb.append(data).toString();
