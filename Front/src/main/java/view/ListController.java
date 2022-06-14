@@ -14,12 +14,13 @@ public class ListController extends BaseController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+         System.out.println("mnbbbbbb");
 
-        // featureList.setItems(observableList);
+
     }
     public void  getListFromServer(){
 
-
+System.out.println("mabab");
 
     }
 }

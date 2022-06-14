@@ -44,6 +44,7 @@ public class TimeCapsuleController extends BaseController{
         enterLineChartChange("6 5 8.8 4.5 20 100");
         enterLineChartCorrelation("5 4 4.4 80 100 775");
         enterRegChart("8 100 4 55.5 14 50 3 30.5 16 85");
+        featureListTC.setOnMouseClicked((event)->{System.out.println(featureListTC.getSelectionModel().getSelectedItem());});
     }
     public void enterLineChartChange(String data){
         XYChart.Series setLineChart=new XYChart.Series<>();

@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 import view.AirPlane;
+import javafx.scene.transform.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,11 +49,11 @@ public class WorldMapController extends BaseController {
                 try {
                         airplane=new Image(new FileInputStream("src/main/resources/images/airplane.png"));
                         map=new Image(new FileInputStream("src/main/resources/images/world-map.jpeg"));
-                        AirPlane plane1=new AirPlane("noy", 50, 50,50, new Position(100,100));
+                        AirPlane plane1=new AirPlane("noy", 50, 60,50, new Position(100,100));
                         AirPlane plane2=new AirPlane("maayan", 50, 50,50, new Position(50,200));
-                        AirPlane plane3=new AirPlane("maya", 50, 50,50, new Position(200,250));
-                        AirPlane plane4=new AirPlane("saar", 50, 50,50, new Position(500,300));
-                        AirPlane plane5=new AirPlane("oz", 50, 50,50, new Position(200,520));
+                        AirPlane plane3=new AirPlane("maya", 50, 100,50, new Position(200,250));
+                        AirPlane plane4=new AirPlane("saar", 50, 70,50, new Position(500,300));
+                        AirPlane plane5=new AirPlane("oz", 50, 10,50, new Position(200,520));
                         planeMap.put("noy",plane1);
                         planeMap.put("maayan",plane2);
                         planeMap.put("maya",plane3);
@@ -101,7 +102,10 @@ public class WorldMapController extends BaseController {
                         System.out.println("no airplanes");
                 } else {
                         for (AirPlane p : planeMap.values()) {
+                                this.canvasGc.rotate(p.getDir());
                                 this.canvasGc.drawImage(this.airplane, p.getP().getX(), p.getP().getY(), p.imageHeight, p.imageWidth);
+                                this.canvasGc.restore();
+                                this.canvasGc.save();
                         }
                 }
         }
