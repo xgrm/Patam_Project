@@ -1,9 +1,8 @@
 package Model.Interpreter.Commands;
 
-import Model.Interpreter.Variable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import Model.Interpreter.Utils.Variable;
 
 public class VarCommand extends Command {
     HashMap<String, Variable> symbolTable;
