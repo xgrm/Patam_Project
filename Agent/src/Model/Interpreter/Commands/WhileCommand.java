@@ -1,24 +1,21 @@
 package Model.Interpreter.Commands;
 
-import Model.Interpreter.ShuntingYardAlgorithm;
-import Model.Interpreter.Variable;
-
+import Model.Interpreter.Utils.SharedMemory;
+import Model.Interpreter.Utils.ShuntingYardAlgorithm;
+import Model.Interpreter.Utils.Variable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class WhileCommand extends Command{
 
-    CommandFactory cf;
-    HashMap<String, Variable> symbolTable;
-    public WhileCommand(CommandFactory cf, HashMap<String, Variable> symbolTable) {
-        this.cf = cf;
-        this.symbolTable = symbolTable;
+    SharedMemory sm;
+    public WhileCommand(SharedMemory sm) {
+        this.sm = sm;
     }
 
     private boolean checkCondition(ArrayList<String> condition){
         ArrayList<String> parsedCondition = new ArrayList<>();
         for (String token:condition){
-            Variable temp = symbolTable.get(token);
+            Variable temp = sm.getSymTable().get(token);
             if(temp != null){
                 parsedCondition.add("" + temp.getValue());
                 continue;
@@ -43,7 +40,7 @@ public class WhileCommand extends Command{
         Command command;
         while (checkCondition(condition)){
             for (int j = 0; j < whileArgs.size(); j++) {
-                command = cf.getCommnd(whileArgs.get(j));
+                command = sm.getCommands().getCommnd(whileArgs.get(j));
                 if(command!=null)
                     j+= command.execute(whileArgs,j);
             }

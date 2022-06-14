@@ -3,29 +3,24 @@ package Model.Interpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import Model.AgentModel;
+import Model.Interpreter.Utils.Parser;
+import Model.Interpreter.Utils.SharedMemory;
+import Model.Interpreter.Utils.Variable;
 
 public class Interpreter implements Observer {
-
     Parser parser;
-    // maps vars to values
-    HashMap<String,Variable> symbolTable;
-    // code var to fg var map
-    ConcurrentHashMap<String,Variable> bindTable;
-    AgentModel model;
+    SharedMemory mem;
     String[] props;
     ExecutorService threadPool;
+    
     public Interpreter(AgentModel model, String paramsPath) {
-        this.symbolTable = new HashMap<>();
-        this.bindTable = new ConcurrentHashMap<>();
-        this.parser = new Parser(symbolTable,bindTable,model);
-        this.model = model;
+        this.mem = new SharedMemory(model);
+        this.parser = new Parser(this.mem);
         setProps(paramsPath);
-        this.model.addObserver(this);
+        model.addObserver(this);
         threadPool = Executors.newFixedThreadPool(2);
     }
 
@@ -46,7 +41,7 @@ public class Interpreter implements Observer {
     }
     public void run(String code){ //TODO: WHAT TO DO WITH THE MODEL!!
         this.threadPool.execute(()->{parser.run(code);
-            model.deleteObserver(this);
+            mem.model.deleteObserver(this);
             this.threadPool.shutdown();
         });
     }
@@ -58,7 +53,7 @@ public class Interpreter implements Observer {
             String[] lines = line.split(",");
             Variable v=null;
             for (int i = 0; i < props.length; i++) { // iterate on the fg props to find if one of them is bind
-                if((v=bindTable.get(props[i]))!=null){  // if the map find prop that bind
+                if((v=mem.getBindMap().get(props[i]))!=null){  // if the map find prop that bind
                     v.setValue(Float.parseFloat(lines[i])); // we change the prop!(:
                 }
             }

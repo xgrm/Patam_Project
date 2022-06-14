@@ -1,16 +1,15 @@
-package Model.Interpreter;
+package Model.Interpreter.Utils;
 
 import Model.Interpreter.Commands.Command;
 import Model.Interpreter.Commands.CommandFactory;
-import Model.AgentModel;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Parser {
     private CommandFactory commandFactory;
-    public Parser(HashMap<String, Variable> symTable, ConcurrentHashMap<String, Variable> bindTable, AgentModel model) {
-        this.commandFactory = new CommandFactory(symTable,bindTable,model);
+
+    public Parser(SharedMemory sm){
+        this.commandFactory = new CommandFactory(sm);
     }
 
     // runs the lexer, creates and runs the commands accordingly

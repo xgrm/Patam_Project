@@ -1,26 +1,21 @@
 package Model.Interpreter.Commands;
 
-import Model.Interpreter.Variable;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
+
+import Model.Interpreter.Utils.SharedMemory;
 
 public class BindCommand extends Command {
 
-    HashMap<String, Variable> symbolTable;
-    ConcurrentHashMap<String, Variable> bindTable;
+    SharedMemory sm;
     
-    // binds code var to fg var
-    public BindCommand(HashMap<String, Variable> symbolTable, ConcurrentHashMap<String, Variable> bindTable) {
-        this.symbolTable = symbolTable;
-        this.bindTable = bindTable;
+    public BindCommand(SharedMemory sm) {
+        this.sm = sm;
     }
 
     @Override
     public int execute(ArrayList<String> args, int index) {
         String token = args.get(index+1);
-        bindTable.put(token.substring(1,token.length()-1),symbolTable.get(args.get(index-2)));
+        sm.getBindMap().put(token.substring(1,token.length()-1),sm.getSymTable().get(args.get(index-2)));
         return 2;
     }
 }

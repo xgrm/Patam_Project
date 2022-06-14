@@ -1,18 +1,14 @@
 package Model.Interpreter.Commands;
 
-import Model.Interpreter.ShuntingYardAlgorithm;
-import Model.Interpreter.Variable;
-import Model.AgentModel;
-
+import Model.Interpreter.Utils.SharedMemory;
+import Model.Interpreter.Utils.ShuntingYardAlgorithm;
+import Model.Interpreter.Utils.Variable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AssignCommand extends Command{
-    HashMap<String,Variable> symbolTable;
-    AgentModel model;
-    public AssignCommand(HashMap<String, Variable> symbolTable, AgentModel model) {
-        this.symbolTable = symbolTable;
-        this.model = model;
+    SharedMemory sm;
+    public AssignCommand(SharedMemory sm) {
+        this.sm = sm;
     }
 
     //calculates the value of the input in case its an expressiom/symbol
@@ -25,7 +21,7 @@ public class AssignCommand extends Command{
             token =args.get(i);
             if(token.equals("\n"))
                 break;
-            tempVar = symbolTable.get(token);
+            tempVar = sm.getSymTable().get(token);
             if(tempVar != null){
                 token = "" + tempVar.getValue();
                 tempVar = null;
@@ -41,11 +37,11 @@ public class AssignCommand extends Command{
         String varName= args.get(index-1);
         if(args.get(index+1).equals("bind")){
             indexCount = 0;
-           symbolTable.put(varName,new Variable(varName,0f,args.get(index+2),model));
+           sm.getSymTable().put(varName,new Variable(varName,0f,args.get(index+2),sm.model));
         }
         else {
-            symbolTable.put(varName,symbolTable.getOrDefault(varName,new Variable(varName,0f)));
-            symbolTable.get(varName).setValue(calcTheExp(args,index));
+            sm.getSymTable().put(varName,sm.getSymTable().getOrDefault(varName,new Variable(varName,0f)));
+            sm.getSymTable().get(varName).setValue(calcTheExp(args,index));
         }
         return indexCount;
     }
