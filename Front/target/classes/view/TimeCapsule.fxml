@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="770.0" prefWidth="1200.0"
+          xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="view.TimeCapsuleController">
+    <children>
+        <HBox prefHeight="634.0" prefWidth="733.0">
+            <children>
+                <Pane prefHeight="639.0" prefWidth="301.0">
+                    <fx:include fx:id="featureListTC" source="FeatureList.fxml" />
+                </Pane>
+                <Pane prefHeight="634.0" prefWidth="402.0">
+                    <children>
+                        <Pane prefHeight="271.0" prefWidth="215.0">
+                            <fx:include fx:id="regChart" source="Charts/RegChart.fxml" />
+                        </Pane>
+                        <Pane layoutX="-3.0" layoutY="302.0" prefHeight="239.0" prefWidth="192.0">
+                            <fx:include fx:id="changeChart" source="Charts/LineChart.fxml" />
+                        </Pane>
+                        <Pane layoutX="187.0" layoutY="302.0" prefHeight="229.0" prefWidth="152.0">
+                            <fx:include fx:id="correlationChart" source="Charts/LineChart.fxml" />
+                        </Pane>
+                    </children>
+                </Pane>
+                <Pane prefHeight="634.0" prefWidth="0.0">
+                    <children>
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="154.0" prefWidth="200.0">
+                             <fx:include fx:id="clockBoardTC" layoutX="-170.0" layoutY="100.0" source="ClockBoard.fxml" />
+                             <fx:include fx:id="staticJoystick" layoutX="100.0" layoutY="20.0" source="Joystick.fxml" />
+                        </Pane>
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+        <Pane layoutX="100.0" prefHeight="130.0" prefWidth="1198.0">
+            <fx:include fx:id="playBoard" layoutX="450.0" source="PlayBoard.fxml" />
+        </Pane>
+    </children>
+</FlowPane>
