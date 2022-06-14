@@ -3,6 +3,7 @@ package Model.Interpreter.Commands;
 import java.util.ArrayList;
 
 import Model.Interpreter.Utils.SharedMemory;
+import Model.Interpreter.Utils.Variable;
 
 public class BindCommand extends Command {
 
@@ -15,7 +16,11 @@ public class BindCommand extends Command {
     @Override
     public int execute(ArrayList<String> args, int index) {
         String token = args.get(index+1);
-        sm.getBindMap().put(token.substring(1,token.length()-1),sm.getSymTable().get(args.get(index-2)));
-        return 2;
+        String bindTo = token.substring(1,token.length()-1);
+        Variable variable = sm.getSymTable().get(args.get(index-2));
+        variable.setBindTo(bindTo);
+        variable.setModel(sm.model);
+        sm.getBindMap().put(bindTo,variable);
+        return 1;
     }
 }

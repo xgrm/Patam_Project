@@ -80,7 +80,7 @@ public class Controller implements Observer {
             String line = (String) arg;
             if(!this.standAlone)
                 BackEndIO.write("addRow~"+line);
-           else System.out.println(line);
+           //else System.out.println(line);
         }
 
     }
