@@ -1,7 +1,6 @@
 package Model.Interpreter.Commands;
 
 import java.util.HashMap;
-
 import Model.Interpreter.Utils.SharedMemory;
 
 public class CommandFactory {
@@ -15,6 +14,7 @@ public class CommandFactory {
         cmds.put("while",new WhileCommand(sm));
         cmds.put("sleep",new SleepCommand());
         cmds.put("print",new PrintCommand(sm));
+        cmds.put("var",new VarCommand(sm));
     }
 
     public Command getCommnd(String commandName){
