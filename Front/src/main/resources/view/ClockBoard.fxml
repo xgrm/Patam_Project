@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.ClockBoardController">
 
     <Gauge fx:id="airspeed" layoutX="247.0" layoutY="295.0" prefHeight="90" prefWidth="90" />
-    <Gauge fx:id="height" layoutX="369.0" layoutY="300.0" prefHeight="90" prefWidth="90" />
+    <Gauge layoutX="369.0" layoutY="300.0" prefHeight="90" prefWidth="90" />
     <Gauge fx:id="degrees" layoutX="488.0" layoutY="295.0" prefHeight="90" prefWidth="90" />
     <Gauge fx:id="yaw" layoutX="247.0" layoutY="399.0" prefHeight="90" prefWidth="90" />
     <Gauge fx:id="pitch" layoutX="369.0" layoutY="398.0" prefHeight="90" prefWidth="90" />

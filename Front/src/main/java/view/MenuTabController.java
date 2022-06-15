@@ -6,9 +6,11 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import viewModel.ViewModel;
 
 import java.io.IOException;
@@ -19,45 +21,39 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 
-public class MenuTabController implements Initializable, Observer {
+public class MenuTabController extends BaseController implements Initializable, Observer {
 
     @FXML
     SplitPane monitoring;
-    TabPane t;
-    HashMap<String,BaseController> controllers;
+
+    @FXML
+    AnchorPane FleetOverView,Monitoring,Teleopration,TimeCapsule;
     public MenuTabController() {
-        this.controllers = new HashMap<>();
+
     }
-    public void init(ViewModel vm){
-        BaseController.setViewModel(vm);
+    @Override
+    public void init(ViewModel vm, Node root) throws Exception{
+        this.setViewModel(vm);
+        addPane(FleetOverView, "FleetOverView.fxml",0,0, "Fleet OverView");
+        addPane(Monitoring, "Monitoring.fxml", 0,0,"Monitoring");
+        addPane(Teleopration, "Teleopration.fxml",0,0, "Teleoperation");
+        addPane(TimeCapsule, "TimeCapsule.fxml", 0,0,"Time Capsule");
     }
 
-    private void putController(String name, BaseController controller){
-        this.controllers.put(name,controller);
-    }
     @Override
     public void update(Observable o, Object arg) {
 
     }
-    public void d(Object arg){
-        t = (TabPane) arg;
-        Platform.runLater(()->{
-            t.getTabs().add(new Tab("s"));
-        });
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Joystick.fxml"));
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException("err");
-        }
-        JoystickController j = fxmlLoader.getController();
-        j.updateUi(this);
-//        putController("Joystick",fxmlLoader.getController());
-//        controllers.get("Joystick").updateUi(this);
-    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
+
+
+    @Override
+    public void updateUi(Object obj) {
+
+    }
 }

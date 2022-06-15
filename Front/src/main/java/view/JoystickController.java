@@ -5,10 +5,12 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
+import viewModel.ViewModel;
 
 import java.net.URL;
 import java.util.Observable;
@@ -51,22 +53,38 @@ public class JoystickController extends BaseController implements Observer {
     }
 
     @Override
+    public void init(ViewModel vm, Node root) throws Exception {
+        viewModel = vm;
+        aileron = new SimpleDoubleProperty(0);
+        elevator = new SimpleDoubleProperty(0);
+        viewModel.addObserver(this);
+        viewModel.elevator.bind(elevator);
+        viewModel.aileron.bind(aileron);
+        viewModel.throttle.bind(throttle.valueProperty());
+        viewModel.rudder.bind(rudder.valueProperty());
+        mx = joystick.getWidth()/2;
+        my = joystick.getHeight()/2;
+        paint(mx,my);
+        elevator.setValue(5);
+    }
+
+    @Override
     public void updateUi(Object obj) {
 
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        aileron = new SimpleDoubleProperty(0);
-        elevator = new SimpleDoubleProperty(0);
-        BaseController.viewModel.addObserver(this);
-        BaseController.viewModel.elevator.bind(elevator);
-        BaseController.viewModel.aileron.bind(aileron);
-        BaseController.viewModel.throttle.bind(throttle.valueProperty());
-        BaseController.viewModel.rudder.bind(rudder.valueProperty());
-        mx = joystick.getWidth()/2;
-        my = joystick.getHeight()/2;
-        paint(mx,my);
-        elevator.setValue(5);
+//        aileron = new SimpleDoubleProperty(0);
+//        elevator = new SimpleDoubleProperty(0);
+//        viewModel.addObserver(this);
+//        viewModel.elevator.bind(elevator);
+//        viewModel.aileron.bind(aileron);
+//        viewModel.throttle.bind(throttle.valueProperty());
+//        viewModel.rudder.bind(rudder.valueProperty());
+//        mx = joystick.getWidth()/2;
+//        my = joystick.getHeight()/2;
+//        paint(mx,my);
+//        elevator.setValue(5);
     }
 
     @Override

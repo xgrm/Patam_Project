@@ -1,11 +1,16 @@
 package view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import view.Charts.RegChart;
+import viewModel.ViewModel;
 
 import java.net.URL;
 import java.util.HashSet;
@@ -26,13 +31,21 @@ public class TimeCapsuleController extends BaseController{
     @FXML
     ScatterChart regChart;
 
-    public void  setList(String features){
-        String[] str=features.split(" ");
-        Set<String> s= new HashSet<>();
-        for(String string:str){
-            s.add(string);
-        }
-        featureListTC.getItems().addAll(s);
+    @FXML
+    AnchorPane FeatureList,RegChart,changeLineChart,correlationLineChart,JoystickClockBoard,PlayBoard;
+
+
+
+    @Override
+    public void init(ViewModel vm, Node root) throws Exception {
+        this.viewModel = vm;
+        addPane(FeatureList, "FeatureList.fxml",0,0, "featureListTC");
+        addPane(RegChart, "Charts/RegChart.fxml",0,0, "regChart");
+        addPane(changeLineChart, "Charts/LineChart.fxml",0,0, "changeChart");
+        addPane(correlationLineChart, "Charts/LineChart.fxml",0,0, "correlationChart");
+        addPane(JoystickClockBoard, "ClockBoard.fxml",-170,100, "clockBoardTC");
+        addPane(JoystickClockBoard, "Joystick.fxml",100,20, "staticJoystick");
+        addPane(PlayBoard, "PlayBoard.fxml",450,1, "playBoard");
     }
 
     @Override
@@ -40,10 +53,10 @@ public class TimeCapsuleController extends BaseController{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setList("ggnjn nn bbb cc");
-        enterLineChartChange("6 5 8.8 4.5 20 100");
-        enterLineChartCorrelation("5 4 4.4 80 100 775");
-        enterRegChart("8 100 4 55.5 14 50 3 30.5 16 85");
+//        setList("ggnjn nn bbb cc");
+//        enterLineChartChange("6 5 8.8 4.5 20 100");
+//        enterLineChartCorrelation("5 4 4.4 80 100 775");
+//        enterRegChart("8 100 4 55.5 14 50 3 30.5 16 85");
     }
     public void enterLineChartChange(String data){
         XYChart.Series setLineChart=new XYChart.Series<>();
@@ -83,6 +96,13 @@ public class TimeCapsuleController extends BaseController{
 
         regChart.getData().add(series2);
     }
-
+    public void  setList(String features){
+        String[] str=features.split(" ");
+        Set<String> s= new HashSet<>();
+        for(String string:str){
+            s.add(string);
+        }
+        featureListTC.getItems().addAll(s);
+    }
 
 }

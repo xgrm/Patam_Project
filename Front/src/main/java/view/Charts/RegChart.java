@@ -1,11 +1,20 @@
 package view.Charts;
 
+import javafx.scene.Node;
+import viewModel.ViewModel;
+
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RegChart extends Chart{
     String name, type;
+
+    @Override
+    public void init(ViewModel vm, Node root) throws Exception {
+
+    }
+
     @Override
     public void updateUi(Object obj) {}
     @Override

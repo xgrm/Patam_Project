@@ -1,12 +1,19 @@
 package view;
 
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import viewModel.ViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayController extends BaseController{
+    @Override
+    public void init(ViewModel vm, Node root) throws Exception {
+
+    }
+
     @Override
     public void updateUi(Object obj) {
 

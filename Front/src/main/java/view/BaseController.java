@@ -1,14 +1,38 @@
 package view;
 
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.AnchorPane;
 import viewModel.ViewModel;
 
+import java.util.HashMap;
+
 public abstract class BaseController extends Canvas implements Initializable {
-    static ViewModel viewModel;
-    static void setViewModel(ViewModel vm){
-        BaseController.viewModel = vm;
+    ViewModel viewModel;
+    HashMap<String,BaseController> controllers = new HashMap<>();
+    void setViewModel(ViewModel vm){
+        viewModel = vm;
     }
+    public abstract void init(ViewModel vm, Node root) throws Exception;
     public abstract void updateUi(Object obj);
+
+    void addPane(AnchorPane root, String resource, int x, int y, String id) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resource));
+        Node node = (Node)fxmlLoader.load();
+        node.idProperty().setValue(id);
+        if (x != 0 && y != 0) {
+            node.setLayoutX(x);
+            node.setLayoutY(y);
+        }
+        root.getChildren().add(node);
+        BaseController baseController = fxmlLoader.getController();
+        putController(baseController.getClass().getSimpleName(), baseController);
+        baseController.init(viewModel,node);
+    }
+    void putController(String name, BaseController controller){
+        controllers.put(name,controller);
+    }
 }

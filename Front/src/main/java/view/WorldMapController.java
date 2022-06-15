@@ -1,6 +1,7 @@
 package view;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 import view.AirPlane;
+import viewModel.ViewModel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,6 +35,11 @@ public class WorldMapController extends BaseController {
         Double widthMap;
         Button bt;
 
+
+        @Override
+        public void init(ViewModel vm, Node root) throws Exception {
+
+        }
 
         @Override
         public void updateUi(Object obj) {}

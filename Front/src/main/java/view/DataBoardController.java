@@ -3,11 +3,13 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import viewModel.ViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +28,12 @@ public class DataBoardController extends BaseController{
     Button refreshBut;
 
     String[] month= {"Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+    @Override
+    public void init(ViewModel vm, Node root) throws Exception {
+
+    }
+
     @Override
     public void updateUi(Object obj) {}
     @Override
