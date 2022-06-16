@@ -30,10 +30,12 @@ public class Commands{
         this.commandsMap.put("updateFlight",new updateFlightCommand());
         this.commandsMap.put("getData",new getDataCommand());
         this.commandsMap.put("getFeaturesList",new getFeaturesListCommand());
+        this.commandsMap.put("Interpreter",new InterpreterCommand());
 
     }
 
     public void executeCommand(String command){
+        System.out.println(command);
         String[] regx = command.split("~");
         this.commandsMap.get(regx[0]).execute(regx[1]);
     }
@@ -56,7 +58,10 @@ public class Commands{
 
         @Override
         public void execute(String command) {//id
-            frontHandler.outToFront("agentData~"+agents.get(Integer.parseInt(command)).getValues());
+            AgentHandler agentHandler = agents.get(Integer.parseInt(command));
+            if(agentHandler !=null)
+                frontHandler.outToFront("agentData~"+agentHandler.getValues());
+            else frontHandler.outToFront("noAgent~ ");
         }
     }
     private class addRowCommand extends Command{ // command is: "1 ....flightData..."
@@ -78,7 +83,6 @@ public class Commands{
         public void execute(String command) {
             String[] tokens = command.split(" ");
             agents.get(Integer.parseInt(tokens[0])).outToAgent(tokens[1]+"~"+tokens[2]);
-            System.out.println(tokens[1]+"~"+tokens[2]);
         }
     }
     private class activeAgentsCommand extends Command{
@@ -130,6 +134,15 @@ public class Commands{
             frontHandler.outToFront("FeaturesList~"+flight_data_col);
         }
 
+    }
+    private class InterpreterCommand extends Command{
+
+        @Override
+        public void execute(String command) {
+
+            String[] tokens = command.split("#");
+            agents.get(Integer.parseInt(tokens[0])).outToAgent("Interpreter~"+tokens[1]);
+        }
     }
 
 }

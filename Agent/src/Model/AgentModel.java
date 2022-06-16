@@ -8,6 +8,7 @@ import TimeSeries.TimeSeries;
 
 import java.io.*;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,9 +25,10 @@ public class AgentModel extends Observable implements Model {
     Server modelServer;
     Socket FlightGear;
     volatile boolean stop;
-
+    DecimalFormat df;
     public AgentModel(String propPath,String symbolPath) {
         stop = false;
+        this.df = df = new DecimalFormat("#.##");
         this.symbolMap = new ConcurrentHashMap<>();
         this.properties = new HashMap<>();
         this.createMapsFromFiles(propPath,symbolPath);
@@ -38,22 +40,22 @@ public class AgentModel extends Observable implements Model {
 
     @Override
     public void setAileron(double x) {
-        outToFG.write(properties.get("aileron")+" "+x);
+        outToFG.write(properties.get("aileron")+" "+df.format(x));
     }
 
     @Override
     public void setElevator(double x) {
-        outToFG.write(properties.get("elevator")+" "+x);
+        outToFG.write(properties.get("elevator")+" "+df.format(x));
     }
 
     @Override
     public void setRudder(double x) {
-        outToFG.write(properties.get("rudder")+" "+x);
+        outToFG.write(properties.get("rudder")+" "+df.format(x));
     }
 
     @Override
     public void setThrottle(double x) {
-        outToFG.write(properties.get("throttle")+" "+x);
+        outToFG.write(properties.get("throttle")+" "+df.format(x));
     }
     public void startInterpreter(String code){
         Interpreter interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
@@ -62,7 +64,7 @@ public class AgentModel extends Observable implements Model {
         }).start();
     }
     public void sendToFG(String path, Float value) {
-        outToFG.write("set "+path+" "+value.toString());
+        outToFG.write("set "+path+" "+df.format(value));
     }
     @Override
     public TimeSeries getTimeSeries() {

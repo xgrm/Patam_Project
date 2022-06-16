@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 // this class  handles all the commands for the agent.
 public class Commands {
@@ -87,6 +88,10 @@ public class Commands {
 
         @Override
         public void execute(String value) {
+            Scanner scanner = new Scanner(value);
+            while (scanner.hasNext()){
+                System.out.println(scanner.nextLine());
+            }
             model.startInterpreter(value);
         }
     }

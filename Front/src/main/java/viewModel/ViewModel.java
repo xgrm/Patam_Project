@@ -42,10 +42,10 @@ public class ViewModel extends Observable implements Observer {
         this.rudder = new SimpleDoubleProperty();
         this.throttle = new SimpleDoubleProperty();
         setListeners();
-        this.commands = new Commands(this);
         this.symbolTable = new ConcurrentHashMap<>();
         createPropMap(propPath);
         createSymbol(propMap.get("symbolsPath"));
+        this.commands = new Commands(this);
         if(!standAlone) {
             try {
                 backend = new Socket(propMap.get("backEndIP"), Integer.parseInt(propMap.get("backEndPort")));

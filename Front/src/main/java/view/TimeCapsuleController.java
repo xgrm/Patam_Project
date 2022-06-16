@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class TimeCapsuleController extends BaseController implements TabController {
+public class TimeCapsuleController extends BaseController {
 
     @FXML
     ListView featureListTC;
@@ -40,13 +40,15 @@ public class TimeCapsuleController extends BaseController implements TabControll
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         this.viewModel = vm;
-        addPane(FeatureList, "FeatureList.fxml",0,0, "featureListTC");
-        addPane(RegChart, "Charts/RegChart.fxml",0,0, "regChart");
-        addPane(changeLineChart, "Charts/LineChart.fxml",0,0, "changeChart");
-        addPane(correlationLineChart, "Charts/LineChart.fxml",0,0, "correlationChart");
-        addPane(JoystickClockBoard, "ClockBoard.fxml",-170,100, "clockBoardTC");
-        addPane(JoystickClockBoard, "Joystick.fxml",100,20, "staticJoystick");
-        addPane(PlayBoard, "PlayBoard.fxml",450,1, "playBoard");
+        addPane(FeatureList, "FeatureList.fxml",13,1,1,1, "featureListTC");
+        addPane(RegChart, "Charts/RegChart.fxml",0,0,1,1, "regChart");
+        addPane(changeLineChart, "Charts/LineChart.fxml",0,0,1,1, "changeChart");
+        addPane(correlationLineChart, "Charts/LineChart.fxml",0,0,1,1, "correlationChart");
+        addPane(JoystickClockBoard, "ClockBoard.fxml",43,256, 1,1,"clockBoardTC");
+        addPane(JoystickClockBoard, "Joystick.fxml",29,2, 1,1,"staticJoystick");
+        addPane(PlayBoard, "PlayBoard.fxml",0,0, 1,1,"playBoard");
+
+
     }
 
     @Override
@@ -108,6 +110,6 @@ public class TimeCapsuleController extends BaseController implements TabControll
 
     @Override
     public void onTabSelection() {
-
+        this.controllers.forEach((key,value)->value.onTabSelection());
     }
 }

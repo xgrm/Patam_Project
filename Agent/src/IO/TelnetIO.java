@@ -21,9 +21,10 @@ public class TelnetIO implements IO{
     }
 
     @Override
-    public void write(String text) {
+    public void write(String text) { //TODO: DELETE THE SOUT
         out.print(text+"\r\n");
         out.flush();
+        System.out.println(text);
     }
 
     @Override

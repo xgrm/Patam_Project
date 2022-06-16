@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import eu.hansolo.medusa.Gauge?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.ClockBoardController">
-
-    <Gauge tickMarkColor="black" animated="true" decimals="0" title="YAW" titleColor="white"
-           fx:id="yaw" layoutX="247.0" layoutY="295.0" prefHeight="90" prefWidth="90" />
-    <Gauge tickMarkColor="black" animated="true" decimals="0" title="Air Speed" titleColor="white" fx:id="airSpeed" layoutX="369.0" layoutY="300.0" prefHeight="90" prefWidth="90" />
-    <Gauge tickMarkColor="black" animated="true" decimals="0" title="Altimeter" fx:id="altimeter" titleColor="white" layoutX="488.0" layoutY="295.0" prefHeight="90" prefWidth="90" />
-    <Gauge tickMarkColor="black" animated="true" decimals="0" title="Roll" fx:id="roll" titleColor="white" layoutX="247.0" layoutY="399.0" prefHeight="90" prefWidth="90" />
-    <Gauge tickMarkColor="black" animated="true" decimals="0" title="Pitch" fx:id="pitch" titleColor="white" layoutX="369.0" layoutY="398.0" prefHeight="90" prefWidth="90" />
-
+<AnchorPane accessibleRole="NODE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ClockBoardController">
+   <children>
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="208.0" prefWidth="202.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                     
+                         <Gauge fx:id="yaw" animated="true" decimals="0" tickMarkColor="black" title="YAW" titleColor="white" />
+                         <Gauge fx:id="roll" animated="true" decimals="0" tickMarkColor="black" title="Roll" titleColor="white" />
+                         <Gauge fx:id="pitch" animated="true" decimals="0" tickMarkColor="black" title="Pitch" titleColor="white" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                         <Gauge fx:id="VerticalSpeed" animated="true" decimals="0" tickMarkColor="black" title="Air Speed" titleColor="white" />
+                         <Gauge fx:id="altimeter" animated="true" decimals="0" tickMarkColor="black" title="Altimeter" titleColor="white" />
+                         <Gauge fx:id="airSpeed" animated="true" decimals="0" tickMarkColor="black" title="Air Speed" titleColor="white" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
 </AnchorPane>

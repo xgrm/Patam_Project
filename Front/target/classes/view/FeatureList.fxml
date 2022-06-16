@@ -3,6 +3,6 @@
 <?import javafx.scene.control.ListView?>
 
 
-<ListView fx:id="list" prefHeight="770.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.ListController">
+<ListView fx:id="list" prefHeight="560.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ListController">
 
 </ListView>

@@ -6,16 +6,16 @@ import viewModel.ViewModel;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Commands {
-    int id = 12;
+    int id;
     volatile boolean agentChosen = false;
     ConcurrentHashMap<String,Command> commandsMap;
-    public String[] symbols;
+    String[] symbols;
     ViewModel viewModel;
     ConcurrentHashMap<String,Float> symbolTable;
     public Commands(ViewModel viewModel) {
         this.commandsMap = new ConcurrentHashMap<>();
         this.viewModel = viewModel;
-        this.symbols = viewModel.getSymbols();
+        symbols = viewModel.getSymbols();
         symbolTable = viewModel.getSymbolTable();
         commandsMap.put("getData",new getDataCommand());
         commandsMap.put("agentData",new agentDataCommand());
@@ -25,6 +25,8 @@ public class Commands {
         commandsMap.put("getActiveAgents",new getActiveAgentsCommand());
         commandsMap.put("activeAgents",new activeAgentsCommand());
         commandsMap.put("setAgentBind",new setAgentBindCommand());
+        commandsMap.put("noAgent",new noAgentCommand());
+        commandsMap.put("Interpreter",new InterpreterCommand());
     }
 
     public void executeCommand(String command){
@@ -59,10 +61,12 @@ public class Commands {
         @Override
         public void execute(String command) {
             String[] data = command.split(",");
-            for (int i = 0; i < symbols.length; i++) {
-                symbolTable.put(symbols[i],Float.parseFloat(data[i]));
+            if (data.length ==symbols.length) {
+                    for (int i = 0; i < symbols.length; i++) {
+                        symbolTable.put(symbols[i], Float.parseFloat(data[i]));
+                    }
+                    viewModel.inFromCommand(symbolTable);
             }
-            viewModel.inFromCommand(symbolTable);
         }
     }
     private class setCommand extends Command{
@@ -70,7 +74,6 @@ public class Commands {
         public void execute(String command) {
             if(agentChosen) {
                 viewModel.outToBack("setCommand~" + id + " " + command);
-                System.out.println("setCommand~" + id + " " + command);
             }
         }
     }
@@ -116,6 +119,24 @@ public class Commands {
             else agentChosen = false;
         }
     }
+
+    private class noAgentCommand extends Command{
+
+        @Override
+        public void execute(String command) {
+            viewModel.inFromCommand("agents~none, ");
+            agentChosen = false;
+        }
+    }
+
+    private class InterpreterCommand extends Command{
+
+        @Override
+        public void execute(String command) {
+            viewModel.outToBack("Interpreter~" + id +"#" + command);
+        }
+    }
+
 
 
 }

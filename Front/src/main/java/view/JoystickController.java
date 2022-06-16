@@ -14,10 +14,8 @@ import javafx.scene.input.MouseEvent;
 import viewModel.ViewModel;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
-import java.util.Timer;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class JoystickController extends BaseController implements Observer {
@@ -34,8 +32,8 @@ public class JoystickController extends BaseController implements Observer {
 
     double mx,my;
     DoubleProperty aileron,elevator;
-
-
+    DecimalFormat df;
+    Node root;
     public JoystickController() {
 
     }
@@ -57,18 +55,29 @@ public class JoystickController extends BaseController implements Observer {
 
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
+        this.root = root;
         viewModel = vm;
         aileron = new SimpleDoubleProperty(0);
         elevator = new SimpleDoubleProperty(0);
-        viewModel.elevator.bind(elevator);
-        viewModel.aileron.bind(aileron);
-        viewModel.throttle.bind(throttle.valueProperty());
-        viewModel.rudder.bind(rudder.valueProperty());
         mx = joystick.getWidth()/2;
         my = joystick.getHeight()/2;
         paint(mx,my);
         agents.setOnMouseClicked((e)->viewModel.exe("getActiveAgents~ "));
         agents.setOnAction((e)->setBindAgent());
+        this.df = df = new DecimalFormat("#.##");
+
+    }
+
+    public void setJoystickDisable(boolean disable){
+        root.setDisable(disable);
+    }
+    @Override
+    public void onTabSelection() {
+        super.onTabSelection();
+        viewModel.elevator.bind(elevator);
+        viewModel.aileron.bind(aileron);
+        viewModel.throttle.bind(throttle.valueProperty());
+        viewModel.rudder.bind(rudder.valueProperty());
     }
 
     @Override
@@ -82,6 +91,13 @@ public class JoystickController extends BaseController implements Observer {
                     agents.getItems().addAll(tokens[1].split(","));
                 });
             }
+        }
+        if(obj instanceof ConcurrentHashMap){
+            ConcurrentHashMap<String,Float> symbolMap = (ConcurrentHashMap<String,Float>) obj;
+            this.throttle.setValue(Float.parseFloat(df.format(symbolMap.get("throttle"))));
+            this.aileron.setValue(Float.parseFloat(df.format(symbolMap.get("aileron"))));
+            this.elevator.setValue(Float.parseFloat(df.format(symbolMap.get("elevator"))));
+            this.rudder.setValue(Float.parseFloat(df.format(symbolMap.get("rudder"))));
         }
     }
     private void setBindAgent( ){

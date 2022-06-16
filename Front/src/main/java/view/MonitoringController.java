@@ -1,30 +1,19 @@
 package view;
 
-import javafx.beans.property.SimpleDoubleProperty;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import view.Charts.TabController;
 import viewModel.ViewModel;
-
 import java.net.URL;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
-import static javafx.geometry.Orientation.VERTICAL;
 
-public class MonitoringController extends BaseController implements TabController {
+public class MonitoringController extends BaseController {
     @FXML
     ListView listF;
 
@@ -35,26 +24,25 @@ public class MonitoringController extends BaseController implements TabControlle
     LineChart correlationChart;
 
     @FXML
-    ScatterChart scatterc;
+    AnchorPane FeatureList,changeLineChart,correlationLineChart,joystick,clockBoard,scatterc;
 
-    @FXML
-    AnchorPane FeatureList,changeLineChart,correlationLineChart,joystick,clockBoard;
-
+    Timer timer;
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         viewModel = vm;
-        addPane(FeatureList,"FeatureList.fxml",0,0,"listF");
-        addPane(changeLineChart,"Charts/LineChart.fxml",0,0,"changeChart");
-        addPane(correlationLineChart,"Charts/LineChart.fxml",0,0,"correlationChart");
-        addPane(joystick,"Joystick.fxml",90,70,"correlationChart");
-        addPane(clockBoard,"ClockBoard.fxml",-200,-200,"correlationChart");
-
+        addPane(FeatureList,"FeatureList.fxml",0,0,0,0,"listF");
+        addPane(changeLineChart,"Charts/LineChart.fxml",1,35,1,1,"changeChart");
+        addPane(correlationLineChart,"Charts/LineChart.fxml",1,31,1,1,"correlationChart");
+        addPane(scatterc,"Charts/RegChart.fxml",22,4,1,1,"correlationChart");
+        addPane(joystick,"Joystick.fxml",0,0,0,0,"joystick");
+        addPane(clockBoard,"ClockBoard.fxml",102,71,2,2,"clockBoard");
+        JoystickController js = (JoystickController) controllers.get("JoystickController");
+        js.setJoystickDisable(true);
     }
 
     @Override
     public void updateUi(Object obj) {
-        this.controllers.get("ListController").updateUi(obj);
-        this.controllers.get("JoystickController").updateUi(obj);
+        this.controllers.forEach((key,value)->value.updateUi(obj));
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,17 +83,31 @@ public class MonitoringController extends BaseController implements TabControlle
     }
 
     public void enterRegChart(String data) {
-        String[] str=data.split(" ");
-        XYChart.Series series=new XYChart.Series();
-        for(int i=0; i< str.length; i+=2){
-            series.getData().add(new XYChart.Data(str[i],Double.parseDouble((str[i+1]))));
-        }
-
-        scatterc.getData().add(series);
+//        String[] str=data.split(" ");
+//        XYChart.Series series=new XYChart.Series();
+//        for(int i=0; i< str.length; i+=2){
+//            series.getData().add(new XYChart.Data(str[i],Double.parseDouble((str[i+1]))));
+//        }
+//
+//        scatterc.getData().add(series);
     }
 
     @Override
     public void onTabSelection() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                    viewModel.exe("getData~ ");
+            }
+        }, 0, 100);
+        this.controllers.forEach((key,value)->value.onTabSelection());
         this.viewModel.exe("getFeaturesList~ ");
+    }
+
+    @Override
+    public void onTabLeave() {
+        super.onTabLeave();
+        timer.cancel();
     }
 }

@@ -39,10 +39,10 @@ public class MenuTabController extends BaseController implements Initializable, 
     public void init(ViewModel vm, Node root) throws Exception{
         this.setViewModel(vm);
         vm.addObserver(this);
-        addPane(FleetOverView, "FleetOverView.fxml",0,0, "Fleet OverView");
-        addPane(Monitoring, "Monitoring.fxml", 0,0,"Monitoring");
-        addPane(Teleopration, "Teleopration.fxml",0,0, "Teleoperation");
-        addPane(TimeCapsule, "TimeCapsule.fxml", 0,0,"Time Capsule");
+        addPane(FleetOverView, "FleetOverView.fxml",0,0,0,0, "Fleet OverView");
+        addPane(Monitoring, "Monitoring.fxml", 0,0,0,0,"Monitoring");
+        addPane(Teleopration, "Teleopration.fxml",0,0,0,0, "Teleoperation");
+        addPane(TimeCapsule, "TimeCapsule.fxml", 0,0,0,0,"Time Capsule");
     }
 
     @Override

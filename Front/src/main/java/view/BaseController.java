@@ -16,13 +16,15 @@ public abstract class BaseController extends Canvas implements Initializable, Ta
     HashMap<String,BaseController> controllers = new HashMap<>();
     public abstract void init(ViewModel vm, Node root) throws Exception;
     public abstract void updateUi(Object obj);
-    void addPane(AnchorPane root, String resource, int x, int y, String id) throws Exception {
+    void addPane(AnchorPane root, String resource, int x, int y,int scaleX,int scaleY, String id) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resource));
         Node node = fxmlLoader.load();
         node.idProperty().setValue(id);
         if (x != 0 && y != 0) {
             node.setLayoutX(x);
             node.setLayoutY(y);
+            node.scaleYProperty().setValue(scaleY);
+            node.scaleXProperty().setValue(scaleX);
         }
         root.getChildren().add(node);
         BaseController baseController = fxmlLoader.getController();
@@ -39,4 +41,6 @@ public abstract class BaseController extends Canvas implements Initializable, Ta
 
     @Override
     public void onTabSelection() {}
+
+    public void onTabLeave(){}
 }

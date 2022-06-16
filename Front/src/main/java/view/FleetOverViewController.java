@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class FleetOverViewController extends BaseController implements TabController {
+public class FleetOverViewController extends BaseController {
 
 
 
@@ -24,8 +24,8 @@ public class FleetOverViewController extends BaseController implements TabContro
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         viewModel = vm;
-        addPane(WorldMap, "WorldMap.fxml",0,0, "worldMap");
-        addPane(DataBoard, "DataBoard.fxml",0,0, "fleetOverView");
+        addPane(WorldMap, "WorldMap.fxml",0,0,0,0, "worldMap");
+        addPane(DataBoard, "DataBoard.fxml",0,0,0,0, "fleetOverView");
     }
 
 
@@ -34,6 +34,6 @@ public class FleetOverViewController extends BaseController implements TabContro
 
     @Override
     public void onTabSelection() {
-
+        this.controllers.forEach((key,value)->value.onTabSelection());
     }
 }
