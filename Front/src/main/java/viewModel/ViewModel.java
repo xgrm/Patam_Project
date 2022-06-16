@@ -1,8 +1,11 @@
 package viewModel;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import model.MainModel;
 import model.utils.IO.BackEndIO;
 import viewModel.Commands.Commands;
@@ -29,10 +32,11 @@ public class ViewModel extends Observable implements Observer {
     Commands commands;
     ConcurrentHashMap<String,Float> symbolTable;
     boolean standAlone;
+
     public ViewModel(String propPath ,boolean standAlone) {
         this.standAlone=standAlone;
         this.propMap = new HashMap<>();
-        this.threadPool = Executors.newFixedThreadPool(4); //TODO: GET THE NUM OF THREADS
+        this.threadPool =  Executors.newFixedThreadPool(4);
         this.aileron = new SimpleDoubleProperty();
         this.elevator = new SimpleDoubleProperty();
         this.rudder = new SimpleDoubleProperty();
@@ -90,17 +94,10 @@ public class ViewModel extends Observable implements Observer {
             throw new RuntimeException(e);
         }
     }
-    private void connectToBackend(){
+    private void connectToBackend() {
         backEndIO.write("front~ ");
-        if(backEndIO.readLine().equals("ok"))
-            this.threadPool.execute(()->inFromBack());
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                exe("getData~ ");
-            }
-        }, 0l, 100l);
+        if (backEndIO.readLine().equals("ok"))
+            this.threadPool.execute(() -> inFromBack());
     }
     private void inFromBack(){
         System.out.println("connect");
@@ -111,11 +108,7 @@ public class ViewModel extends Observable implements Observer {
         }
     }
     public void exe(String command){
-        System.out.println("from exe: "+command);
-        threadPool.execute(()->{
-
-            this.commands.executeCommand(command);
-        });
+        this.threadPool.execute(()->this.commands.executeCommand(command));
     }
     public void outToBack(String command){
         if(!standAlone)
@@ -126,14 +119,20 @@ public class ViewModel extends Observable implements Observer {
     public void update(Observable o, Object arg) {
 
     }
-    public void test(String s){
-        String[] data = s.split(",");
-        for (int i = 0; i < symbols.length; i++) {
-            this.symbolTable.put(symbols[i],Float.parseFloat(data[i]));
-        }
+
+    public void inFromCommand(Object obj){
         setChanged();
-        notifyObservers(this.symbolTable);
+        notifyObservers(obj);
     }
+
+    public String[] getSymbols() {
+        return symbols;
+    }
+
+    public ConcurrentHashMap<String, Float> getSymbolTable() {
+        return symbolTable;
+    }
+
     public void close(){
         if(!standAlone) {
             try {

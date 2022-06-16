@@ -10,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import view.Charts.RegChart;
+import view.Charts.TabController;
 import viewModel.ViewModel;
 
 import java.net.URL;
@@ -17,7 +18,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class TimeCapsuleController extends BaseController{
+public class TimeCapsuleController extends BaseController implements TabController {
 
     @FXML
     ListView featureListTC;
@@ -105,4 +106,8 @@ public class TimeCapsuleController extends BaseController{
         featureListTC.getItems().addAll(s);
     }
 
+    @Override
+    public void onTabSelection() {
+
+    }
 }

@@ -15,6 +15,7 @@ public class Commands{
     ConcurrentHashMap<Integer, AgentHandler> agents;
     FrontHandler frontHandler;
     BackendModel model;
+    String flight_data_col=null;
     public Commands(BackendModel model, ConcurrentHashMap<Integer, AgentHandler> agents) {
         this.model = model;
         this.agents = agents;
@@ -28,6 +29,8 @@ public class Commands{
         this.commandsMap.put("getKpi",new getKPICommand());
         this.commandsMap.put("updateFlight",new updateFlightCommand());
         this.commandsMap.put("getData",new getDataCommand());
+        this.commandsMap.put("getFeaturesList",new getFeaturesListCommand());
+
     }
 
     public void executeCommand(String command){
@@ -116,6 +119,15 @@ public class Commands{
             int activeFlight = agents.size();
             int inActiveFlight = flights.length - activeFlight;
             frontHandler.outToFront("setKpi~Active "+activeFlight+" inActive "+inActiveFlight);
+        }
+
+    }
+    private class getFeaturesListCommand extends Command{
+        @Override
+        public void execute(String command) {
+            if(flight_data_col==null)
+                flight_data_col = model.getFlight_data_cols().substring(1,model.getFlight_data_cols().length()-1);
+            frontHandler.outToFront("FeaturesList~"+flight_data_col);
         }
 
     }

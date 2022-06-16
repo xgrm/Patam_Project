@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import viewModel.ViewModel;
@@ -28,6 +29,8 @@ public class JoystickController extends BaseController implements Observer {
     Slider rudder;
     @FXML
     Slider throttle;
+    @FXML
+    ChoiceBox<String> agents;
 
     double mx,my;
     DoubleProperty aileron,elevator;
@@ -57,7 +60,6 @@ public class JoystickController extends BaseController implements Observer {
         viewModel = vm;
         aileron = new SimpleDoubleProperty(0);
         elevator = new SimpleDoubleProperty(0);
-        viewModel.addObserver(this);
         viewModel.elevator.bind(elevator);
         viewModel.aileron.bind(aileron);
         viewModel.throttle.bind(throttle.valueProperty());
@@ -65,38 +67,32 @@ public class JoystickController extends BaseController implements Observer {
         mx = joystick.getWidth()/2;
         my = joystick.getHeight()/2;
         paint(mx,my);
-        elevator.setValue(5);
+        agents.setOnMouseClicked((e)->viewModel.exe("getActiveAgents~ "));
+        agents.setOnAction((e)->setBindAgent());
     }
 
     @Override
     public void updateUi(Object obj) {
-
+        if(obj instanceof String){
+            String line = (String) obj;
+            String[] tokens = line.split("~");
+            if(tokens[0].equals("agents")){
+                Platform.runLater(()->{
+                    agents.getItems().clear();
+                    agents.getItems().addAll(tokens[1].split(","));
+                });
+            }
+        }
+    }
+    private void setBindAgent( ){
+        viewModel.exe("setAgentBind~"+agents.getValue());
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        aileron = new SimpleDoubleProperty(0);
-//        elevator = new SimpleDoubleProperty(0);
-//        viewModel.addObserver(this);
-//        viewModel.elevator.bind(elevator);
-//        viewModel.aileron.bind(aileron);
-//        viewModel.throttle.bind(throttle.valueProperty());
-//        viewModel.rudder.bind(rudder.valueProperty());
-//        mx = joystick.getWidth()/2;
-//        my = joystick.getHeight()/2;
-//        paint(mx,my);
-//        elevator.setValue(5);
+
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        Runnable r = ()-> {
-            ConcurrentHashMap<String, Float> symbols = (ConcurrentHashMap<String, Float>) arg;
-            this.aileron.setValue(symbols.get("aileron"));
-            this.elevator.setValue(symbols.get("elevator"));
-            paint(mx * (aileron.doubleValue() + 1), my * (elevator.doubleValue() + 1));
-            throttle.setValue(symbols.get("throttle"));
-            rudder.setValue(symbols.get("rudder"));
-        };
-        Platform.runLater(r);
     }
 }

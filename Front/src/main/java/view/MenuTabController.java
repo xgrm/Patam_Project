@@ -25,15 +25,20 @@ public class MenuTabController extends BaseController implements Initializable, 
 
     @FXML
     SplitPane monitoring;
+    @FXML
+    Tab fleetOverViewTab,monitoringTab,teleoperationTab,timeCapsuleTab;
 
     @FXML
     AnchorPane FleetOverView,Monitoring,Teleopration,TimeCapsule;
+
+    String currentTab;
     public MenuTabController() {
 
     }
     @Override
     public void init(ViewModel vm, Node root) throws Exception{
         this.setViewModel(vm);
+        vm.addObserver(this);
         addPane(FleetOverView, "FleetOverView.fxml",0,0, "Fleet OverView");
         addPane(Monitoring, "Monitoring.fxml", 0,0,"Monitoring");
         addPane(Teleopration, "Teleopration.fxml",0,0, "Teleoperation");
@@ -42,16 +47,29 @@ public class MenuTabController extends BaseController implements Initializable, 
 
     @Override
     public void update(Observable o, Object arg) {
-
+        this.controllers.get(currentTab).updateUi(arg);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        this.currentTab = "FleetOverViewController";
+        fleetOverViewTab.setOnSelectionChanged(e->{
+            this.currentTab = "FleetOverViewController";
+            controllers.get("FleetOverViewController").onTabSelection();
+        });
+        monitoringTab.setOnSelectionChanged(e->{
+            this.currentTab = "MonitoringController";
+            controllers.get("MonitoringController").onTabSelection();
+        });
+        teleoperationTab.setOnSelectionChanged(e->{
+            this.currentTab = "TeleoprationController";
+            controllers.get("TeleoprationController").onTabSelection();
+        });
+        timeCapsuleTab.setOnSelectionChanged(e->{
+            this.currentTab = "TimeCapsuleController";
+            controllers.get("TimeCapsuleController").onTabSelection();
+        });
     }
-
-
-
     @Override
     public void updateUi(Object obj) {
 

@@ -4,12 +4,13 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import view.Charts.TabController;
 import viewModel.ViewModel;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class FleetOverViewController extends BaseController{
+public class FleetOverViewController extends BaseController implements TabController {
 
 
 
@@ -30,4 +31,9 @@ public class FleetOverViewController extends BaseController{
 
     @Override
     public void updateUi(Object obj) {}
+
+    @Override
+    public void onTabSelection() {
+
+    }
 }

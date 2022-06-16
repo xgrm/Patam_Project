@@ -38,6 +38,9 @@ public class BackendModel extends Observable implements Model {
     public String getKPI() { //TODO: need to implement
         return db.getKPI();
     }
+    public String getFlight_data_cols(){
+        return db.getFlight_data_cols();
+    }
 
     @Override
     public void close() {

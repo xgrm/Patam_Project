@@ -13,6 +13,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import view.Charts.TabController;
 import viewModel.ViewModel;
 
 import java.net.URL;
@@ -23,7 +24,7 @@ import java.util.Set;
 
 import static javafx.geometry.Orientation.VERTICAL;
 
-public class MonitoringController extends BaseController {
+public class MonitoringController extends BaseController implements TabController {
     @FXML
     ListView listF;
 
@@ -47,10 +48,14 @@ public class MonitoringController extends BaseController {
         addPane(correlationLineChart,"Charts/LineChart.fxml",0,0,"correlationChart");
         addPane(joystick,"Joystick.fxml",90,70,"correlationChart");
         addPane(clockBoard,"ClockBoard.fxml",-200,-200,"correlationChart");
+
     }
 
     @Override
-    public void updateUi(Object obj) {}
+    public void updateUi(Object obj) {
+        this.controllers.get("ListController").updateUi(obj);
+        this.controllers.get("JoystickController").updateUi(obj);
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        setList("jdfbnhkjd ldjfvdlfjb kdfjlbldkfjbidl maya noy");
@@ -99,4 +104,8 @@ public class MonitoringController extends BaseController {
         scatterc.getData().add(series);
     }
 
+    @Override
+    public void onTabSelection() {
+        this.viewModel.exe("getFeaturesList~ ");
+    }
 }
