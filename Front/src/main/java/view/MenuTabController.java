@@ -15,10 +15,7 @@ import viewModel.ViewModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class MenuTabController extends BaseController implements Initializable, Observer {
@@ -43,6 +40,12 @@ public class MenuTabController extends BaseController implements Initializable, 
         addPane(Monitoring, "Monitoring.fxml", 0,0,0,0,"Monitoring");
         addPane(Teleopration, "Teleopration.fxml",0,0,0,0, "Teleoperation");
         addPane(TimeCapsule, "TimeCapsule.fxml", 0,0,0,0,"Time Capsule");
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {viewModel.exe(new SerializableCommand("getData",""));
+            }
+        }, 0, 100);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package IO;
 
+import view.SerializableCommand;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -21,10 +23,19 @@ public class TelnetIO implements IO{
     }
 
     @Override
+    public SerializableCommand readCommand() {
+        return null;
+    }
+
+    @Override
     public void write(String text) { //TODO: DELETE THE SOUT
         out.print(text+"\r\n");
         out.flush();
-        System.out.println(text);
+    }
+
+    @Override
+    public void write(SerializableCommand command) {
+
     }
 
     @Override

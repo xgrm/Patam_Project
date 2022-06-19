@@ -18,23 +18,20 @@ public class Server {
             server.setSoTimeout(1000);
             while (!stop){
                 try {
-                    Socket client = server.accept();
-                    ch.handle(client.getInputStream(),client.getOutputStream());
-                    client.close();
-                }
-                catch (SocketTimeoutException e){}
+                    Socket client = null;
+                    client = server.accept();
+                    ch.handle(client);
+                    System.out.println("client connected");
+                }catch (IOException e) {}
             }
             server.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
     }
     public void start(int port,ClientHandler ch){
         if(stop){
             this.stop = false;
             new Thread(()->startServer(port,ch)).start();
         }
-
     }
     public void stop(){
         stop = true;

@@ -7,7 +7,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
-import view.Charts.TabController;
 import viewModel.ViewModel;
 import java.net.URL;
 import java.util.*;
@@ -94,20 +93,12 @@ public class MonitoringController extends BaseController {
 
     @Override
     public void onTabSelection() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                    viewModel.exe("getData~ ");
-            }
-        }, 0, 100);
         this.controllers.forEach((key,value)->value.onTabSelection());
-        this.viewModel.exe("getFeaturesList~ ");
+        this.viewModel.exe(new SerializableCommand("getFeaturesList"," "));
     }
 
     @Override
     public void onTabLeave() {
         super.onTabLeave();
-        timer.cancel();
     }
 }

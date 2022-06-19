@@ -3,7 +3,6 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import view.Charts.TabController;
 import viewModel.ViewModel;
 
 import java.net.URL;
@@ -37,19 +36,11 @@ public class TeleoprationController extends BaseController {
 
     @Override
     public void onTabSelection() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                viewModel.exe("getData~ ");
-            }
-        }, 0, 100);
         this.controllers.forEach((key,value)->value.onTabSelection());
     }
 
     @Override
     public void onTabLeave() {
         super.onTabLeave();
-        timer.cancel();
     }
 }

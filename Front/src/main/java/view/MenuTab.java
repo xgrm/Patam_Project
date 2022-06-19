@@ -6,9 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import viewModel.ViewModel;
 
-import java.util.concurrent.Executors;
-
-
 public class MenuTab extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -20,6 +17,8 @@ public class MenuTab extends Application {
         stage.setTitle("Patam Project!");
         stage.setScene(scene);
         stage.show();
+
+
     }
     public static void main(String[] args) {
         launch();

@@ -21,26 +21,17 @@ public class ListController extends BaseController {
 
     @Override
     public void updateUi(Object obj) {
-        if(obj instanceof String){
-            String line = (String) obj;
-            String[] tokens = line.split("~");
-            if(tokens[0].equals("list")){
-                Platform.runLater(()->{
-                    list.getItems().clear();
-                    list.getItems().addAll(line.split(","));
-                });
-            }
+        SerializableCommand command = (SerializableCommand) obj;
+        if(command.getCommandName().intern()=="FeaturesList"){
+            Platform.runLater(()->{
+                list.getItems().clear();
+                list.getItems().addAll(command.getData().split(","));
+            });
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        // featureList.setItems(observableList);
-    }
-    public void  getListFromServer(){
-
-
 
     }
 }

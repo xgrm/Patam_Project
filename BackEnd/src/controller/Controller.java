@@ -1,16 +1,16 @@
 package controller;
 
 import controller.Server.Server;
+import controller.clientHandler.SocketIO;
+import view.SerializableCommand;
 import controller.clientHandler.AgentHandler;
 import controller.clientHandler.ClientHandler;
 import controller.activeObject.ActiveObject;
 import controller.clientHandler.FrontHandler;
-import controller.clientHandler.SocketIO;
 import model.BackendModel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.beans.XMLDecoder;
+import java.io.*;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
@@ -39,16 +39,19 @@ public class Controller implements Observer, ClientHandler {
     }
     public void addNewClient(Socket client){
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String[] tokens = in.readLine().split("~");  // getting the command from the clinet
+            System.out.println("Trying to add a new client");   //TODO: DELETE SOUT
+            SocketIO clientIO = new SocketIO(client.getInputStream(),client.getOutputStream());
+            System.out.println("Open the input stream");
+            SerializableCommand command = (SerializableCommand)clientIO.readCommand();
+            System.out.println("read the object!");
             int id;
-            if(tokens[0].equals("agent")){ // ex for command: "agent~Name"
-                id = model.addFlight(tokens[1],"yes",-1f);  // addind a new flight to db and gets the flight id
-                AgentHandler ag = new AgentHandler(client,id,this.ac); // creating a new agent handler with the flight id
+            if(command.getCommandName().equals("agent")){ // ex for command: "agent~Name"
+                id = model.addFlight(command.getData(),"yes",-1f);  // addind a new flight to db and gets the flight id
+                AgentHandler ag = new AgentHandler(client,clientIO,id,this.ac); // creating a new agent handler with the flight id
                 this.agents.put(id,ag); // adding the agent into the agent map.
             }
             else{
-                new FrontHandler(client,ac);
+                new FrontHandler(client,clientIO,ac);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

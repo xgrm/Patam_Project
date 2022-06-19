@@ -7,6 +7,7 @@ module com.example.front {
     requires org.kordamp.bootstrapfx.core;
     requires javafx.graphics;
     requires Medusa;
+    requires java.desktop;
 
 //    opens com.example.front to javafx.fxml;
 //    exports com.example.front;

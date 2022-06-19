@@ -1,14 +1,10 @@
 package viewModel;
 
-import javafx.application.Platform;
+import IO.SocketIO;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import model.MainModel;
-import model.utils.IO.BackEndIO;
 import viewModel.Commands.Commands;
+import view.SerializableCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +17,7 @@ import java.util.concurrent.Executors;
 
 public class ViewModel extends Observable implements Observer {
     Socket backend;
-    BackEndIO backEndIO;
+    SocketIO backEndIO;
     HashMap<String,String> propMap;
     String[] symbols;
     public DoubleProperty aileron;
@@ -49,7 +45,7 @@ public class ViewModel extends Observable implements Observer {
         if(!standAlone) {
             try {
                 backend = new Socket(propMap.get("backEndIP"), Integer.parseInt(propMap.get("backEndPort")));
-                backEndIO = new BackEndIO(backend.getInputStream(), backend.getOutputStream());
+                backEndIO = new SocketIO(backend.getOutputStream());
                 connectToBackend();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -60,10 +56,10 @@ public class ViewModel extends Observable implements Observer {
         this(propPath,false);
     }
     private void setListeners(){
-        aileron.addListener((o,ov,nv)-> exe("setCommand~Aileron "+nv));
-        elevator.addListener((o,ov,nv)-> exe("setCommand~Elevator "+nv));
-        rudder.addListener((o,ov,nv)-> exe("setCommand~Rudder "+nv));
-        throttle.addListener((o,ov,nv)-> exe("setCommand~Throttle "+nv));
+        aileron.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Aileron "+nv)));
+        elevator.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Elevator "+nv)));
+        rudder.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Rudder "+nv)));
+        throttle.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Throttle "+nv)));
     }
     private void createPropMap(String propPath){
         try {
@@ -95,22 +91,26 @@ public class ViewModel extends Observable implements Observer {
         }
     }
     private void connectToBackend() {
-        backEndIO.write("front~ ");
-        if (backEndIO.readLine().equals("ok"))
-            this.threadPool.execute(() -> inFromBack());
+        try {
+            System.out.println("trying to send object");
+            backEndIO.write(new SerializableCommand("front"," "));
+            backEndIO.setInPutStream(backend.getInputStream());
+            System.out.println("sending the object");
+            if (backEndIO.readCommand().getCommandName().equals("ok"))
+                this.threadPool.execute(() -> inFromBack());
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
     private void inFromBack(){
         System.out.println("connect");
-        String line;
-        while (backEndIO.hasNext()){
-            line = backEndIO.readLine();
-           this.exe(line); // execute the command from back
+        Object command = null;
+        while ((command=backEndIO.readCommand())!=null){
+           this.exe((SerializableCommand) command); // execute the command from back
         }
     }
-    public void exe(String command){
+    public void exe(SerializableCommand command){
         this.threadPool.execute(()->this.commands.executeCommand(command));
     }
-    public void outToBack(String command){
+    public void outToBack(SerializableCommand command){
         if(!standAlone)
             backEndIO.write(command);
         else System.out.println("outToBack: "+command);
@@ -120,7 +120,7 @@ public class ViewModel extends Observable implements Observer {
 
     }
 
-    public void inFromCommand(Object obj){
+    public void inFromCommand(SerializableCommand obj){
         setChanged();
         notifyObservers(obj);
     }

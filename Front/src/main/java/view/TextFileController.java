@@ -24,7 +24,7 @@ public class TextFileController extends BaseController{
         send.setOnAction((e)->{
             if(!sent) {
                 code.setDisable(true);
-                this.viewModel.exe("Interpreter~ " + code.getText());
+                this.viewModel.exe(new SerializableCommand("Interpreter",code.getText()));
                 send.setText("Edit");
                 sent = true;
             }

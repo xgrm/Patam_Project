@@ -14,6 +14,9 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AgentModel extends Observable implements Model {
     String[] symbols;
@@ -26,8 +29,10 @@ public class AgentModel extends Observable implements Model {
     Socket FlightGear;
     volatile boolean stop;
     DecimalFormat df;
+    ExecutorService threadPool;
     public AgentModel(String propPath,String symbolPath) {
         stop = false;
+        this.threadPool = Executors.newFixedThreadPool(2); //TODO: NOT HARD CODED
         this.df = df = new DecimalFormat("#.##");
         this.symbolMap = new ConcurrentHashMap<>();
         this.properties = new HashMap<>();
@@ -59,9 +64,7 @@ public class AgentModel extends Observable implements Model {
     }
     public void startInterpreter(String code){
         Interpreter interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
-        new Thread(()->{
-            interpreter.run(code);
-        }).start();
+        this.threadPool.execute(()->interpreter.run(code));
     }
     public void sendToFG(String path, Float value) {
         outToFG.write("set "+path+" "+df.format(value));
@@ -72,23 +75,36 @@ public class AgentModel extends Observable implements Model {
     }
 
     @Override
-    public void handle(InputStream in, OutputStream out) {
-        TelnetIO inFromFG = new TelnetIO(in,out);
-        String line;
-        String[] propValArr;
-        while (!stop){
-            while (!stop && inFromFG.hasNext()){
-                line = inFromFG.readLine();
-                propValArr = line.split(",");
-                for (int i = 0; i < symbols.length; i++) {
-                    symbolMap.put(symbols[i],Float.parseFloat(propValArr[i]));
+    public void handle(Socket client) {
+        this.threadPool.execute(()->inFromFG(client));
+        this.modelServer.stop();
+    }
+    private void inFromFG(Socket client){
+        TelnetIO inFromFG = null;
+        try {
+            inFromFG = new TelnetIO(client.getInputStream(),client.getOutputStream());
+            String line;
+            String[] propValArr;
+            while (!stop){
+                while (!stop && inFromFG.hasNext()){
+                    line = inFromFG.readLine();
+                    propValArr = line.split(",");
+                    for (int i = 0; i < symbols.length; i++) {
+                        symbolMap.put(symbols[i],Float.parseFloat(propValArr[i]));
+                    }
+                    if(!stop){
+                        this.setChanged();
+                        this.notifyObservers(line);
+                    }
+                    timeSeries.addLine(line);
                 }
-                this.setChanged();
-                this.notifyObservers(line);
-                timeSeries.addLine(line);
             }
+            System.out.println("closing the fg client");  //TODO: DELETE!
+            inFromFG.close();
+            client.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        inFromFG.close();
     }
 
     private void createMapsFromFiles(String propPath,String symbolPath){
@@ -128,14 +144,14 @@ public class AgentModel extends Observable implements Model {
     }
 
     public void closeModel(){
-        modelServer.stop();
-        this.stop = true;
-        outToFG.close();
         try {
+            this.stop = true;
+            outToFG.close();
             FlightGear.close();
+            timeSeries.exportCSV("src/external_files/FlightData.csv");
+            this.threadPool.shutdown();
+            System.out.println("closed");
         } catch (IOException e) {throw new RuntimeException(e);}
-        timeSeries.exportCSV("src/external_files/FlightData.csv");
-        System.out.println("closed");
     }
     @Override
     public void finalize(){

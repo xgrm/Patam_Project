@@ -2,7 +2,6 @@ package view;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -62,9 +61,9 @@ public class JoystickController extends BaseController implements Observer {
         mx = joystick.getWidth()/2;
         my = joystick.getHeight()/2;
         paint(mx,my);
-        agents.setOnMouseClicked((e)->viewModel.exe("getActiveAgents~ "));
+        agents.setOnMouseClicked((e)->viewModel.exe(new SerializableCommand("getActiveAgents"," ")));
         agents.setOnAction((e)->setBindAgent());
-        this.df = df = new DecimalFormat("#.##");
+        this.df = new DecimalFormat("#.##");
 
     }
 
@@ -82,26 +81,30 @@ public class JoystickController extends BaseController implements Observer {
 
     @Override
     public void updateUi(Object obj) {
-        if(obj instanceof String){
-            String line = (String) obj;
-            String[] tokens = line.split("~");
-            if(tokens[0].equals("agents")){
-                Platform.runLater(()->{
-                    agents.getItems().clear();
-                    agents.getItems().addAll(tokens[1].split(","));
-                });
-            }
+        SerializableCommand command = (SerializableCommand) obj;
+        if(command.getCommandName().intern() == "activeAgents"){
+            String[] tokens = command.getData().split(",");
+            Platform.runLater(()->{
+                agents.getItems().clear();
+                agents.getItems().addAll(tokens);
+            });
         }
-        if(obj instanceof ConcurrentHashMap){
-            ConcurrentHashMap<String,Float> symbolMap = (ConcurrentHashMap<String,Float>) obj;
-            this.throttle.setValue(Float.parseFloat(df.format(symbolMap.get("throttle"))));
-            this.aileron.setValue(Float.parseFloat(df.format(symbolMap.get("aileron"))));
-            this.elevator.setValue(Float.parseFloat(df.format(symbolMap.get("elevator"))));
-            this.rudder.setValue(Float.parseFloat(df.format(symbolMap.get("rudder"))));
+        else if(command.getCommandName().intern() == "agentData"){
+                ConcurrentHashMap<String,Float> symbolMap = new ConcurrentHashMap<>(command.getDataMap());
+                this.throttle.setValue(Float.parseFloat(df.format(symbolMap.get("throttle"))));
+                this.aileron.setValue(Float.parseFloat(df.format(symbolMap.get("aileron"))));
+                this.elevator.setValue(Float.parseFloat(df.format(symbolMap.get("elevator"))));
+                this.rudder.setValue(Float.parseFloat(df.format(symbolMap.get("rudder"))));
         }
     }
+
     private void setBindAgent( ){
-        viewModel.exe("setAgentBind~"+agents.getValue());
+        if(agents.getValue().intern()!="none"){
+            SerializableCommand command = new SerializableCommand("setAgentBind"," ");
+            command.setId(Integer.parseInt(agents.getValue()));
+            viewModel.exe(command);
+        }
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

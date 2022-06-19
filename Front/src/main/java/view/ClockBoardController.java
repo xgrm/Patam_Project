@@ -4,6 +4,7 @@ import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.skins.HSkin;
 import eu.hansolo.medusa.skins.LcdSkin;
 import eu.hansolo.medusa.skins.ModernSkin;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import viewModel.ViewModel;
@@ -22,33 +23,19 @@ public class ClockBoardController extends BaseController {
     }
 
 
-
-//        ["ias",         "/instrumentation/airspeed-indicator/indicated-speed-kt"],
-//                ["tas",         "/instrumentation/airspeed-indicator/tas-face-rotation"],
-//                ["roll",        "/instrumentation/attitude-indicator/indicated-roll-deg"],
-//                ["pitch",       "/instrumentation/attitude-indicator/indicated-pitch-deg"],
-//                ["alt",         "/instrumentation/altimeter/indicated-altitude-ft"],
-//                ["heading",     "/instrumentation/heading-indicator/indicated-heading-deg"],
-//                ["headingBug",  "/autopilot/settings/heading-bug-deg"],
-//                ["inhg",        "/instrumentation/altimeter/setting-inhg"],
-//                ["rpm",         "/engines/active-engine/rpm"],
-//                ["turn",        "/instrumentation/turn-indicator/indicated-turn-rate"],
-//                ["slip",        "/instrumentation/slip-skid-ball/indicated-slip-skid"],
-//                ["fpm",         "/instrumentation/vertical-speed-indicator/indicated-speed-fpm"],
-//                ["egt",         "/engines/active-engine/egt-norm"],
-//                ["egtBug",      "/engines/engine/egt-bug-norm"],
-//                ["adf",         "/instrumentation/adf/indicated-bearing-deg"],
-//                ["adf-rotation-deg", "/instrumentation/adf/rotation-deg"],
-
     @Override
     public void updateUi(Object obj) {
-        if(obj instanceof ConcurrentHashMap) {
-            ConcurrentHashMap<String, Float> symbolTable = (ConcurrentHashMap) obj;
-            yaw.setValue(symbolTable.get("indicated-heading-deg"));
-            airSpeed.setValue(symbolTable.get("airspeed-indicator_indicated-speed-kt"));
-            altimeter.setValue(symbolTable.get("altimeter_indicated-altitude-ft"));
-            roll.setValue(symbolTable.get("attitude-indicator_indicated-roll-deg"));
-            pitch.setValue(symbolTable.get("attitude-indicator_indicated-pitch-deg"));
+        SerializableCommand command = (SerializableCommand) obj;
+        if(command.getCommandName().intern() == "agentData") {
+            ConcurrentHashMap<String,Float> symbolTable = new ConcurrentHashMap<>(command.getDataMap());
+            Platform.runLater(()->{
+                yaw.setValue(symbolTable.get("indicated-heading-deg"));
+                airSpeed.setValue(symbolTable.get("airspeed-indicator_indicated-speed-kt"));
+                altimeter.setValue(symbolTable.get("altimeter_indicated-altitude-ft"));
+                roll.setValue(symbolTable.get("attitude-indicator_indicated-roll-deg"));
+                pitch.setValue(symbolTable.get("attitude-indicator_indicated-pitch-deg"));
+            });
+
         }
     }
     @Override

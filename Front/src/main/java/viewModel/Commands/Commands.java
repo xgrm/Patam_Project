@@ -1,8 +1,10 @@
 package viewModel.Commands;
 
 
-import javafx.application.Platform;
+import view.SerializableCommand;
 import viewModel.ViewModel;
+
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Commands {
@@ -29,91 +31,88 @@ public class Commands {
         commandsMap.put("Interpreter",new InterpreterCommand());
     }
 
-    public void executeCommand(String command){
-        String[] tokens = command.split("~");
-        this.commandsMap.get(tokens[0]).execute(tokens[1]);
+    public void executeCommand(SerializableCommand command){
+        this.commandsMap.get(command.getCommandName()).execute(command);
     }
 
 
 
     private abstract class Command {
         public Command() {}
-        public abstract void execute(String command);
+        public abstract void execute(SerializableCommand command);
     }
 
     private class expCommand extends Command{
         @Override
-        public void execute(String command) {
-            System.out.println(command);
+        public void execute(SerializableCommand command) {
+            System.out.println(command.getData());
         }
     }
 
     private class getDataCommand extends Command{
-
         @Override
-        public void execute(String command) {
-            if(agentChosen)
-                viewModel.outToBack("getData~"+id);
+        public void execute(SerializableCommand command) {
+            if(agentChosen) {
+                command.setId(id);
+                viewModel.outToBack(command);
+            }
         }
     }
     private class agentDataCommand extends Command{
-
         @Override
-        public void execute(String command) {
-            String[] data = command.split(",");
-            if (data.length ==symbols.length) {
+        public void execute(SerializableCommand command) { //TODO: CHECK IF TO SEND THE MAP FROM AGENT
+            String[] data = command.getData().split(",");
+            if (data.length == symbols.length) {
                     for (int i = 0; i < symbols.length; i++) {
                         symbolTable.put(symbols[i], Float.parseFloat(data[i]));
                     }
-                    viewModel.inFromCommand(symbolTable);
+                    command.setDataMap(new HashMap<>(symbolTable));
+                    viewModel.inFromCommand(command);
             }
         }
     }
     private class setCommand extends Command{
         @Override
-        public void execute(String command) {
+        public void execute(SerializableCommand command) {
             if(agentChosen) {
-                viewModel.outToBack("setCommand~" + id + " " + command);
+                command.setId(id);
+                viewModel.outToBack(command);
             }
         }
     }
     private class getFeaturesListCommand extends Command{
         @Override
-        public void execute(String command) {
-            viewModel.outToBack("getFeaturesList~ ");
+        public void execute(SerializableCommand command) {
+            viewModel.outToBack(command);
         }
     }
     private class FeaturesListCommand extends Command{
         @Override
-        public void execute(String command) {
-            viewModel.inFromCommand("list~"+command);
+        public void execute(SerializableCommand command) {
+            viewModel.inFromCommand(command);
         }
     }
     private class getActiveAgentsCommand extends Command{
         @Override
-        public void execute(String command) {  ///0,1,2,3
-            viewModel.outToBack("activeAgents~ ");
+        public void execute(SerializableCommand command) {///0,1,2,3
+            command.setCommandName("activeAgents");
+            viewModel.outToBack(command);
         }
     }
 
     private class activeAgentsCommand extends Command{
-
         @Override
-        public void execute(String command) {  ///0,1,2,3
-            String[] agents = command.split(",");
-            if(!agents[0].equals("0"))
-                viewModel.inFromCommand("agents~"+command);
-            else{
-                viewModel.inFromCommand("agents~none, ");
-            }
+        public void execute(SerializableCommand command) {  ///0,1,2,3
+            System.out.println(command.getData());
+                viewModel.inFromCommand(command);
         }
     }
     private class setAgentBindCommand extends Command{
 
         @Override
-        public void execute(String command) {
-            if(command.intern()!="none".intern()){
-                id = Integer.parseInt(command);
+        public void execute(SerializableCommand command) {
+            if(command.getData().intern()!="none"){
+                id = command.getId();
                 agentChosen = true;
             }
             else agentChosen = false;
@@ -123,8 +122,8 @@ public class Commands {
     private class noAgentCommand extends Command{
 
         @Override
-        public void execute(String command) {
-            viewModel.inFromCommand("agents~none, ");
+        public void execute(SerializableCommand command) {
+            viewModel.inFromCommand(new SerializableCommand("agents","none, "));
             agentChosen = false;
         }
     }
@@ -132,8 +131,9 @@ public class Commands {
     private class InterpreterCommand extends Command{
 
         @Override
-        public void execute(String command) {
-            viewModel.outToBack("Interpreter~" + id +"#" + command);
+        public void execute(SerializableCommand command) {
+            command.setId(id);
+            viewModel.outToBack(command);
         }
     }
 

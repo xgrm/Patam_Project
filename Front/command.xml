@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="18.0.1.1" class="java.beans.XMLDecoder">
+ <object class="view.SerializableCommand">
+  <void property="commandName">
+   <string>s</string>
+  </void>
+  <void property="data">
+   <string></string>
+  </void>
+ </object>
+</java>
