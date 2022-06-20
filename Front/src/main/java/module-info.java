@@ -9,6 +9,7 @@ module com.example.front {
     requires Medusa;
     requires java.desktop;
 
+
 //    opens com.example.front to javafx.fxml;
 //    exports com.example.front;
 

@@ -41,9 +41,6 @@ public class TimeCapsuleController extends BaseController {
     public void init(ViewModel vm, Node root) throws Exception {
         this.viewModel = vm;
         addPane(FeatureList, "FeatureList.fxml",13,1,1,1, "featureListTC");
-//        addPane(RegChart, "Charts/RegChart.fxml",0,0,1,1, "regChart");
-//        addPane(changeLineChart, "Charts/LineChart.fxml",0,0,1,1, "changeChart");
-//        addPane(correlationLineChart, "Charts/LineChart.fxml",0,0,1,1, "correlationChart");
         addPane(JoystickClockBoard, "ClockBoard.fxml",43,256, 1,1,"clockBoardTC");
         addPane(JoystickClockBoard, "Joystick.fxml",29,2, 1,1,"staticJoystick");
         addPane(PlayBoard, "PlayBoard.fxml",0,0, 1,1,"playBoard");
