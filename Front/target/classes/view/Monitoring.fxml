@@ -5,54 +5,14 @@
 
 <SplitPane dividerPositions="0.20814732142857145" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="1039.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MonitoringController">
     <items>
-        <AnchorPane fx:id="FeatureList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="201.0">
-
+        <AnchorPane fx:id="FeatureList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="586.0" prefWidth="628.0">
         </AnchorPane>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="668.0" prefWidth="901.0">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="585.0" prefWidth="404.0">
             <children>
-                <SplitPane dividerPositions="0.4949919871794871" prefHeight="584.0" prefWidth="831.0">
-                    <items>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="410.0">
-                            <children>
-                                <SplitPane dividerPositions="0.4205729166666667" orientation="VERTICAL">
-                                    <items>
-                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="272.0" prefWidth="409.0">
-                                            <children>
-                                                <SplitPane dividerPositions="0.4819277108433735" layoutX="-1.0">
-                                                    <items>
-                                                        <AnchorPane fx:id="changeLineChart">
-
-                                                        </AnchorPane>
-                                                        <AnchorPane fx:id="correlationLineChart">
-
-                                                        </AnchorPane>
-                                                    </items>
-                                                </SplitPane>
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane fx:id="scatterc">
-
-                                        </AnchorPane>
-                                    </items>
-                                </SplitPane>
-                            </children>
-                        </AnchorPane>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="582.0" prefWidth="414.0">
-                            <children>
-                                <SplitPane dividerPositions="0.32130584192439865" layoutX="3.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="584.0" prefWidth="411.0">
-                                    <items>
-                                        <AnchorPane fx:id="joystick" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1.0" minWidth="0.0" prefHeight="238.0" prefWidth="205.0">
-
-                                        </AnchorPane>
-                                         <AnchorPane fx:id="clockBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="467.0">
-
-                                         </AnchorPane>
-                                    </items>
-                                </SplitPane>
-                            </children>
-                        </AnchorPane>
-                    </items>
-                </SplitPane>
+                       <AnchorPane fx:id="clockBoard" layoutX="2.0" layoutY="259.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="324.0" prefWidth="404.0">
+                       </AnchorPane>
+                      <AnchorPane fx:id="joystick" layoutX="102.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1.0" minWidth="0.0" prefHeight="242.0" prefWidth="211.0">
+                      </AnchorPane>
             </children>
         </AnchorPane>
     </items>

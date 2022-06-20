@@ -55,7 +55,7 @@ public class Commands{
         @Override
         public void execute(SerializableCommand command) {//id
             AgentHandler agentHandler = agents.get(command.getId());
-            if(agentHandler != null){
+            if(agentHandler != null&&agentHandler.getValues()!=null){
                 frontHandler.outToFront(new SerializableCommand("agentData",agentHandler.getValues()));
             }
             else frontHandler.outToFront(new SerializableCommand("noAgent"," "));

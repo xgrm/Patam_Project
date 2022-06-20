@@ -99,7 +99,7 @@ public class JoystickController extends BaseController implements Observer {
     }
 
     private void setBindAgent( ){
-        if(agents.getValue().intern()!="none"){
+        if((agents.getValue()!=null)&&agents.getValue().intern()!="none"){
             SerializableCommand command = new SerializableCommand("setAgentBind"," ");
             command.setId(Integer.parseInt(agents.getValue()));
             viewModel.exe(command);

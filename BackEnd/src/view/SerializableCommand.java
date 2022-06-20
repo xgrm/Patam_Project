@@ -12,15 +12,27 @@ public class SerializableCommand implements Serializable {
     HashMap<String, Float> dataMap;
     String data;
 
+    Object object;
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
     public SerializableCommand() {
     }
     public SerializableCommand(String commandName,String data) {
         this.commandName = commandName;
         this.data = data;
     }
+
     public int getId() {
         return id;
     }
+
     public String getCommandName() {
         return commandName;
     }
@@ -49,3 +61,4 @@ public class SerializableCommand implements Serializable {
         this.data = data;
     }
 }
+

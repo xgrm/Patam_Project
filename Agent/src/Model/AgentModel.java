@@ -153,8 +153,8 @@ public class AgentModel extends Observable implements Model {
             System.out.println("closed");
         } catch (IOException e) {throw new RuntimeException(e);}
     }
-    @Override
-    public void finalize(){
-        this.closeModel();
-    }
+//    @Override
+//    public void finalize(){
+//        this.closeModel();
+//    }
 }

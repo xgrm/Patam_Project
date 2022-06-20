@@ -21,7 +21,6 @@ public class Server {
                     Socket client = null;
                     client = server.accept();
                     ch.handle(client);
-                    System.out.println("client connected");
                 }catch (IOException e) {}
             }
             server.close();

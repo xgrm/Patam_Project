@@ -46,7 +46,7 @@ public class Commands {
 
         @Override
         public void execute(SerializableCommand value) {
-            System.out.println(value.getCommandName()+" "+value.getData());
+
             model.setAileron(Float.parseFloat(value.getData()));
         }
     }
@@ -58,7 +58,7 @@ public class Commands {
 
         @Override
         public void execute(SerializableCommand value) {
-            System.out.println(value.getCommandName()+" "+value.getData());
+
             model.setElevator(Float.parseFloat(value.getData()));
         }
     }
@@ -70,7 +70,7 @@ public class Commands {
 
         @Override
         public void execute(SerializableCommand value) {
-            System.out.println(value.getCommandName()+" "+value.getData());
+
             model.setRudder(Float.parseFloat(value.getData()));
         }
     }
@@ -82,7 +82,7 @@ public class Commands {
 
         @Override
         public void execute(SerializableCommand value) {
-            System.out.println(value.getCommandName()+" "+value.getData());
+
             model.setThrottle(Float.parseFloat(value.getData()));
         }
     }

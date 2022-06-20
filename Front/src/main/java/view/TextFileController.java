@@ -31,6 +31,7 @@ public class TextFileController extends BaseController{
             else{
                 code.setDisable(false);
                 send.setText("Send");
+                sent = false;
             }
 
         });

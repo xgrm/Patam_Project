@@ -14,7 +14,6 @@ public class LineChart extends Chart {
     public void updateChart(Map<Float, Float> map) {}
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {}
-
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
 

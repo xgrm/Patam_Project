@@ -7,6 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import view.Charts.Chart;
 import viewModel.ViewModel;
 import java.net.URL;
 import java.util.*;
@@ -23,18 +24,15 @@ public class MonitoringController extends BaseController {
     LineChart correlationChart;
 
     @FXML
-    AnchorPane FeatureList,changeLineChart,correlationLineChart,joystick,clockBoard,scatterc;
+    AnchorPane FeatureList,joystick,clockBoard,scatterc;
 
     Timer timer;
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         viewModel = vm;
         addPane(FeatureList,"FeatureList.fxml",0,0,0,0,"listF");
-        addPane(changeLineChart,"Charts/LineChart.fxml",1,35,1,1,"changeChart");
-        addPane(correlationLineChart,"Charts/LineChart.fxml",1,31,1,1,"correlationChart");
-        addPane(scatterc,"Charts/RegChart.fxml",22,4,1,1,"correlationChart");
         addPane(joystick,"Joystick.fxml",0,0,0,0,"joystick");
-        addPane(clockBoard,"ClockBoard.fxml",102,71,2,2,"clockBoard");
+        addPane(clockBoard,"ClockBoard.fxml",101,83,2,2,"clockBoard");
         JoystickController js = (JoystickController) controllers.get("JoystickController");
         js.setJoystickDisable(true);
     }

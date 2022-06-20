@@ -3,6 +3,7 @@ package viewModel;
 import IO.SocketIO;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import model.MainModel;
 import viewModel.Commands.Commands;
 import view.SerializableCommand;
 
@@ -24,12 +25,15 @@ public class ViewModel extends Observable implements Observer {
     public DoubleProperty elevator;
     public DoubleProperty rudder;
     public DoubleProperty throttle;
-    ExecutorService threadPool;
+    public ExecutorService threadPool;
     Commands commands;
     ConcurrentHashMap<String,Float> symbolTable;
     boolean standAlone;
 
-    public ViewModel(String propPath ,boolean standAlone) {
+    MainModel model;
+
+    public ViewModel(String propPath,MainModel model ,boolean standAlone) {
+        this.model = model;
         this.standAlone=standAlone;
         this.propMap = new HashMap<>();
         this.threadPool =  Executors.newFixedThreadPool(4);
@@ -52,8 +56,8 @@ public class ViewModel extends Observable implements Observer {
             }
         }
     }
-    public ViewModel(String propPath){
-        this(propPath,false);
+    public ViewModel(String propPath,MainModel model){
+        this(propPath,model,false);
     }
     private void setListeners(){
         aileron.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Aileron "+nv)));
@@ -131,6 +135,10 @@ public class ViewModel extends Observable implements Observer {
 
     public ConcurrentHashMap<String, Float> getSymbolTable() {
         return symbolTable;
+    }
+
+    public MainModel getModel() {
+        return model;
     }
 
     public void close(){

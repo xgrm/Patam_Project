@@ -33,6 +33,7 @@ encoder_pressure-alt-ft
 gps_indicated-altitude-ft
 gps_indicated-ground-speed-kt
 gps_indicated-vertical-speed
+indicated-heading-offset-deg
 indicated-heading-deg
 magnetic-compass_indicated-heading-deg
 slip-skid-ball_indicated-slip-skid

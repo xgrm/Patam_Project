@@ -1,10 +1,14 @@
 package viewModel.Commands;
 
 
+import model.AnomalyDetection.AnomalyReport;
+import model.AnomalyDetection.CorrelatedFeatures;
 import view.SerializableCommand;
 import viewModel.ViewModel;
 
+import java.awt.image.VolatileImage;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Commands {
@@ -29,6 +33,7 @@ public class Commands {
         commandsMap.put("setAgentBind",new setAgentBindCommand());
         commandsMap.put("noAgent",new noAgentCommand());
         commandsMap.put("Interpreter",new InterpreterCommand());
+        commandsMap.put("getCorrelatedFeatures",new getCorrelatedFeaturesCommand());
     }
 
     public void executeCommand(SerializableCommand command){
@@ -68,6 +73,14 @@ public class Commands {
                     }
                     command.setDataMap(new HashMap<>(symbolTable));
                     viewModel.inFromCommand(command);
+                viewModel.threadPool.execute(()->{
+                    List<AnomalyReport> anomalyReport = viewModel.getModel().detectFromLine(symbolTable);
+                    if(!anomalyReport.isEmpty()){
+                        for (AnomalyReport ar : anomalyReport){
+                            viewModel.inFromCommand(new SerializableCommand("anomalyDetectet",ar.description));
+                        }
+                    }
+                });
             }
         }
     }
@@ -136,7 +149,15 @@ public class Commands {
             viewModel.outToBack(command);
         }
     }
+    private class getCorrelatedFeaturesCommand extends Command{
 
-
+        @Override
+        public void execute(SerializableCommand command) {
+            HashMap<String, CorrelatedFeatures> correlatedFeatures =  viewModel.getModel().getCorrelatedFeatures();
+            command.setCommandName("correlatedFeatures");
+            command.setObject(correlatedFeatures);
+            viewModel.inFromCommand(command);
+        }
+    }
 
 }

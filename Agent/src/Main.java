@@ -30,7 +30,7 @@ public class Main {
 //    }).start();
     new Thread(()->{
         try {
-            Thread.sleep(1000*60*8);
+            Thread.sleep(1000*60*4);
             cn.close();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

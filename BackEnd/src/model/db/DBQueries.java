@@ -24,8 +24,8 @@ public class DBQueries {
                 System.out.println("Connection is established!");
             else System.out.println("Connection failed!");
             scanner.close();
-//            createFlightsTable();
-//            createFlightDataTable();
+            createFlightsTable();
+            createFlightDataTable();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

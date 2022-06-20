@@ -12,6 +12,16 @@ public class SerializableCommand implements Serializable {
     HashMap<String, Float> dataMap;
     String data;
 
+    Object object;
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
     public SerializableCommand() {
     }
     public SerializableCommand(String commandName,String data) {

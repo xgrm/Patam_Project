@@ -39,7 +39,7 @@ public class Interpreter implements Observer {
         }
 
     }
-    public void run(String code){ //TODO: WHAT TO DO WITH THE MODEL!!
+    public void run(String code){
         this.threadPool.execute(()->{parser.run(code);
             mem.model.deleteObserver(this);
             this.threadPool.shutdown();
@@ -54,7 +54,7 @@ public class Interpreter implements Observer {
             Variable v=null;
             for (int i = 0; i < props.length; i++) { // iterate on the fg props to find if one of them is bind
                 if((v=mem.getBindMap().get(props[i]))!=null){  // if the map find prop that bind
-                    v.setValue(Float.parseFloat(lines[i])); // we change the prop!(:
+                    v.setValue(Float.parseFloat(lines[i]),true); // we change the prop!(:
                 }
             }
         });

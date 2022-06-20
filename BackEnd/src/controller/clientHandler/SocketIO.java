@@ -39,9 +39,9 @@ public class SocketIO implements IO{
         try {
             command = (SerializableCommand) in.readObject();
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            System.out.println("expt from read1");
         } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
+            System.out.println("expt from read2");
         }
         return command;
     }
@@ -58,7 +58,9 @@ public class SocketIO implements IO{
                 out.writeObject(command);
                 out.flush();
             }
-        } catch (IOException e) {throw new RuntimeException(e);}
+        } catch (IOException e) {
+            System.out.println("exp from write");
+        }
     }
 
     @Override
