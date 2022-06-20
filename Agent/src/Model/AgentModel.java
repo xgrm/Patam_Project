@@ -1,30 +1,40 @@
 package Model;
 
 import IO.*;
+import Model.Interpreter.Interpreter;
 import Server.ClientHandler;
 import Server.Server;
 import TimeSeries.TimeSeries;
 
 import java.io.*;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class AgentModel extends Observable implements Model, ClientHandler {
+public class AgentModel extends Observable implements Model {
     String[] symbols;
-    HashMap<String,Float> symbolMap;
+    ConcurrentHashMap<String,Float> symbolMap;
+
     HashMap<String,String> properties;
     TimeSeries timeSeries;
     IO outToFG;
     Server modelServer;
     Socket FlightGear;
     volatile boolean stop;
-
+    DecimalFormat df;
+    ExecutorService threadPool;
     public AgentModel(String propPath,String symbolPath) {
         stop = false;
-        this.symbolMap = new HashMap<>();
+        this.threadPool = Executors.newFixedThreadPool(2); //TODO: NOT HARD CODED
+        this.df = df = new DecimalFormat("#.##");
+        this.symbolMap = new ConcurrentHashMap<>();
         this.properties = new HashMap<>();
         this.createMapsFromFiles(propPath,symbolPath);
         timeSeries = new TimeSeries(symbols);
@@ -35,47 +45,66 @@ public class AgentModel extends Observable implements Model, ClientHandler {
 
     @Override
     public void setAileron(double x) {
-        outToFG.write(properties.get("aileron")+" "+x);
+        outToFG.write(properties.get("aileron")+" "+df.format(x));
     }
 
     @Override
     public void setElevator(double x) {
-        outToFG.write(properties.get("elevator")+" "+x);
+        outToFG.write(properties.get("elevator")+" "+df.format(x));
     }
 
     @Override
     public void setRudder(double x) {
-        outToFG.write(properties.get("rudder")+" "+x);
+        outToFG.write(properties.get("rudder")+" "+df.format(x));
     }
 
     @Override
     public void setThrottle(double x) {
-        outToFG.write(properties.get("throttle")+" "+x);
+        outToFG.write(properties.get("throttle")+" "+df.format(x));
     }
-
+    public void startInterpreter(String code){
+        Interpreter interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
+        this.threadPool.execute(()->interpreter.run(code));
+    }
+    public void sendToFG(String path, Float value) {
+        outToFG.write("set "+path+" "+df.format(value));
+    }
     @Override
     public TimeSeries getTimeSeries() {
         return timeSeries;
     }
 
     @Override
-    public void handle(InputStream in, OutputStream out) {
-        TelnetIO inFromFG = new TelnetIO(in,out);
-        String line;
-        String[] propValArr;
-        while (!stop){
-            while (!stop && inFromFG.hasNext()){
-                line = inFromFG.readLine();
-                propValArr = line.split(",");
-                for (int i = 0; i < symbols.length; i++) {
-                    symbolMap.put(symbols[i],Float.parseFloat(propValArr[i]));
+    public void handle(Socket client) {
+        this.threadPool.execute(()->inFromFG(client));
+        this.modelServer.stop();
+    }
+    private void inFromFG(Socket client){
+        TelnetIO inFromFG = null;
+        try {
+            inFromFG = new TelnetIO(client.getInputStream(),client.getOutputStream());
+            String line;
+            String[] propValArr;
+            while (!stop){
+                while (!stop && inFromFG.hasNext()){
+                    line = inFromFG.readLine();
+                    propValArr = line.split(",");
+                    for (int i = 0; i < symbols.length; i++) {
+                        symbolMap.put(symbols[i],Float.parseFloat(propValArr[i]));
+                    }
+                    if(!stop){
+                        this.setChanged();
+                        this.notifyObservers(line);
+                    }
+                    timeSeries.addLine(line);
                 }
-                this.setChanged();
-                this.notifyObservers(line);
-                timeSeries.addLine(line);
             }
+            System.out.println("closing the fg client");  //TODO: DELETE!
+            inFromFG.close();
+            client.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        inFromFG.close();
     }
 
     private void createMapsFromFiles(String propPath,String symbolPath){
@@ -115,16 +144,17 @@ public class AgentModel extends Observable implements Model, ClientHandler {
     }
 
     public void closeModel(){
-        modelServer.stop();
-        this.stop = true;
-        outToFG.close();
         try {
+            this.stop = true;
+            outToFG.close();
             FlightGear.close();
+            timeSeries.exportCSV("src/external_files/FlightData.csv");
+            this.threadPool.shutdown();
+            System.out.println("closed");
         } catch (IOException e) {throw new RuntimeException(e);}
-        timeSeries.exportCSV("FlightData.csv");
     }
-    @Override
-    public void finalize(){
-        this.closeModel();
-    }
+//    @Override
+//    public void finalize(){
+//        this.closeModel();
+//    }
 }

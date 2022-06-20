@@ -3,16 +3,15 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FleetOverViewController">
+<AnchorPane prefHeight="742.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FleetOverViewController">
     <children>
-        <SplitPane dividerPositions="0.667" prefHeight="800.0" prefWidth="1200.0">
+        <SplitPane dividerPositions="0.667" prefHeight="741.0" prefWidth="1200.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="800.0">
-                    <fx:include fx:id="worldMap" source="WorldMap.fxml" />
+                <AnchorPane fx:id="WorldMap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="743.0" prefWidth="796.0">
 
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="400.0">
-                    <fx:include fx:id="dataBoard" source="DataBoard.fxml" />
+                <AnchorPane fx:id="DataBoard" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="400.0">
+
                 </AnchorPane>
             </items>
         </SplitPane>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="770.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DataBoardController">
+<AnchorPane prefHeight="770.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.DataBoardController">
 
     <children>
         <SplitPane dividerPositions="0.49" orientation="VERTICAL" prefHeight="550.0" prefWidth="400.0">

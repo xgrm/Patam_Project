@@ -4,19 +4,23 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-
-import java.io.IOException;
+import model.MainModel;
+import viewModel.ViewModel;
 
 public class MenuTab extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuTab.class.getResource("MenuTab.fxml"));
-        MenuTabController mwc = fxmlLoader.getController();
+        MainModel model = new MainModel();
+        ViewModel vm = new ViewModel("src/main/java/viewModel/prop.txt",model);
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
+        MenuTabController mwc = fxmlLoader.getController();
+        mwc.init(vm,fxmlLoader.getRoot());
         stage.setTitle("Patam Project!");
         stage.setScene(scene);
         stage.show();
+
+
     }
     public static void main(String[] args) {
         launch();
