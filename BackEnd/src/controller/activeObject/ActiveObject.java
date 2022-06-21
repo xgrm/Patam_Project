@@ -13,7 +13,6 @@ public class ActiveObject {
     ExecutorService threadPool;
     public Commands commands;
     public ActiveObject(int maxThreads, BackendModel model, ConcurrentHashMap<Integer, AgentHandler> agents) {
-
         this.threadPool = Executors.newFixedThreadPool(maxThreads);
         this.commands = new Commands(model,agents);
     }

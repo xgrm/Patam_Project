@@ -1,0 +1,2 @@
+localFG,127.0.0.1 5403
+trainingData,src/main/java/model/FlightData.csv

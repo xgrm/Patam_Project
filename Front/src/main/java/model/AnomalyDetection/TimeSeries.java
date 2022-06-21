@@ -3,20 +3,23 @@ package model.AnomalyDetection;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TimeSeries {
     private Map<String, float[]> map;
     private String[] features;
     private int size;
+    private int timeStep;
+
+    private boolean lineByline;
+    private List<CorrelatedFeatures> correlatedFeatures;
 
     public TimeSeries(String csvFileName) {
         Scanner csvFile = null;
         map = new HashMap<>();
         Map<String, ArrayList<Float>> tempMap = new HashMap<>();
+
         // Open the csv file
         try {
             csvFile = new Scanner(new BufferedInputStream(new FileInputStream(csvFileName)));
@@ -31,8 +34,6 @@ public class TimeSeries {
         csvFile.useDelimiter(",|\\n");
         while (csvFile.hasNext()) {
             for (int i = 0; i < props.length; i++){
-                //float f = csvFile.nextFloat();
-                //System.out.println(f);
                 tempMap.get(props[i]).add(csvFile.nextFloat());
             }
         }
@@ -46,6 +47,30 @@ public class TimeSeries {
         }
         this.size= props.length;
         this.features = props;
+    }
+
+    public TimeSeries(String[] features){
+        this.features = features;
+        this.lineByline = true;
+        this.map = new HashMap<>();
+        this.timeStep = 0;
+        for (String feature: features){
+            this.map.put(feature,new float[500]);
+        }
+    }
+
+    public void addLine(ConcurrentHashMap<String,Float> data){
+        if(lineByline){
+            if (timeStep>map.get(features[0]).length-1){
+                map.forEach((k,v)->{
+                    float[] temp = new float[v.length*2];
+                    System.arraycopy(v,0,temp,0,v.length);
+                    map.put(k,temp);
+                });
+            }
+            map.forEach((k,v)->this.map.get(k)[timeStep] = data.get(k));
+            timeStep++;
+        }
     }
 
     private float[] FloatToPrimitive(Float[] arr) {
@@ -71,5 +96,13 @@ public class TimeSeries {
 
     public String[] getFeatures() {
         return features;
+    }
+
+    public void setCorrelatedFeatures(List<CorrelatedFeatures> correlatedFeatures) {
+        this.correlatedFeatures = correlatedFeatures;
+    }
+
+    public List<CorrelatedFeatures> getCorrelatedFeatures() {
+        return correlatedFeatures;
     }
 }

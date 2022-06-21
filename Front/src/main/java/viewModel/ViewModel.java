@@ -2,7 +2,10 @@ package viewModel;
 
 import IO.SocketIO;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.stage.Stage;
 import model.MainModel;
 import viewModel.Commands.Commands;
 import view.SerializableCommand;
@@ -25,6 +28,7 @@ public class ViewModel extends Observable implements Observer {
     public DoubleProperty elevator;
     public DoubleProperty rudder;
     public DoubleProperty throttle;
+    public IntegerProperty timeStep;
     public ExecutorService threadPool;
     Commands commands;
     ConcurrentHashMap<String,Float> symbolTable;
@@ -32,8 +36,13 @@ public class ViewModel extends Observable implements Observer {
 
     MainModel model;
 
-    public ViewModel(String propPath,MainModel model ,boolean standAlone) {
+    Stage stage;
+
+    public ViewModel(String propPath,MainModel model,Stage stage ,boolean standAlone) {
+        this.stage = stage;
+        this.timeStep = new SimpleIntegerProperty();
         this.model = model;
+        model.addObserver(this);
         this.standAlone=standAlone;
         this.propMap = new HashMap<>();
         this.threadPool =  Executors.newFixedThreadPool(4);
@@ -56,14 +65,15 @@ public class ViewModel extends Observable implements Observer {
             }
         }
     }
-    public ViewModel(String propPath,MainModel model){
-        this(propPath,model,false);
+    public ViewModel(String propPath,MainModel model,Stage stage){
+        this(propPath,model,stage,false);
     }
     private void setListeners(){
         aileron.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Aileron "+nv)));
         elevator.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Elevator "+nv)));
         rudder.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Rudder "+nv)));
         throttle.addListener((o,ov,nv)-> exe(new SerializableCommand("setCommand","Throttle "+nv)));
+        timeStep.addListener((o,ov,nv)-> model.setTimeStep((Integer) nv));
     }
     private void createPropMap(String propPath){
         try {
@@ -121,7 +131,8 @@ public class ViewModel extends Observable implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-
+        setChanged();
+        notifyObservers(arg);
     }
 
     public void inFromCommand(SerializableCommand obj){
@@ -139,6 +150,10 @@ public class ViewModel extends Observable implements Observer {
 
     public MainModel getModel() {
         return model;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
     public void close(){

@@ -34,6 +34,11 @@ public class Commands {
         commandsMap.put("noAgent",new noAgentCommand());
         commandsMap.put("Interpreter",new InterpreterCommand());
         commandsMap.put("getCorrelatedFeatures",new getCorrelatedFeaturesCommand());
+        commandsMap.put("play",new playCommand());
+        commandsMap.put("setSpeed",new setSpeedCommand());
+        commandsMap.put("stop",new stopCommand());
+        commandsMap.put("pause",new pauseCommand());
+        commandsMap.put("setPath",new setPathCommand());
     }
 
     public void executeCommand(SerializableCommand command){
@@ -159,5 +164,39 @@ public class Commands {
             viewModel.inFromCommand(command);
         }
     }
+    private class playCommand extends Command{
 
+        @Override
+        public void execute(SerializableCommand command) {
+            viewModel.getModel().play();
+        }
+    }
+    private class setSpeedCommand extends Command{
+
+        @Override
+        public void execute(SerializableCommand command) {
+            viewModel.getModel().setSpeed(Long.parseLong(command.getData()));
+        }
+    }
+    private class stopCommand extends Command{
+
+        @Override
+        public void execute(SerializableCommand command) {
+            viewModel.getModel().stop();
+        }
+    }
+    private class pauseCommand extends Command{
+
+        @Override
+        public void execute(SerializableCommand command) {
+            viewModel.getModel().pause();
+        }
+    }
+    private class setPathCommand extends Command{
+
+        @Override
+        public void execute(SerializableCommand command) {
+            viewModel.getModel().setPlayerPath(command.getData());
+        }
+    }
 }

@@ -12,23 +12,38 @@ import model.BackendModel;
 import java.beans.XMLDecoder;
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Controller implements Observer, ClientHandler {
     BackendModel model;
     ActiveObject ac;
     ConcurrentHashMap<Integer, AgentHandler> agents;
+    HashMap<String,String> propMap;
     Server server;
-    public Controller(BackendModel model) {
+    public Controller(String propPath, BackendModel model) {
         this.model = model;
         this.agents = new ConcurrentHashMap<>();
-        this.ac = new ActiveObject(5,model,this.agents);
+        this.propMap = new HashMap<>();
+        createPropMap(propPath);
+        this.ac = new ActiveObject(Integer.parseInt(propMap.get("maxThreads")),model,this.agents);
         server = new Server();
-        server.start(5500,this);    //TODO: FROm PROP FILE
+        server.start(Integer.parseInt(propMap.get("controllerPort")),this);
     }
-
+    private void createPropMap(String path){
+        try {
+            Scanner scanner = new Scanner(new File(path));
+            String[] tokens;
+            while (scanner.hasNext()){
+                tokens = scanner.nextLine().split(",");
+                this.propMap.put(tokens[0],tokens[1]);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {throw new RuntimeException(e);}
+    }
     @Override
     public void update(Observable o, Object arg) {
 

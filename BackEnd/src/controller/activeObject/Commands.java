@@ -13,7 +13,7 @@ public class Commands{
     ConcurrentHashMap<Integer, AgentHandler> agents;
     FrontHandler frontHandler;
     BackendModel model;
-    String flight_data_col=null;
+    String featuresList=null;
     public Commands(BackendModel model, ConcurrentHashMap<Integer, AgentHandler> agents) {
         this.model = model;
         this.agents = agents;
@@ -127,9 +127,9 @@ public class Commands{
     private class getFeaturesListCommand extends Command{
         @Override
         public void execute(SerializableCommand command) {
-            if(flight_data_col==null)
-                flight_data_col = model.getFlight_data_cols().substring(1,model.getFlight_data_cols().length()-1);
-            frontHandler.outToFront(new SerializableCommand("FeaturesList",flight_data_col));
+            if(featuresList==null)
+                featuresList = model.getFeaturesList();
+            frontHandler.outToFront(new SerializableCommand("FeaturesList",featuresList));
         }
 
     }

@@ -20,15 +20,15 @@ public class StatLib {
         return (float) sum/i;
     }
     // returns the variance of X
-    public static float var(float[] x){
-        float a = avg(x);
-        int len = x.length;
+    public static float var(float[] X){
+        float avg = avg(X);
+        int len = X.length;
         float sum = 0;
-        for(float i:x){
-            sum+= (float) Math.pow(i-a,2);
+        for(float x:X){
+            sum += (float) Math.pow(x-avg,2);
         }
 
-        return (float) sum/len;
+        return sum/len;
     }
 
     // returns the variance of X until the index i
@@ -36,24 +36,25 @@ public class StatLib {
         float a = avg(X,i);
         float sum = 0;
         for (int j = 0; j <= i ; j++)
-            sum+= (float) Math.pow(i-a,2);
-        return (float) sum/i;
+            sum+= (float) Math.pow(X[i]-a,2);
+        return sum/(i+1);
     }
 
     // returns the covariance of X and Y
     public static float cov(float[] x, float[] y){
-        float[] xy = (float[]) x.clone();
-        for (int i = 0; i<xy.length; i++){
-            xy[i]*=y[i];
+        float sum = 0;
+        float avgX = avg(x);
+        float avgY = avg(y);
+        for (int i = 0; i < x.length; i++) {
+            sum+=(x[i]-avgX)*(y[i]-avgY);
         }
-        return avg(xy)-avg(x)*avg(y);
+        return (sum/ x.length);
     }
 
 
     // returns the Pearson correlation coefficient of X and Y
     public static float pearson(float[] x, float[] y){
-
-        float p = (float) (cov(x, y) / (Math.sqrt(var(x)) * Math.sqrt(var(y))));
+        float p = (float) (cov(x, y) / ( Math.sqrt(var(x)) * Math.sqrt(var(y)) ));
         return p;
     }
 

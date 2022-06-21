@@ -28,7 +28,7 @@
                                  <children>
                                     <LineChart fx:id="regLine1" prefHeight="280.0" prefWidth="180.0">
                                       <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <NumberAxis side="BOTTOM" />
                                       </xAxis>
                                       <yAxis>
                                         <NumberAxis side="LEFT" />
@@ -40,7 +40,7 @@
                                  <children>
                                     <LineChart fx:id="regLine2" prefHeight="280.0" prefWidth="180.0">
                                       <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <NumberAxis side="BOTTOM" />
                                       </xAxis>
                                       <yAxis>
                                         <NumberAxis side="LEFT" />
@@ -56,10 +56,10 @@
                      <children>
                         <LineChart fx:id="visRegLine" prefHeight="285.0" prefWidth="419.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis side="BOTTOM" fx:id="xAxis" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis side="LEFT" fx:id="yAxis"/>
                           </yAxis>
                         </LineChart>
                      </children>

@@ -19,7 +19,7 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
     public SimpleAnomalyDetector() {
         this.correlatedFeatures =new ArrayList<>();
         this.correlatedFeaturesHashMap = new HashMap<>();
-        this.threshold = 0.8F;
+        this.threshold = 0.95F;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
         for (int i = 0; i< ts.getSize();i++){
             String feature1 = ts.getFeatures()[i];
             String feature2 = null;
-            float person = 0;
+            float person = -1;
             float tempPerson;
             for (int j = i+1; j< ts.getSize();j++){
                 tempPerson = Math.abs(StatLib.pearson(ts.GetValueByProp(ts.getFeatures()[i]),ts.GetValueByProp(ts.getFeatures()[j])));
@@ -36,12 +36,14 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
                     feature2 = ts.getFeatures()[j];
                 }
             }
-            if(feature2!=null && person>threshold)
+            if(feature2!=null)
                 AddCorrelatedFeatures(ts,feature1,feature2,person);
         }
+        ts.setCorrelatedFeatures(this.correlatedFeatures);
     }
 
     public void AddCorrelatedFeatures(TimeSeries ts, String feature1, String feature2,float person){
+        System.out.println(feature1+" "+feature2+" "+person);
         float threshold =0;
         float[] arr1 = ts.GetValueByProp(feature1);
         float[] arr2 = ts.GetValueByProp(feature2);
@@ -78,17 +80,19 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
         }
         return  lst;
     }
-
+    @Override
     public List<AnomalyReport> detectFromLine(ConcurrentHashMap<String,Float> data) {
 
         List<AnomalyReport> lst = new LinkedList<>();
         for(CorrelatedFeatures corFeat : correlatedFeatures){
-            String feature1 = corFeat.feature1;
-            String feature2 = corFeat.feature2;
-            Line lin_reg = corFeat.lin_reg;
-            float threshold = corFeat.threshold;
-            if(StatLib.dev(new Point(data.get(feature1),data.get(feature2)),lin_reg)>threshold){
-                    lst.add(new AnomalyReport(feature1+"-"+feature2,feature1,feature2,1));
+            if(corFeat.correlation>=this.threshold) {
+                String feature1 = corFeat.feature1;
+                String feature2 = corFeat.feature2;
+                Line lin_reg = corFeat.lin_reg;
+                float threshold = corFeat.threshold;
+                if (StatLib.dev(new Point(data.get(feature1), data.get(feature2)), lin_reg) > threshold) {
+                    lst.add(new AnomalyReport(feature1 + "-" + feature2, feature1, feature2, 1));
+                }
             }
         }
         return  lst;

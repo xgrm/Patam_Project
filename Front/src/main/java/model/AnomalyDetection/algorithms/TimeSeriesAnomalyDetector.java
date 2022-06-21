@@ -10,4 +10,6 @@ public interface TimeSeriesAnomalyDetector {
     void learnNormal(TimeSeries ts);
     List<AnomalyReport> detect(TimeSeries ts);
 
+    public List<AnomalyReport> detectFromLine(ConcurrentHashMap<String,Float> data);
+
 }
