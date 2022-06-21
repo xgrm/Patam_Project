@@ -46,6 +46,7 @@ public class PlayController extends BaseController{
         this.viewModel = vm;
         this.stage = viewModel.getStage();
         this.viewModel.timeStep.bind(timeSlider.valueProperty());
+        this.timeSlider.setMin(1);
         setDisable();
         this.fileChooser = new FileChooser();
 
@@ -88,7 +89,6 @@ public class PlayController extends BaseController{
             this.timeStepSize = Integer.parseInt(command.getData());
             this.timeSlider.setMax(this.timeStepSize);
             setTimeLine();
-//            setLabel(0);
         }
     }
 
@@ -127,9 +127,7 @@ public class PlayController extends BaseController{
     private void setLabel(double timeStep){ //TODO: FIX THE TIME CALC
         float sec = (float)(timeStepSize-timeStep)*(float) 100 /(float)1000;
         SimpleDateFormat df = new SimpleDateFormat("mm:ss");
-
         String re = df.format(new Date((long) (sec/60)));
-        System.out.println(sec+" "+re);
         time.setText(re);
     }
     public void play(ActionEvent actionEvent) {

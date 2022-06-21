@@ -49,45 +49,7 @@ public class MonitoringController extends BaseController {
 //        enterRegChart("8 100 4 55.5 14 50 3 30.5 16 85");
 
     }
-    public void  setList(String features){
-        String[] str=features.split(" ");
-        Set<String> s= new HashSet<>();
-        for(String string:str){
-            s.add(string);
-        }
 
-        listF.getItems().addAll(s);
-    }
-    public void enterLineChartChange(String data){
-        XYChart.Series setLineChart=new XYChart.Series<>();
-        String[] str=data.split(" ");
-        int i=0;
-        for(String s:str){
-            setLineChart.getData().add(new XYChart.Data<>("7",Double.parseDouble(str[i])));
-            i++;
-        }
-        changeChart.getData().add(setLineChart);
-    }
-    public void enterLineChartCorrelation(String data){
-        XYChart.Series setLineChart=new XYChart.Series<>();
-        String[] str=data.split(" ");
-        int i=0;
-        for(String s:str){
-            setLineChart.getData().add(new XYChart.Data<>("7",Double.parseDouble(str[i])));
-            i++;
-        }
-        correlationChart.getData().add(setLineChart);
-    }
-
-    public void enterRegChart(String data) {
-//        String[] str=data.split(" ");
-//        XYChart.Series series=new XYChart.Series();
-//        for(int i=0; i< str.length; i+=2){
-//            series.getData().add(new XYChart.Data(str[i],Double.parseDouble((str[i+1]))));
-//        }
-//
-//        scatterc.getData().add(series);
-    }
 
     @Override
     public void onTabSelection() {

@@ -131,8 +131,13 @@ public class ViewModel extends Observable implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-        setChanged();
-        notifyObservers(arg);
+        SerializableCommand command = (SerializableCommand) arg;
+        if(command.getCommandName().intern() == "agentData")
+            exe(command);
+        else{
+            setChanged();
+            notifyObservers(arg);
+        }
     }
 
     public void inFromCommand(SerializableCommand obj){

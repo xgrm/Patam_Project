@@ -9,6 +9,8 @@ import model.AnomalyDetection.utils.Point;
 import model.MainModel;
 import viewModel.ViewModel;
 
+import java.text.DecimalFormat;
+
 public class MenuTab extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -21,6 +23,7 @@ public class MenuTab extends Application {
         stage.setTitle("Patam Project!");
         stage.setScene(scene);
         stage.show();
+
     }
     public static void main(String[] args) {
         launch();

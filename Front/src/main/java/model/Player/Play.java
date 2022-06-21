@@ -2,16 +2,18 @@ package model.Player;
 
 
 import IO.TelnetIO;
+import view.SerializableCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Observable;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Play {
+public class Play extends Observable {
     String path;
     volatile boolean pause;
     volatile boolean stop;
@@ -29,7 +31,7 @@ public class Play {
         this.pause = false;
         this.stop = false;
         this.speed = 1;
-        this.timeStep = 0;
+        this.timeStep = 1;
         thread = Executors.newFixedThreadPool(1);
     }
 
@@ -68,6 +70,8 @@ public class Play {
                 for (; !this.pause && timeStep < csvData.length; timeStep++) {
                     String line = csvData[timeStep];
                     io.write(line);
+                    setChanged();
+                    notifyObservers(new SerializableCommand("agentData",line));
                     Thread.sleep(100/speed);
                 }
                 if(timeStep > csvData.length) this.stop();

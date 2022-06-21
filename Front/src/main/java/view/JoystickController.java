@@ -44,7 +44,11 @@ public class JoystickController extends BaseController implements Observer {
         aileron.setValue((x-mx)/mx);
         elevator.setValue((y-my)/my);
     }
-
+    public void paintFromFG(double x, double y){
+        GraphicsContext gc = joystick.getGraphicsContext2D();
+        gc.clearRect(0,0,joystick.getWidth(),joystick.getHeight());
+        gc.strokeOval(x-50,y-50,100,100);
+    }
     public void onMouseDragged(MouseEvent me){
         paint(me.getX(), me.getY());
     }
@@ -63,7 +67,7 @@ public class JoystickController extends BaseController implements Observer {
         paint(mx,my);
         agents.setOnMouseClicked((e)->viewModel.exe(new SerializableCommand("getActiveAgents"," ")));
         agents.setOnAction((e)->setBindAgent());
-        this.df = new DecimalFormat("#.##");
+        this.df = new DecimalFormat("##.##");
 
     }
 
@@ -90,11 +94,10 @@ public class JoystickController extends BaseController implements Observer {
             });
         }
         else if(command.getCommandName().intern() == "agentData"){
-                ConcurrentHashMap<String,Float> symbolMap = new ConcurrentHashMap<>(command.getDataMap());
-                this.throttle.setValue(Float.parseFloat(df.format(symbolMap.get("throttle"))));
-                this.aileron.setValue(Float.parseFloat(df.format(symbolMap.get("aileron"))));
-                this.elevator.setValue(Float.parseFloat(df.format(symbolMap.get("elevator"))));
-                this.rudder.setValue(Float.parseFloat(df.format(symbolMap.get("rudder"))));
+            ConcurrentHashMap<String,Float> symbolMap = new ConcurrentHashMap<>(command.getDataMap());
+            this.throttle.setValue(Float.parseFloat(df.format(symbolMap.get("throttle"))));
+            this.rudder.setValue(Float.parseFloat(df.format(symbolMap.get("rudder"))));
+            paint((mx*Float.parseFloat(df.format(symbolMap.get("aileron"))))+mx,(my*Float.parseFloat(df.format(symbolMap.get("elevator"))))+my);
         }
     }
 

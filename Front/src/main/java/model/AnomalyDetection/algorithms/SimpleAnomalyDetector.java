@@ -43,7 +43,6 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
     }
 
     public void AddCorrelatedFeatures(TimeSeries ts, String feature1, String feature2,float person){
-        System.out.println(feature1+" "+feature2+" "+person);
         float threshold =0;
         float[] arr1 = ts.GetValueByProp(feature1);
         float[] arr2 = ts.GetValueByProp(feature2);

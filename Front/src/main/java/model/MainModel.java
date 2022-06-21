@@ -10,13 +10,10 @@ import view.SerializableCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MainModel extends Observable implements Model{
+public class MainModel extends Observable implements Model, Observer {
     AnomalyDetector anomalyDetector;
     Play play;
     HashMap<String,String> propMap;
@@ -26,7 +23,7 @@ public class MainModel extends Observable implements Model{
         createPropMap(path);
         anomalyDetector = new AnomalyDetector(propMap.get("trainingData"));
         play = new Play(propMap.get("localFG"));
-//        setPlayerPath("src/main/java/viewModel/FlightData.csv");
+        this.play.addObserver(this);
     }
     private void createPropMap(String path){
         try {
@@ -64,5 +61,11 @@ public class MainModel extends Observable implements Model{
         int timeStepsSize = play.setPath(path);
         setChanged();
         notifyObservers(new SerializableCommand("timeStepsSize",String.valueOf(timeStepsSize)));
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        setChanged();
+        notifyObservers(arg);
     }
 }

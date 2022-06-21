@@ -44,8 +44,8 @@ public class TimeCapsuleController extends BaseController {
         addPane(JoystickClockBoard, "ClockBoard.fxml",43,256, 1,1,"clockBoardTC");
         addPane(JoystickClockBoard, "Joystick.fxml",29,2, 1,1,"staticJoystick");
         addPane(PlayBoard, "PlayBoard.fxml",0,0, 1,1,"playBoard");
-
-
+        JoystickController js = (JoystickController) controllers.get("JoystickController");
+        js.setJoystickDisable(true);
     }
 
     @Override

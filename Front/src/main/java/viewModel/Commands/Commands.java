@@ -68,6 +68,7 @@ public class Commands {
             }
         }
     }
+
     private class agentDataCommand extends Command{
         @Override
         public void execute(SerializableCommand command) { //TODO: CHECK IF TO SEND THE MAP FROM AGENT
