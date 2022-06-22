@@ -61,8 +61,10 @@ public class Controller implements Observer, ClientHandler {
             System.out.println("read the object!");
             int id;
             if(command.getCommandName().equals("agent")){ // ex for command: "agent~Name"
-                id = model.addFlight(command.getData(),"yes",-1f);  // addind a new flight to db and gets the flight id
+                String name = command.getData();
+                id = model.addFlight(name,"yes",-1f);  // addind a new flight to db and gets the flight id
                 AgentHandler ag = new AgentHandler(client,clientIO,id,this.ac); // creating a new agent handler with the flight id
+                ag.setName(name);
                 this.agents.put(id,ag); // adding the agent into the agent map.
             }
             else{

@@ -26,7 +26,7 @@ public class MonitoringController extends BaseController {
     @FXML
     AnchorPane FeatureList,joystick,clockBoard,scatterc;
 
-    Timer timer;
+
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         viewModel = vm;

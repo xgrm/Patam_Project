@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Commands {
     int id;
+    int mapData;
     volatile boolean agentChosen = false;
     ConcurrentHashMap<String,Command> commandsMap;
     String[] symbols;
@@ -21,6 +22,7 @@ public class Commands {
     public Commands(ViewModel viewModel) {
         this.commandsMap = new ConcurrentHashMap<>();
         this.viewModel = viewModel;
+        mapData = 1;
         symbols = viewModel.getSymbols();
         symbolTable = viewModel.getSymbolTable();
         commandsMap.put("getData",new getDataCommand());
@@ -37,6 +39,8 @@ public class Commands {
         commandsMap.put("play",new playCommand());
         commandsMap.put("stop",new stopCommand());
         commandsMap.put("setPath",new setPathCommand());
+        commandsMap.put("setMapData",new setMapDataCommand());
+        commandsMap.put("mapData",new mapDataCommand());
     }
 
     public void executeCommand(SerializableCommand command){
@@ -61,12 +65,14 @@ public class Commands {
         @Override
         public void execute(SerializableCommand command) {
             if(agentChosen) {
+                if(mapData==1)
+                    command.setObject(1);
+                else command.setObject(0);
                 command.setId(id);
                 viewModel.outToBack(command);
             }
         }
     }
-
     private class agentDataCommand extends Command{
         @Override
         public void execute(SerializableCommand command) { //TODO: CHECK IF TO SEND THE MAP FROM AGENT
@@ -119,7 +125,6 @@ public class Commands {
     private class activeAgentsCommand extends Command{
         @Override
         public void execute(SerializableCommand command) {  ///0,1,2,3
-            System.out.println(command.getData());
                 viewModel.inFromCommand(command);
         }
     }
@@ -139,6 +144,7 @@ public class Commands {
         @Override
         public void execute(SerializableCommand command) {
             viewModel.inFromCommand(new SerializableCommand("agents","none, "));
+            viewModel.inFromCommand(command);
             agentChosen = false;
         }
     }
@@ -178,6 +184,18 @@ public class Commands {
         @Override
         public void execute(SerializableCommand command) {
             viewModel.getModel().setPlayerPath(command.getData());
+        }
+    }
+    private class setMapDataCommand extends Command{
+        @Override
+        public void execute(SerializableCommand command) {
+            mapData = command.getId();
+        }
+    }
+    private class mapDataCommand extends Command{
+        @Override
+        public void execute(SerializableCommand command) {
+            viewModel.inFromCommand(command);
         }
     }
 }

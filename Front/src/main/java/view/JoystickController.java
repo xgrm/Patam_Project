@@ -95,9 +95,9 @@ public class JoystickController extends BaseController implements Observer {
         }
         else if(command.getCommandName().intern() == "agentData"){
             ConcurrentHashMap<String,Float> symbolMap = new ConcurrentHashMap<>(command.getDataMap());
-            this.throttle.setValue(Float.parseFloat(df.format(symbolMap.get("throttle"))));
-            this.rudder.setValue(Float.parseFloat(df.format(symbolMap.get("rudder"))));
-            paint((mx*Float.parseFloat(df.format(symbolMap.get("aileron"))))+mx,(my*Float.parseFloat(df.format(symbolMap.get("elevator"))))+my);
+            this.throttle.setValue(symbolMap.get("throttle"));
+            this.rudder.setValue(symbolMap.get("rudder"));
+            paint((mx*symbolMap.get("aileron"))+mx,(my*symbolMap.get("elevator"))+my);
         }
     }
 

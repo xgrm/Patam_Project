@@ -6,6 +6,6 @@
 
 <ImageView fx:id="plane" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <image>
-      <Image url="@../images/airplane.png" />
+      <Image url="@images/airplane.svg" />
    </image>
 </ImageView>

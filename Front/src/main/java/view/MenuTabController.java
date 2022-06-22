@@ -55,18 +55,22 @@ public class MenuTabController extends BaseController implements Initializable, 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.currentTab = "FleetOverViewController";
         fleetOverViewTab.setOnSelectionChanged(e->{
+            controllers.get(currentTab).onTabLeave();
             this.currentTab = "FleetOverViewController";
             controllers.get("FleetOverViewController").onTabSelection();
         });
         monitoringTab.setOnSelectionChanged(e->{
+            controllers.get(currentTab).onTabLeave();
             this.currentTab = "MonitoringController";
             controllers.get("MonitoringController").onTabSelection();
         });
         teleoperationTab.setOnSelectionChanged(e->{
+            controllers.get(currentTab).onTabLeave();
             this.currentTab = "TeleoprationController";
             controllers.get("TeleoprationController").onTabSelection();
         });
         timeCapsuleTab.setOnSelectionChanged(e->{
+            controllers.get(currentTab).onTabLeave();
             this.currentTab = "TimeCapsuleController";
             controllers.get("TimeCapsuleController").onTabSelection();
         });

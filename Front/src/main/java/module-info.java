@@ -8,6 +8,8 @@ module com.example.front {
     requires javafx.graphics;
     requires Medusa;
     requires java.desktop;
+    requires com.sothawo.mapjfx;
+    requires org.slf4j;
 
 
 //    opens com.example.front to javafx.fxml;

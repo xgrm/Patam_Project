@@ -14,6 +14,7 @@ public class TeleoprationController extends BaseController {
 
     @FXML
     AnchorPane TextFile,Joystick,ClockBoard;
+
     Timer timer;
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
