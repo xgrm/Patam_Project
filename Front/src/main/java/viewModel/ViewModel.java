@@ -37,8 +37,10 @@ public class ViewModel extends Observable implements Observer {
     MainModel model;
 
     Stage stage;
+    long updateRate;
 
     public ViewModel(String propPath,MainModel model,Stage stage ,boolean standAlone) {
+        this.symbolTable = new ConcurrentHashMap<>();
         this.stage = stage;
         this.timeStep = new SimpleIntegerProperty();
         this.model = model;
@@ -51,9 +53,9 @@ public class ViewModel extends Observable implements Observer {
         this.rudder = new SimpleDoubleProperty();
         this.throttle = new SimpleDoubleProperty();
         setListeners();
-        this.symbolTable = new ConcurrentHashMap<>();
         createPropMap(propPath);
         createSymbol(propMap.get("symbolsPath"));
+        this.updateRate = Long.parseLong(propMap.get("updateRate"));
         this.commands = new Commands(this);
         if(!standAlone) {
             try {
@@ -159,6 +161,10 @@ public class ViewModel extends Observable implements Observer {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public long getUpdateRate() {
+        return updateRate;
     }
 
     public void close(){

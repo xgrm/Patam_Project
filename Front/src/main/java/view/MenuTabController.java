@@ -21,8 +21,6 @@ import java.util.*;
 public class MenuTabController extends BaseController implements Initializable, Observer {
 
     @FXML
-    SplitPane monitoring;
-    @FXML
     Tab fleetOverViewTab,monitoringTab,teleoperationTab,timeCapsuleTab;
 
     @FXML
@@ -45,7 +43,7 @@ public class MenuTabController extends BaseController implements Initializable, 
             @Override
             public void run() {viewModel.exe(new SerializableCommand("getData",""));
             }
-        }, 0, 100);
+        }, 0, viewModel.getUpdateRate());
     }
 
     @Override

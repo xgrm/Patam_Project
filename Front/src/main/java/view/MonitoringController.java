@@ -54,7 +54,6 @@ public class MonitoringController extends BaseController {
     @Override
     public void onTabSelection() {
         this.controllers.forEach((key,value)->value.onTabSelection());
-        this.viewModel.exe(new SerializableCommand("getFeaturesList"," "));
     }
 
     @Override
