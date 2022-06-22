@@ -63,7 +63,7 @@ public class PlayController extends BaseController{
     public void updateUi(Object obj) {
         SerializableCommand command = (SerializableCommand) obj;
         if(command.getCommandName().intern()=="timeStepsSize"){
-            this.timeStepSize = Integer.parseInt(command.getData());
+            this.timeStepSize = Integer.parseInt(command.getData())-1;
             this.timeSlider.setMax(this.timeStepSize);
             setTimeLine();
         }
