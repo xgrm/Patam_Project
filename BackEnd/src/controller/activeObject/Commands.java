@@ -6,6 +6,7 @@ import model.BackendModel;
 import view.SerializableCommand;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Commands{
@@ -29,6 +30,7 @@ public class Commands{
         this.commandsMap.put("getData",new getDataCommand());
         this.commandsMap.put("getFeaturesList",new getFeaturesListCommand());
         this.commandsMap.put("Interpreter",new InterpreterCommand());
+        this.commandsMap.put("mapData",new mapDataCommand());
 
     }
 
@@ -51,10 +53,11 @@ public class Commands{
         }
     }
     private class getDataCommand extends Command{ //
-
         @Override
         public void execute(SerializableCommand command) {//id
             AgentHandler agentHandler = agents.get(command.getId());
+            if((Integer)command.getObject() == 1)
+                frontHandler.ac.execute(new SerializableCommand("mapData"," "));
             if(agentHandler != null&&agentHandler.getValues()!=null){
                 frontHandler.outToFront(new SerializableCommand("agentData",agentHandler.getValues()));
             }
@@ -137,6 +140,19 @@ public class Commands{
         @Override
         public void execute(SerializableCommand command) {
             agents.get(command.getId()).outToAgent(command);
+        }
+    }
+    private class mapDataCommand extends Command{
+        @Override
+        public void execute(SerializableCommand command) {
+            HashMap<Integer,SerializableCommand> agentsRowData = new HashMap<>();
+            agents.forEach((k,v)->{
+                agentsRowData.put(k,new SerializableCommand(v.getName(),v.getValues()));
+            });
+            if (!agentsRowData.isEmpty()){
+                command.setObject(agentsRowData);
+                frontHandler.outToFront(command);
+            }
         }
     }
 

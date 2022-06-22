@@ -10,7 +10,7 @@ import java.net.Socket;
 public class FrontHandler {
     Socket front;
     SocketIO io;
-    ActiveObject ac;
+    public ActiveObject ac;
 
     public FrontHandler(Socket front, SocketIO io , ActiveObject ac) {
 

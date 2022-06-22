@@ -162,6 +162,25 @@ public class DBQueries {
         table.deleteCharAt(table.length()-1);
         return table.toString();
     }
+    public String getActiveFlight(){
+        Statement statement;
+        ResultSet rs = null;
+        StringBuilder table = new StringBuilder();
+        StringBuilder sb;
+        String columns = "flight_id";
+        try {
+            String query = String.format("select %s from flights",columns);
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            while(rs.next()) {
+                table.append(rs.getString(columns)).append(",");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        table.deleteCharAt(table.length()-1);
+        return table.toString();
+    }
     public void close(){
         try {
             db_connection.close();

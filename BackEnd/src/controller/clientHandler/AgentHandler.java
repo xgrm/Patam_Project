@@ -12,6 +12,7 @@ public class AgentHandler{
     public int id;
     ActiveObject ac;
     String values;
+    String name;
 
     public String getValues() {
         return values;
@@ -47,6 +48,15 @@ public class AgentHandler{
         ac.execute(serializableCommand); // removing agent from agent map.
         close();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private void close(){
         try {
             io.close();

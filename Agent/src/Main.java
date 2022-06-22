@@ -15,7 +15,7 @@ public class Main {
 
     new Thread(()->{
         try {
-            Thread.sleep(1000*60*4);
+            Thread.sleep(1000*60*20);
             cn.close();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
