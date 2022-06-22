@@ -15,6 +15,7 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
     private List<CorrelatedFeatures> correlatedFeatures;
     private HashMap<String,CorrelatedFeatures> correlatedFeaturesHashMap;
     private float threshold;
+    int count =1;
 
     public SimpleAnomalyDetector() {
         this.correlatedFeatures =new ArrayList<>();
@@ -24,22 +25,27 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
 
     @Override
     public void learnNormal(TimeSeries ts) {
+        String[] features = ts.getFeatures();
         for (int i = 0; i< ts.getSize();i++){
-            String feature1 = ts.getFeatures()[i];
+            String feature1 = features[i];
             String feature2 = null;
             float person = -1;
             float tempPerson;
             for (int j = i+1; j< ts.getSize();j++){
-                tempPerson = Math.abs(StatLib.pearson(ts.GetValueByProp(ts.getFeatures()[i]),ts.GetValueByProp(ts.getFeatures()[j])));
+                tempPerson = Math.abs(StatLib.pearson(ts.GetValueByProp(features[i]),ts.GetValueByProp(features[j])));
                 if(person < tempPerson) {
                     person = tempPerson;
-                    feature2 = ts.getFeatures()[j];
+                    feature2 = features[j];
                 }
             }
             if(feature2!=null)
                 AddCorrelatedFeatures(ts,feature1,feature2,person);
+            else
+                AddCorrelatedFeatures(ts,feature1,feature1,-1);
+
         }
         ts.setCorrelatedFeatures(this.correlatedFeatures);
+
     }
 
     public void AddCorrelatedFeatures(TimeSeries ts, String feature1, String feature2,float person){

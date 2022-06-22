@@ -1,3 +1,4 @@
 backEndIP,127.0.0.1
 backEndPort,5500
 symbolsPath,src/main/java/viewModel/symbol.txt
+updateRate,100

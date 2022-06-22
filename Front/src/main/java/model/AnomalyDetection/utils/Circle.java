@@ -76,12 +76,10 @@ public class Circle {
         float delta=-4*a*c;
         float result=sqr+delta;
         if (result<0) {
-            System.out.println("no sol");
             y[0] = null;
             y[1] = null;
         }
         if (result==0) {
-            System.out.println("one sol");
             result= (float) Math.sqrt(result);
             y[0] = (-b)/(2*a);
             y[1] = null;
@@ -102,12 +100,10 @@ public class Circle {
         float delta=-4*a*c;
         float result=sqr+delta;
         if (result<0) {
-            System.out.println("no sol");
             x[0] = null;
             x[1] = null;
         }
         if (result==0) {
-            System.out.println("one sol");
             result= (float) Math.sqrt(result);
             x[0] = (-b)/(2*a);
             x[1] = null;

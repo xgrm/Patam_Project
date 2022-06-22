@@ -9,12 +9,17 @@ import model.AnomalyDetection.utils.Point;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Hybrid implements TimeSeriesAnomalyDetector{
 
     TimeSeries timeSeries;
     private List<CorrelatedFeatures> correlatedFeatures;
     private HashMap<CorrelatedFeatures,Circle> circlesHashMap;
+
+
+
     @Override
     public void learnNormal(TimeSeries ts) {
         this.timeSeries = ts;
@@ -25,7 +30,7 @@ public class Hybrid implements TimeSeriesAnomalyDetector{
             if (Math.abs(c.correlation) >= 0.5 && Math.abs(c.correlation) <= 0.95) {
                 Circle minCircle = wAlgo.calculateMiniCircle(new ArrayList<>(List.of(StatLib.CreatePointArr(ts.GetValueByProp(c.feature1), ts.GetValueByProp(c.feature2)))));
                 circlesHashMap.put(c,minCircle );
-                c.setCircle(minCircle);
+                    c.setCircle(minCircle);
             }
         }
     }
