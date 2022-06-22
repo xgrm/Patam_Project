@@ -45,12 +45,6 @@ public class MainModel extends Observable implements Model, Observer {
     public void play(){
         play.play();
     }
-    public void setSpeed(long speed){
-        play.setSpeed(speed);
-    }
-    public void pause(){
-        play.pause();
-    }
     public void stop(){
         play.stop();
     }
@@ -62,7 +56,6 @@ public class MainModel extends Observable implements Model, Observer {
         setChanged();
         notifyObservers(new SerializableCommand("timeStepsSize",String.valueOf(timeStepsSize)));
     }
-
     @Override
     public void update(Observable o, Object arg) {
         setChanged();

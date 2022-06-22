@@ -15,26 +15,20 @@ import java.util.concurrent.Executors;
 
 public class Play extends Observable {
     String path;
-    volatile boolean pause;
-    volatile boolean stop;
-    volatile long speed;
     volatile boolean start;
-    ExecutorService thread;
     int port;
     String ip;
     String[] csvData;
     volatile int timeStep;
+    TelnetIO io;
+    Socket socket;
     public Play(String data) {
         String[] tokens = data.split(" ");
         port = Integer.parseInt(tokens[1]);
         ip = tokens[0];
-        this.pause = false;
-        this.stop = false;
-        this.speed = 1;
+        this.start = false;
         this.timeStep = 1;
-        thread = Executors.newFixedThreadPool(1);
     }
-
     public int setPath(String path) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
@@ -49,50 +43,33 @@ public class Play extends Observable {
         } catch (FileNotFoundException e) {throw new RuntimeException(e);}
     }
     public void play() {
-        if(!start){
-            start = true;
-            stop = false;
-            pause = false;
-            thread.execute(()->play_1());
-        }
-        else if(pause)
-            pause();
-    }
-    private void play_1() {
-        try {
-            Socket socket = new Socket(ip,port);
-            TelnetIO io = new TelnetIO(socket.getInputStream(),socket.getOutputStream());
-            while (!this.stop) {
-                for (; !this.pause && timeStep < csvData.length; timeStep++) {
-                    String line = csvData[timeStep];
-                    io.write(line);
-                    setChanged();
-                    notifyObservers(new SerializableCommand("agentData",line));
-                    Thread.sleep(100/speed);
-                }
-                if(timeStep > csvData.length) this.stop();
+        if(!start) {
+            try {
+                socket = new Socket(ip, port);
+                io = new TelnetIO(socket.getInputStream(), socket.getOutputStream());
+                start = true;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            io.close();
-            socket.close();
-            timeStep = 0;
-        } catch (FileNotFoundException e) {throw new RuntimeException(e);
-        } catch (IOException e) {throw new RuntimeException(e);
-        } catch (InterruptedException e) {throw new RuntimeException(e);}
-
+        }
     }
-
     public void setTimeStep(int timeStep) {
+        if(this.csvData==null)
+            return;
         this.timeStep = timeStep;
-    }
-    public void setSpeed(long speed){
-        this.speed = speed;
-    }
-    public void pause(){
-        this.pause = !this.pause;
+        String line = csvData[timeStep];
+        io.write(line);
+        setChanged();
+        notifyObservers(new SerializableCommand("agentData",line));
     }
     public void stop(){
-        this.pause = true;
-        this.stop = true;
-        this.start = false;
+        try {
+            start = false;
+            socket.close();
+            io.close();
+            timeStep = 1;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

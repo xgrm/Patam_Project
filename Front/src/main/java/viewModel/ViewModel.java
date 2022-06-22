@@ -141,32 +141,25 @@ public class ViewModel extends Observable implements Observer {
             notifyObservers(arg);
         }
     }
-
     public void inFromCommand(SerializableCommand obj){
         setChanged();
         notifyObservers(obj);
     }
-
     public String[] getSymbols() {
         return symbols;
     }
-
     public ConcurrentHashMap<String, Float> getSymbolTable() {
         return symbolTable;
     }
-
     public MainModel getModel() {
         return model;
     }
-
     public Stage getStage() {
         return stage;
     }
-
     public long getUpdateRate() {
         return updateRate;
     }
-
     public void close(){
         if(!standAlone) {
             try {

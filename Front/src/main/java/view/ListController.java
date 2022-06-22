@@ -73,13 +73,15 @@ public class ListController extends BaseController {
         regLine2.getData().add(pointForReg2);
         visRegLine.getData().add(pointForVisRegLine);
         visRegLine.getData().add(livePointForVisRegLine);
-        list.setOnMouseClicked((e)->clickedItem(e));
+        list.setOnMouseClicked((e)->clickedItem((String) list.getSelectionModel().getSelectedItem()));
 
     }
     private void addFeaturesToList(String[] features){
         Platform.runLater(()->{
             list.getItems().clear();
             list.getItems().addAll(features);
+            list.requestFocus();
+            clickedItem((String) list.getItems().get(0));
         });
     }
     private void anomalyDetected(String anomaly){
@@ -95,12 +97,12 @@ public class ListController extends BaseController {
             lastUpdate = System.nanoTime();
         }
     }
-    private void clickedItem(MouseEvent e){
+    private void clickedItem(String feature){
         pointForReg1.getData().clear();
         pointForReg2.getData().clear();
         livePointForVisRegLine.getData().clear();
         CorrelatedFeatures cf = null;
-        this.feature1 = (String) list.getSelectionModel().getSelectedItem();
+        this.feature1 = feature;
         cf = correlatedFeatures.get(feature1);
         this.feature2 =  cf.feature2;
         this.regLine = cf.lin_reg;

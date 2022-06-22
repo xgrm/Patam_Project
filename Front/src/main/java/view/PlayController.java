@@ -37,9 +37,9 @@ public class PlayController extends BaseController{
     int timeStepSize;
     FileChooser fileChooser;
     Timeline timeline;
-    long speed = 1;
-    long rewindMulti = 2;
-    long forwardMulti = 2;
+    long speed;
+    long rewindMulti;
+    long forwardMulti;
 
     long localSpeed;
     Stage stage;
@@ -47,6 +47,8 @@ public class PlayController extends BaseController{
     public void init(ViewModel vm, Node root) throws Exception {
         this.timeSlider.setMin(1);
         this.speed = 1;
+        this.forwardMulti=0;
+        this.rewindMulti=0;
         this.viewModel = vm;
         this.stage = viewModel.getStage();
         this.viewModel.timeStep.bind(timeSlider.valueProperty());
@@ -55,7 +57,7 @@ public class PlayController extends BaseController{
         setTextFormatter();
         speedControl.setOnKeyPressed((e)-> getSpeedFromSpeedTextField(e));
         open.setOnAction((e)->open());
-        timeSlider.valueProperty().addListener((o,ov,nv)->setLabel((Double) nv));
+        timeSlider.valueProperty().addListener((o,ov,nv)->setTimeLabel((Double) nv));
     }
     @Override
     public void updateUi(Object obj) {
@@ -114,11 +116,11 @@ public class PlayController extends BaseController{
     }
     private void setSpeedControl(long speed) {
         this.speed = speed;
-        viewModel.exe(new SerializableCommand("setSpeed",speed+""));
+        this.speedControl.setText(String.valueOf(speed));
     }
     private void setTimeLine(){
-        forwardMulti =2;
-        rewindMulti = 2;
+        forwardMulti = 0;
+        rewindMulti = 0;
         this.timeline = new Timeline(
                 new KeyFrame(Duration.millis(0),new KeyValue(timeSlider.valueProperty(),1)),
                 new KeyFrame(Duration.millis(timeStepSize*100/speed),new KeyValue(timeSlider.valueProperty(),timeStepSize))
@@ -137,46 +139,66 @@ public class PlayController extends BaseController{
     public void play(ActionEvent actionEvent) {
         viewModel.exe(new SerializableCommand("play"," "));
         if(timeline.getStatus().equals(Animation.Status.RUNNING)){
-            setCustomTimeLine((long) timeSlider.getValue(),1);
-            rewindMulti = 2;
-            forwardMulti = 2;
+            restForwardOrRewind();
+            setCustomTimeLine((long) timeSlider.getValue(),speed);
         }
         else
             timeline.play();
 
     }
     public void pause(ActionEvent actionEvent) {
-        viewModel.exe(new SerializableCommand("pause"," "));
+        restForwardOrRewind();
+        setCustomTimeLine((long) timeSlider.getValue(),speed);
         timeline.pause();
     }
     public void stop(ActionEvent actionEvent) {
+        this.timeSlider.valueProperty().setValue(1);
         viewModel.exe(new SerializableCommand("stop",""));
+        setCustomTimeLine(1,1l);
         timeline.stop();
-        setTimeLine();
     }
     public void forward(ActionEvent actionEvent) {
         if(timeline.getStatus().equals(Animation.Status.RUNNING)){
-            setCustomTimeLine((long) timeSlider.getValue(),speed*(forwardMulti++));
+            if(rewindMulti>0) {
+                setCustomTimeLine((long) timeSlider.getValue(), speed - (rewindMulti));
+                rewindMulti = 0;
+            }
+            setCustomTimeLine((long) timeSlider.getValue(),speed+1);
+            forwardMulti++;
         }
     }
     public void rewind(ActionEvent actionEvent) {
         if(timeline.getStatus().equals(Animation.Status.RUNNING)){
-            rewindMulti++;
+            if(forwardMulti>0) {
+                setCustomTimeLine((long) timeSlider.getValue(), speed - (forwardMulti));
+                forwardMulti = 0;
+            }
             timeline.stop();
             timeline.getKeyFrames().clear();
             this.timeline = new Timeline(
                     new KeyFrame(Duration.millis(0),new KeyValue(timeSlider.valueProperty(),(long) timeSlider.getValue())),
-                    new KeyFrame(Duration.millis(timeStepSize*100/(speed*(rewindMulti))),new KeyValue(timeSlider.valueProperty(),0))
+                    new KeyFrame(Duration.millis(timeStepSize*100/(speed+1)),new KeyValue(timeSlider.valueProperty(),0))
             );
             timeline.play();
-            setSpeedControl(speed*(rewindMulti));
+            setSpeedControl(speed+1);
+            rewindMulti++;
         }
     }
-    private void setLabel(double timeStep){ //TODO: FIX THE TIME CALC
+    private void setTimeLabel(double timeStep){ //TODO: FIX THE TIME CALC
+
         float sec = (float)(timeStepSize-timeStep)*(float) 100 /(float)1000;
         SimpleDateFormat df = new SimpleDateFormat("mm:ss");
         String re = df.format(new Date((long) (sec/60)));
         time.setText(re);
+    }
+    private void restForwardOrRewind(){
+        if(forwardMulti>0){
+            speed -= forwardMulti;
+            forwardMulti=0;
+        } else if (rewindMulti>0) {
+            speed-=rewindMulti;
+            rewindMulti = 0;
+        }
     }
     public void setTimeSlider(MouseEvent mouseEvent) {}
 }
