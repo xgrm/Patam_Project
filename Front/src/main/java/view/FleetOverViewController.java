@@ -2,6 +2,7 @@ package view;
 
 
 import com.sothawo.mapjfx.Projection;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -30,10 +31,8 @@ public class FleetOverViewController extends BaseController {
         command = new SerializableCommand("setMapData","");
         command.setId(1);
         addPane(WorldMap, "WorldMap.fxml",0,0,0,0, "worldMap");
-//        addPane(WorldMap, "s.fxml",0,0,0,0, "worldMap");
         addPane(DataBoard, "DataBoard.fxml",0,0,0,0, "fleetOverView");
         WorldMapController controller = (WorldMapController) controllers.get("WorldMapController");
-//        TestController controller = (TestController) controllers.get("TestController");
         final Projection projection =Projection.WEB_MERCATOR;
         controller.initMapAndControls(projection);
     }
@@ -49,6 +48,12 @@ public class FleetOverViewController extends BaseController {
         command.setId(1);
         this.controllers.forEach((key,value)->value.onTabSelection());
         viewModel.exe(command);
+        Platform.runLater(()->{
+            this.viewModel.getStage().setMaxWidth(1150);
+            this.viewModel.getStage().setMaxHeight(588);
+            this.viewModel.getStage().setMinWidth(1150);
+            this.viewModel.getStage().setMinHeight(588);
+        });
     }
 
     @Override

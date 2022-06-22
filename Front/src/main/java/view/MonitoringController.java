@@ -1,6 +1,7 @@
 package view;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
@@ -54,6 +55,12 @@ public class MonitoringController extends BaseController {
     @Override
     public void onTabSelection() {
         this.controllers.forEach((key,value)->value.onTabSelection());
+        Platform.runLater(()->{
+            this.viewModel.getStage().setMaxWidth(1133);
+            this.viewModel.getStage().setMaxHeight(650);
+            this.viewModel.getStage().setMinWidth(1133);
+            this.viewModel.getStage().setMinHeight(650);
+        });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -20,8 +21,8 @@ public class TeleoprationController extends BaseController {
     public void init(ViewModel vm, Node root) throws Exception {
         this.viewModel = vm;
         addPane(TextFile, "TextFile.fxml", 0,0,1,1,"textFile");
-        addPane(Joystick, "Joystick.fxml", 155,1,1,1,"movingJoystick");
-        addPane(ClockBoard, "ClockBoard.fxml", 189,87,2,2,"clock");
+        addPane(Joystick, "Joystick.fxml", 75,1,1,1,"movingJoystick");
+        addPane(ClockBoard, "ClockBoard.fxml", 103,73,2,2,"clock");
 
     }
 
@@ -38,6 +39,12 @@ public class TeleoprationController extends BaseController {
     @Override
     public void onTabSelection() {
         this.controllers.forEach((key,value)->value.onTabSelection());
+        Platform.runLater(()->{
+            this.viewModel.getStage().setMaxWidth(850);
+            this.viewModel.getStage().setMaxHeight(650);
+            this.viewModel.getStage().setMinWidth(850);
+            this.viewModel.getStage().setMinHeight(650);
+        });
     }
 
     @Override
