@@ -118,7 +118,6 @@ public class Commands {
             viewModel.outToBack(command);
         }
     }
-
     private class activeAgentsCommand extends Command{
         @Override
         public void execute(SerializableCommand command) {  ///0,1,2,3
@@ -137,7 +136,6 @@ public class Commands {
             else agentChosen = false;
         }
     }
-
     private class noAgentCommand extends Command{
 
         @Override
@@ -146,7 +144,6 @@ public class Commands {
             agentChosen = false;
         }
     }
-
     private class InterpreterCommand extends Command{
 
         @Override
@@ -166,7 +163,6 @@ public class Commands {
         }
     }
     private class playCommand extends Command{
-
         @Override
         public void execute(SerializableCommand command) {
             viewModel.getModel().play();

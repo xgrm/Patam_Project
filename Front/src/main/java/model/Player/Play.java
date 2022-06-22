@@ -36,7 +36,6 @@ public class Play extends Observable {
     }
 
     public int setPath(String path) {
-
         try {
             StringBuilder stringBuilder = new StringBuilder();
             Scanner scanner = new Scanner(new File(path));
@@ -45,15 +44,12 @@ public class Play extends Observable {
             }
             this.csvData = stringBuilder.toString().split("\n");
             scanner.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        this.path = path;
-        return csvData.length;
+            this.path = path;
+            return csvData.length;
+        } catch (FileNotFoundException e) {throw new RuntimeException(e);}
     }
     public void play() {
         if(!start){
-            System.out.println("start");
             start = true;
             stop = false;
             pause = false;
@@ -88,7 +84,6 @@ public class Play extends Observable {
     public void setTimeStep(int timeStep) {
         this.timeStep = timeStep;
     }
-
     public void setSpeed(long speed){
         this.speed = speed;
     }
