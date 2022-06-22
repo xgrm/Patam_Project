@@ -1,41 +1,16 @@
 package view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.ScatterChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import view.Charts.RegChart;
-import view.Charts.TabController;
 import viewModel.ViewModel;
-
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class TimeCapsuleController extends BaseController {
 
     @FXML
-    ListView featureListTC;
-
-    @FXML
-    LineChart changeChart;
-
-    @FXML
-    LineChart correlationChart;
-
-    @FXML
-    ScatterChart regChart;
-
-    @FXML
     AnchorPane FeatureList,RegChart,changeLineChart,correlationLineChart,JoystickClockBoard,PlayBoard;
-
-
 
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
