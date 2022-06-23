@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<TabPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="1150.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.MenuTabController">
   <tabs>
-    <Tab text="Fleet OverView">
+    <Tab fx:id="fleetOverViewTab" text="Fleet OverView">
       <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-              <fx:include source="FleetOverView.fxml" />
+          <AnchorPane fx:id="FleetOverView" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
           </AnchorPane>
       </content>
     </Tab>
-    <Tab text="Monitoring">
+    <Tab fx:id="monitoringTab" text="Monitoring">
       <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-              <fx:include fx:id="monitoring" source="Monitoring.fxml" />
+          <AnchorPane fx:id="Monitoring" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
           </AnchorPane>
       </content>
     </Tab>
-      <Tab text="Teleoperation">
+      <Tab fx:id="teleoperationTab" text="Teleoperation">
         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-                <fx:include fx:id="teleopration" source="Teleopration.fxml" />
+            <AnchorPane fx:id="Teleopration" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
             </AnchorPane>
         </content>
       </Tab>
-      <Tab text="Time Capsule">
+      <Tab fx:id="timeCapsuleTab" text="Time Capsule">
         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-                <fx:include fx:id="timeCapsule" source="TimeCapsule.fxml" />
+            <AnchorPane fx:id="TimeCapsule" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
             </AnchorPane>
         </content>
       </Tab>

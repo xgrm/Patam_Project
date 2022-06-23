@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="openjfx.javafx.web" type="repository">
+    <properties maven-id="org.openjfx:javafx-web:17-ea+9" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/17-ea+9/javafx-web-17-ea+9.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/17-ea+9/javafx-web-17-ea+9-mac.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17-ea+9/javafx-controls-17-ea+9.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17-ea+9/javafx-controls-17-ea+9-mac.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17-ea+9/javafx-graphics-17-ea+9.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17-ea+9/javafx-graphics-17-ea+9-mac.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17-ea+9/javafx-base-17-ea+9.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17-ea+9/javafx-base-17-ea+9-mac.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/17-ea+9/javafx-media-17-ea+9.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/17-ea+9/javafx-media-17-ea+9-mac.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

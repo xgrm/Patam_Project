@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<?import javafx.scene.shape.Circle?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.JoystickController"
-            prefHeight="300.0" prefWidth="300.0">
-    <children>
-        <Circle fill="#c8c8c8" layoutX="133.0" layoutY="125.0" radius="100.0" stroke="TRANSPARENT" strokeType="INSIDE"/>
-        <Circle fx:id="_smallCircle" fill="#525150" layoutX="133.0" layoutY="125.0" radius="47.0" stroke="WHITE"
-                strokeType="INSIDE"/>
-        <Slider disable="true" fx:id="_rudder" layoutX="41.0" layoutY="234.0" prefHeight="16.0" prefWidth="206.0"/>
-        <Slider fx:id="_throttle" layoutX="14.0" layoutY="18.0" orientation="VERTICAL" prefHeight="200.0"
-                disable="true" prefWidth="16.0"/>
-    </children>
+<AnchorPane prefHeight="240.0" prefWidth="218.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.JoystickController">
+<children>
+        <Slider fx:id="rudder" layoutX="7.0" max="1.0" min="-1.0" onMouseDragged="#onMouseDraggedSendingData" onMouseReleased="#onMouseReleasedSendingData" orientation="VERTICAL" prefHeight="167.0" prefWidth="14.0" BorderPane.alignment="CENTER" />
+        <Slider fx:id="throttle" layoutX="14.0" layoutY="170.0" max="1.0" onMouseDragged="#onMouseDraggedSendingData" onMouseReleased="#onMouseReleasedSendingData" prefHeight="26.0" prefWidth="181.0" BorderPane.alignment="CENTER" />
+        <Canvas fx:id="joystick" height="157.0" layoutX="26.0" layoutY="10.0" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" width="167.0" BorderPane.alignment="CENTER" />
+      <ChoiceBox fx:id="agents" layoutX="34.0" layoutY="201.0" prefWidth="150.0" />
+</children>
 </AnchorPane>

@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ChangeListManager">
-    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/.idea/runConfigurations.xml" beforeDir="false" />
-    </list>
-    <option name="SHOW_DIALOG" value="false" />
-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-    <option name="LAST_RESOLUTION" value="IGNORE" />
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="Front" />
+  <component name="ChangeListManager">
+
+    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/BindCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/BindCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/ConnectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/ConnectCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/ExpressionCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/ExpressionCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/OpenServerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/OpenServerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/PrintCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/PrintCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/SleepCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/SleepCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/VarCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/VarCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/BinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/BinaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Div.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Div.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Minus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Minus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Mul.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Mul.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Number.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Number.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Expressions/Plus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Expressions/Plus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEnd/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/src/Model/AgentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Model/AgentModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Model/Model.java" afterDir="false" />
+    </list>
+    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="view model" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -28,11 +43,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/saarmoseri/Library/CloudStorage/OneDrive-cs.colman.ac.il/2end Year/Patam/2end semester/Project/Project"
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Agent/src" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -43,9 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1653232751724</updated>
       <workItem from="1653232754128" duration="66000" />
-      <workItem from="1655021384810" duration="118000" />
-      <workItem from="1655022272306" duration="701000" />
-      <workItem from="1655026099109" duration="110000" />
+      <workItem from="1653487279621" duration="128000" />
     </task>
     <servers />
   </component>
@@ -74,5 +94,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
