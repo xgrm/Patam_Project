@@ -3,7 +3,6 @@ package IO;
 import view.SerializableCommand;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class SocketIO implements IO{
     ObjectInputStream in;

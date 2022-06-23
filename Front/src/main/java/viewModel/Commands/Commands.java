@@ -6,7 +6,6 @@ import model.AnomalyDetection.CorrelatedFeatures;
 import view.SerializableCommand;
 import viewModel.ViewModel;
 
-import java.awt.image.VolatileImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,6 +40,8 @@ public class Commands {
         commandsMap.put("setPath",new setPathCommand());
         commandsMap.put("setMapData",new setMapDataCommand());
         commandsMap.put("mapData",new mapDataCommand());
+        commandsMap.put("moveTab",new moveTabCommand());
+        commandsMap.put("getBindAgent",new getBindAgentCommand());
     }
 
     public void executeCommand(SerializableCommand command){
@@ -60,17 +61,16 @@ public class Commands {
             System.out.println(command.getData());
         }
     }
-
     private class getDataCommand extends Command{
         @Override
         public void execute(SerializableCommand command) {
+            if(mapData==1)
+                command.setObject(1);
+            else command.setObject(0);
             if(agentChosen) {
-                if(mapData==1)
-                    command.setObject(1);
-                else command.setObject(0);
                 command.setId(id);
-                viewModel.outToBack(command);
             }
+            viewModel.outToBack(command);
         }
     }
     private class agentDataCommand extends Command{
@@ -143,6 +143,8 @@ public class Commands {
 
         @Override
         public void execute(SerializableCommand command) {
+            if(!agentChosen)
+                return;
             viewModel.inFromCommand(new SerializableCommand("agents","none, "));
             viewModel.inFromCommand(command);
             agentChosen = false;
@@ -195,6 +197,27 @@ public class Commands {
     private class mapDataCommand extends Command{
         @Override
         public void execute(SerializableCommand command) {
+            viewModel.inFromCommand(command);
+        }
+    }
+    private class moveTabCommand extends Command{
+        @Override
+        public void execute(SerializableCommand command) {
+            SerializableCommand bind  = new SerializableCommand("setAgentBind","");
+            bind.setId(command.getId());
+            executeCommand(bind);
+            viewModel.inFromCommand(command);
+        }
+    }
+    private class getBindAgentCommand extends Command{
+        @Override
+        public void execute(SerializableCommand command) {
+            String data;
+            if(agentChosen)
+                data = id+", ";
+            else data = "none, ";
+            command.setCommandName("bindAgent");
+            command.setData(data);
             viewModel.inFromCommand(command);
         }
     }

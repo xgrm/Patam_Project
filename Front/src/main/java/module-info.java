@@ -19,4 +19,6 @@ module com.example.front {
     exports view;
 
     exports view.Charts;
+    exports viewModel.Commands;
+    opens viewModel.Commands to javafx.fxml;
 }

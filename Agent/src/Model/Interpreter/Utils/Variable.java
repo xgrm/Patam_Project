@@ -30,11 +30,9 @@ public class Variable {
     public void setBindTo(String bindTo) {
         this.bindTo = bindTo;
     }
-
     public void setModel(AgentModel model) {
         this.model = model;
     }
-
     public float getValue() {
         return value;
     }
