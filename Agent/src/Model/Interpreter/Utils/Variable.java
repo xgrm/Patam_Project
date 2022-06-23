@@ -22,10 +22,17 @@ public class Variable {
         this.value = value;
         if(this.bindTo != null){
             model.sendToFG(bindTo,value);
-//            System.out.println("send to model: "+bindTo+" "+ value);
         }
     }
-
+    public void setValue(Float value,boolean fromBind) {
+        this.value = value;
+    }
+    public void setBindTo(String bindTo) {
+        this.bindTo = bindTo;
+    }
+    public void setModel(AgentModel model) {
+        this.model = model;
+    }
     public float getValue() {
         return value;
     }

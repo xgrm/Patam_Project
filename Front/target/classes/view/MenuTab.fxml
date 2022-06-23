@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<TabPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="1150.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller="view.MenuTabController">
+  <tabs>
+    <Tab fx:id="fleetOverViewTab" text="Fleet OverView">
+      <content>
+          <AnchorPane fx:id="FleetOverView" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
+          </AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="monitoringTab" text="Monitoring">
+      <content>
+          <AnchorPane fx:id="Monitoring" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
+          </AnchorPane>
+      </content>
+    </Tab>
+      <Tab fx:id="teleoperationTab" text="Teleoperation">
+        <content>
+            <AnchorPane fx:id="Teleopration" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab fx:id="timeCapsuleTab" text="Time Capsule">
+        <content>
+            <AnchorPane fx:id="TimeCapsule" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+
+            </AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>

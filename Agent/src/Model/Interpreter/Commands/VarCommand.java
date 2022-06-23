@@ -1,20 +1,20 @@
 package Model.Interpreter.Commands;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import Model.Interpreter.Utils.SharedMemory;
 import Model.Interpreter.Utils.Variable;
 
 public class VarCommand extends Command {
-    HashMap<String, Variable> symbolTable;
-    
+
+    SharedMemory sm;
     // gets the sym table and updates it on execute
-    public VarCommand(HashMap<String, Variable> symbolTable) {
-        this.symbolTable = symbolTable;
+    public VarCommand(SharedMemory sm) {
+        this.sm = sm;
     }
 
     @Override
     public int execute(ArrayList<String> args, int index) {
-        this.symbolTable.put(args.get(index+1),new Variable(args.get(index+1),0f));
+        this.sm.getSymTable().put(args.get(index+1),new Variable(args.get(index+1),0f));
         return 1;
     }
 }

@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class AssignCommand extends Command{
     SharedMemory sm;
+    int indexCount;
     public AssignCommand(SharedMemory sm) {
         this.sm = sm;
+        this.indexCount = 1;
     }
 
     //calculates the value of the input in case its an expressiom/symbol
@@ -27,20 +29,18 @@ public class AssignCommand extends Command{
                 tempVar = null;
             }
             list.add(token);
+            this.indexCount++;
         }
         return (float) ShuntingYardAlgorithm.calc(list);
     }
 
     @Override
     public int execute(ArrayList<String> args, int index) {
-        int indexCount = 1;
         String varName= args.get(index-1);
         if(args.get(index+1).equals("bind")){
             indexCount = 0;
-           sm.getSymTable().put(varName,new Variable(varName,0f,args.get(index+2),sm.model));
         }
         else {
-            sm.getSymTable().put(varName,sm.getSymTable().getOrDefault(varName,new Variable(varName,0f)));
             sm.getSymTable().get(varName).setValue(calcTheExp(args,index));
         }
         return indexCount;

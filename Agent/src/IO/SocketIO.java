@@ -1,49 +1,90 @@
 package IO;
 
+import view.SerializableCommand;
+
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.*;
 import java.util.Scanner;
 
 public class SocketIO implements IO{
-
-    PrintWriter out;
-
-    Scanner in;
+    ObjectInputStream in;
+    ObjectOutputStream out;
+    Scanner scanner;
 
     public SocketIO(InputStream in, OutputStream out) {
-        this.out = new PrintWriter(out);
-        this.in = new Scanner(in);
+        this.scanner = new Scanner(in);
+        try {
+            this.in = new ObjectInputStream(in);
+            this.out = new ObjectOutputStream(out);
+        } catch (IOException e) {throw new RuntimeException(e);}
+
+    }
+    public SocketIO(OutputStream out){
+        try {
+            this.out = new ObjectOutputStream(new DataOutputStream(out));
+        } catch (IOException e) {throw new RuntimeException(e);}
+    }
+
+    public void setInPutStream(InputStream in){
+        try {
+            this.scanner = new Scanner(in);
+            this.in = new ObjectInputStream(new DataInputStream(in));
+        } catch (IOException e) {throw new RuntimeException(e);}
+    }
+    @Override
+    public String readLine() {
+        return scanner.nextLine();
     }
 
     @Override
-    public String readLine() {
-        return in.nextLine();
+    public SerializableCommand readCommand() {
+        SerializableCommand command = null;
+        try {
+            command = (SerializableCommand) in.readObject();
+        } catch (IOException e) {
+            return null;
+        }
+        catch (ClassNotFoundException e) {throw new RuntimeException(e);}
+
+        return command;
     }
 
     @Override
     public void write(String text) {
-        out.println(text);
-        out.flush();
+
+    }
+
+    @Override
+    public void write(SerializableCommand command) {
+        try {
+            synchronized (this) {
+                out.writeObject(command);
+                out.flush();
+            }
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 
     @Override
     public float readVal() {
-        return in.nextFloat();
+        return scanner.nextFloat();
     }
 
     @Override
     public void write(float val) {
-        out.println(val);
-        out.flush();
+
     }
 
     @Override
     public boolean hasNext() {
-        return in.hasNext();
+        return scanner.hasNext();
     }
 
     @Override
     public void close() {
-    out.close();
-    in.close();
+        try {
+            in.close();
+            out.close();
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 }

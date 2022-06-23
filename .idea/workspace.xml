@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
+
     <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/BindCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/BindCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/Interpreter/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Interpreter/Commands/Command.java" afterDir="false" />
@@ -24,14 +28,7 @@
       <change beforePath="$PROJECT_DIR$/Agent/src/Model/AgentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Model/AgentModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Agent/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/src/Model/Model.java" afterDir="false" />
     </list>
-    <option name="SHOW_DIALOG" value="false" />
-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-    <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
+    <list default="true" id="80a3b053-1cca-4fe4-8cb5-f94df1d69373" name="Changes" comment="view model" />
         <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
@@ -80,10 +77,23 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Front" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

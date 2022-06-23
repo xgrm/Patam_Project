@@ -1,6 +1,7 @@
 package controller.clientHandler;
 
 import controller.activeObject.ActiveObject;
+import view.SerializableCommand;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -10,36 +11,56 @@ public class AgentHandler{
     SocketIO io;
     public int id;
     ActiveObject ac;
+    String values;
+    String name;
 
-    public AgentHandler(Socket agent,int id, ActiveObject ac) {
-        try {
+    public String getValues() {
+        return values;
+    }
+
+    public void setValues(String values) {
+        this.values = values;
+    }
+
+    public AgentHandler(Socket agent, SocketIO io,int id, ActiveObject ac) {
             this.id = id;
             this.ac =ac;
             this.agent = agent;
-            this.io = new SocketIO(agent.getInputStream(),agent.getOutputStream());
+            this.io = io;
             ac.addToThreadPool(()->{
-                outToAgent("ok"); // sending to agent that the connection is ok and the back can receive data from him.
+                outToAgent(new SerializableCommand("ok"," ")); // sending to agent that the connection is ok and the back can receive data from him.
                 inFromAgent();  // start getting data from agent in a different thread
             });
-
-        } catch (IOException e) {throw new RuntimeException(e);}
     }
 
-    public void outToAgent(String command){
+    public void outToAgent(SerializableCommand command){
         this.io.write(command);
     }
     public void inFromAgent() {
-        String[] tokens;
-        while (io.hasNext()){
-            tokens = io.readLine().split("~");
-            ac.execute(tokens[0]+"~"+id+" "+tokens[1]);
+        Object command = null;
+        while ((command = io.readCommand())!= null){
+            SerializableCommand serializableCommand = (SerializableCommand) command;
+            serializableCommand.setId(id);
+            ac.execute(serializableCommand);
         }
-        io.close();
+        SerializableCommand serializableCommand = new SerializableCommand("removeAgent","");
+        serializableCommand.setId(id);
+        ac.execute(serializableCommand); // removing agent from agent map.
+        close();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private void close(){
         try {
+            io.close();
             agent.close();
-            ac.execute("removeAgent~"+id); // removing agent from agent map.
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 }

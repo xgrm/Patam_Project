@@ -33,6 +33,7 @@
 /instrumentation/gps/indicated-altitude-ft
 /instrumentation/gps/indicated-ground-speed-kt
 /instrumentation/gps/indicated-vertical-speed
+/instrumentation/heading-indicator/offset-deg
 /instrumentation/heading-indicator/indicated-heading-deg
 /instrumentation/magnetic-compass/indicated-heading-deg
 /instrumentation/slip-skid-ball/indicated-slip-skid

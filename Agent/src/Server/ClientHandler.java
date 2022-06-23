@@ -2,7 +2,8 @@ package Server;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 
 public interface ClientHandler {
-    void handle(InputStream in, OutputStream out);
+    void handle(Socket client);
 }

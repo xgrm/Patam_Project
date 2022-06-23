@@ -1,6 +1,7 @@
 package controller.clientHandler;
 
 import controller.activeObject.ActiveObject;
+import view.SerializableCommand;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -8,35 +9,32 @@ import java.net.Socket;
 public class FrontHandler {
     Socket front;
     SocketIO io;
-    ActiveObject ac;
+    public ActiveObject ac;
 
-    public FrontHandler(Socket front, ActiveObject ac) {
-        try {
+    public FrontHandler(Socket front, SocketIO io , ActiveObject ac) {
+
             this.ac =ac;
             this.front = front;
-            this.io = new SocketIO(front.getInputStream(),front.getOutputStream());
+            this.io = io;
             ac.commands.setFrontHandler(this);
             ac.addToThreadPool(()->{
-                        outToFront("ok");  // sending to front that the connection is ok and the back can receive data from him.
+                        outToFront(new SerializableCommand("ok"," "));  // sending to front that the connection is ok and the back can receive data from him.
                         inFromFront(); // start getting data from front in a different thread
                     });
-
-        } catch (IOException e) {throw new RuntimeException(e);}
     }
-    public void outToFront(String command){
+    public void outToFront(SerializableCommand command){
         this.io.write(command);
     }
     public void inFromFront() {
-        String line;
-        while (io.hasNext()){
-            line = io.readLine();
-            ac.execute(line);
+        SerializableCommand command = null;
+        while ((command = io.readCommand())!=null){
+            ac.execute(command);
         }
-        io.close();
+    }
+    private void close(){
         try {
+            io.close();
             front.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 }

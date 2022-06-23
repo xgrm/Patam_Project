@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
+
+<ScatterChart prefHeight="300.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Charts.RegChart">
+    <xAxis>
+        <CategoryAxis side="BOTTOM" />
+    </xAxis>
+    <yAxis>
+        <NumberAxis prefHeight="195.0" prefWidth="19.0" side="LEFT" />
+    </yAxis>
+</ScatterChart>

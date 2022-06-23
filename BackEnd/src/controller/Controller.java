@@ -1,34 +1,48 @@
 package controller;
 
 import controller.Server.Server;
+import controller.clientHandler.SocketIO;
+import view.SerializableCommand;
 import controller.clientHandler.AgentHandler;
 import controller.clientHandler.ClientHandler;
 import controller.activeObject.ActiveObject;
 import controller.clientHandler.FrontHandler;
-import controller.clientHandler.SocketIO;
 import model.BackendModel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Controller implements Observer, ClientHandler {
     BackendModel model;
     ActiveObject ac;
     ConcurrentHashMap<Integer, AgentHandler> agents;
+    HashMap<String,String> propMap;
     Server server;
-    public Controller(BackendModel model) {
+    public Controller(String propPath, BackendModel model) {
         this.model = model;
         this.agents = new ConcurrentHashMap<>();
-        this.ac = new ActiveObject(5,model,this.agents);
+        this.propMap = new HashMap<>();
+        createPropMap(propPath);
+        this.ac = new ActiveObject(Integer.parseInt(propMap.get("maxThreads")),model,this.agents);
         server = new Server();
-        server.start(5500,this);    //TODO: FROm PROP FILE
+        server.start(Integer.parseInt(propMap.get("controllerPort")),this);
     }
-
+    private void createPropMap(String path){
+        try {
+            Scanner scanner = new Scanner(new File(path));
+            String[] tokens;
+            while (scanner.hasNext()){
+                tokens = scanner.nextLine().split(",");
+                this.propMap.put(tokens[0],tokens[1]);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {throw new RuntimeException(e);}
+    }
     @Override
     public void update(Observable o, Object arg) {
 
@@ -39,16 +53,21 @@ public class Controller implements Observer, ClientHandler {
     }
     public void addNewClient(Socket client){
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String[] tokens = in.readLine().split("~");  // getting the command from the clinet
+            System.out.println("Trying to add a new client");   //TODO: DELETE SOUT
+            SocketIO clientIO = new SocketIO(client.getInputStream(),client.getOutputStream());
+            System.out.println("Open the input stream");
+            SerializableCommand command = (SerializableCommand)clientIO.readCommand();
+            System.out.println("read the object!");
             int id;
-            if(tokens[0].equals("agent")){ // ex for command: "agent~Name"
-                id = model.addFlight(tokens[1],"yes",-1f);  // addind a new flight to db and gets the flight id
-                AgentHandler ag = new AgentHandler(client,id,this.ac); // creating a new agent handler with the flight id
+            if(command.getCommandName().equals("agent")){ // ex for command: "agent~Name"
+                String name = command.getData();
+                id = model.addFlight(name,"yes",-1f);  // addind a new flight to db and gets the flight id
+                AgentHandler ag = new AgentHandler(client,clientIO,id,this.ac); // creating a new agent handler with the flight id
+                ag.setName(name);
                 this.agents.put(id,ag); // adding the agent into the agent map.
             }
             else{
-                new FrontHandler(client,ac);
+                new FrontHandler(client,clientIO,ac);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

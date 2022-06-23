@@ -1,49 +1,95 @@
 package controller.clientHandler;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import view.SerializableCommand;
+
+
+import java.io.*;
 
 public class SocketIO implements IO{
-    Scanner in;
-    PrintWriter out;
+    ObjectInputStream in;
+    ObjectOutputStream out;
 
     public SocketIO(InputStream in, OutputStream out) {
-        this.in = new Scanner(in);
-        this.out = new PrintWriter(out);
+        try {
+            this.in = new ObjectInputStream(new DataInputStream(in));
+            this.out = new ObjectOutputStream(new DataOutputStream(out));
+        } catch (IOException e) {throw new RuntimeException(e);}
+
+    }
+    public SocketIO(OutputStream out){
+        try {
+            this.out = new ObjectOutputStream(new DataOutputStream(out));
+        } catch (IOException e) {throw new RuntimeException(e);}
+    }
+
+    public void setInPutStream(InputStream in){
+        try {
+            this.in = new ObjectInputStream(new DataInputStream(in));
+        } catch (IOException e) {throw new RuntimeException(e);}
+    }
+    @Override
+    public String readLine() {
+        return null;
     }
 
     @Override
-    public String readLine() {
-        return in.nextLine();
+    public SerializableCommand readCommand() {
+        SerializableCommand command = null;
+        try {
+            command = (SerializableCommand) in.readObject();
+        } catch (IOException ex) {
+            System.out.println("expt from read1");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("expt from read2");
+        }
+        return command;
     }
 
     @Override
     public void write(String text) {
-        out.println(text);
-        out.flush();
+
+    }
+
+    @Override
+    public void write(SerializableCommand command) {
+        try {
+            synchronized (this) {
+                out.writeObject(command);
+                out.flush();
+            }
+        } catch (IOException e) {
+            System.out.println("exp from write");
+        }
     }
 
     @Override
     public float readVal() {
-        return in.nextFloat();
+        try {
+            return in.readFloat();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void write(float val) {
-        out.println(val);
-        out.flush();
+
     }
 
     @Override
     public boolean hasNext() {
-        return in.hasNext();
+        try {
+            return in.available()>0;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void close() {
-        in.close();
-        out.close();
+        try {
+            in.close();
+            out.close();
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 }
