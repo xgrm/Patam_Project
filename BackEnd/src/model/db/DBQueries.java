@@ -162,24 +162,45 @@ public class DBQueries {
         table.deleteCharAt(table.length()-1);
         return table.toString();
     }
-    public String getActiveFlight(){
+    public float getTotalMiles(){
         Statement statement;
         ResultSet rs = null;
-        StringBuilder table = new StringBuilder();
-        StringBuilder sb;
-        String columns = "flight_id";
+        float totalMiles = 0;
         try {
-            String query = String.format("select %s from flights",columns);
+            String query = "select count(totalmiles) from flights";
             statement = this.db_connection.createStatement();
             rs = statement.executeQuery(query);
-            while(rs.next()) {
-                table.append(rs.getString(columns)).append(",");
-            }
+            totalMiles=rs.getFloat(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        table.deleteCharAt(table.length()-1);
-        return table.toString();
+
+        return totalMiles;
+    }
+    public String getActiveFlight(){
+        Statement statement;
+        ResultSet rs = null;
+        int active = 0;
+        int notActive = 0;
+        try {
+            String query = "select count(isactive) from flights where isactive = 'no'";
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            notActive = rs.getInt(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String query = "select count(isactive) from flights where isactive = 'yes'";
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            active = rs.getInt(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int total = active+notActive;
+        return (active/total)*100+"%-"+(notActive/total)*100+"%";
     }
     public void close(){
         try {

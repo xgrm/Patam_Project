@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -10,14 +11,14 @@ import java.util.ResourceBundle;
 public class TimeCapsuleController extends BaseController {
 
     @FXML
-    AnchorPane FeatureList,RegChart,changeLineChart,correlationLineChart,JoystickClockBoard,PlayBoard;
+    AnchorPane FeatureList,Joystick,ClockBoard,PlayBoard;
 
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         this.viewModel = vm;
         addPane(FeatureList, "FeatureList.fxml",13,1,1,1, "featureListTC");
-        addPane(JoystickClockBoard, "ClockBoard.fxml",43,256, 1,1,"clockBoardTC");
-        addPane(JoystickClockBoard, "Joystick.fxml",29,2, 1,1,"staticJoystick");
+        addPane(ClockBoard, "ClockBoard.fxml",125,91, 2,2,"clockBoardTC");
+        addPane(Joystick, "Joystick.fxml",29,2, 1,1,"staticJoystick");
         addPane(PlayBoard, "PlayBoard.fxml",0,0, 1,1,"playBoard");
         JoystickController js = (JoystickController) controllers.get("JoystickController");
         js.setJoystickDisable(true);
@@ -39,5 +40,11 @@ public class TimeCapsuleController extends BaseController {
     @Override
     public void onTabSelection() {
         this.controllers.forEach((key,value)->value.onTabSelection());
+        Platform.runLater(()->{
+            this.viewModel.getStage().setMaxWidth(1155);
+            this.viewModel.getStage().setMaxHeight(740);
+            this.viewModel.getStage().setMinWidth(1155);
+            this.viewModel.getStage().setMinHeight(740);
+        });
     }
 }

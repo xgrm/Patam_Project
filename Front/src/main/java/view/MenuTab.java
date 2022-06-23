@@ -17,7 +17,7 @@ public class MenuTab extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuTab.class.getResource("MenuTab.fxml"));
         MainModel model = new MainModel("src/main/java/model/model.data");
         ViewModel vm = new ViewModel("src/main/java/viewModel/prop.txt",model,stage);
-        Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
+        Scene scene = new Scene(fxmlLoader.load());
         MenuTabController mwc = fxmlLoader.getController();
         mwc.init(vm,fxmlLoader.getRoot());
         stage.setTitle("Patam Project!");
