@@ -9,28 +9,27 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="608.0" prefHeight="102.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PlayController">
+<HBox xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PlayController">
     <children>
-        <AnchorPane maxHeight="200.0" maxWidth="807.0" minHeight="33.0" minWidth="631.0" prefHeight="102.0" prefWidth="703.0">
+        <AnchorPane>
             <children>
                 <Slider fx:id="timeSlider" layoutX="14.0" layoutY="22.0" onMouseClicked="#setTimeSlider" onMouseDragged="#setTimeSlider" prefHeight="14.0" prefWidth="501.0" />
-                <Label fx:id="TimeStep" layoutX="527.0" layoutY="16.0" maxHeight="130.0" prefHeight="26.0" prefWidth="47.0" text="Label">
+                <Label fx:id="time" layoutX="527.0" layoutY="16.0" maxHeight="130.0" prefHeight="26.0" prefWidth="47.0" text="Label">
                     <font>
                         <Font size="14.0" />
-                    </font></Label>
-                <Button layoutX="264.0" layoutY="54.0" mnemonicParsing="false" onAction="#forward" text="⏩" />
-                <Button layoutX="121.0" layoutY="54.0" mnemonicParsing="false" onAction="#rewind" text="⏪" />
-                <Button layoutX="193.0" layoutY="54.0" mnemonicParsing="false" onAction="#pause" text="⏸" />
-                <Button layoutX="157.0" layoutY="54.0" mnemonicParsing="false" onAction="#play" prefHeight="26.0" prefWidth="28.0" text="▶" />
-                <TextField fx:id="speedControl" layoutX="451.0" layoutY="54.0" onAction="#setSpeedControl" prefHeight="25.0" prefWidth="47.0" />
+                    </font>
+                </Label>
+                <Button fx:id="forward" layoutX="264.0" layoutY="54.0" mnemonicParsing="false" onAction="#forward" text="⏩" />
+                <Button fx:id="rewind" layoutX="121.0" layoutY="54.0" mnemonicParsing="false" onAction="#rewind" text="⏪" />
+                <Button fx:id="pause" layoutX="193.0" layoutY="54.0" mnemonicParsing="false" onAction="#pause" text="⏸" />
+                <Button fx:id="play" layoutX="157.0" layoutY="54.0" mnemonicParsing="false" onAction="#play" prefHeight="26.0" prefWidth="28.0" text="▶" />
+                <TextField fx:id="speedControl" layoutX="451.0" layoutY="54.0" prefHeight="25.0" prefWidth="47.0" />
                 <Text layoutX="381.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play Speed">
                     <font>
                         <Font size="13.0" />
                     </font></Text>
-                <Button layoutX="228.0" layoutY="54.0" mnemonicParsing="false" onAction="#stop" text="⏹" />
-                <Button layoutX="85.0" layoutY="54.0" mnemonicParsing="false" onAction="#rewind" text="⏮" />
-                <Button layoutX="297.0" layoutY="54.0" mnemonicParsing="false" onAction="#forward" text="⏭" />
-                <Button layoutX="26.0" layoutY="54.0" mnemonicParsing="false" onAction="#rewind" text="Open" />
+                <Button fx:id="stop" layoutX="228.0" layoutY="54.0" mnemonicParsing="false" onAction="#stop" text="⏹" />
+                <Button fx:id="open" layoutX="26.0" layoutY="54.0" mnemonicParsing="false" onAction="#rewind" text="Open" />
             </children>
         </AnchorPane>
     </children>

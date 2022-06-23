@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="200.0" prefWidth="218.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.JoystickController">
+<AnchorPane prefHeight="240.0" prefWidth="218.0" xmlns="http://javafx.com/javafx/17.0.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.JoystickController">
 <children>
-        <Slider layoutX="7.0" orientation="VERTICAL" prefHeight="167.0" prefWidth="14.0" BorderPane.alignment="CENTER" />
-        <Slider layoutX="14.0" layoutY="170.0" prefHeight="26.0" prefWidth="181.0" BorderPane.alignment="CENTER" />
-        <Canvas fx:id="joystick" height="157.0" layoutX="26.0" layoutY="10.0" onMouseDragged="#mouseMove" onMousePressed="#mouseDown" onMouseReleased="#mouseUp" width="167.0" BorderPane.alignment="CENTER" />
+        <Slider fx:id="rudder" layoutX="7.0" max="1.0" min="-1.0" onMouseDragged="#onMouseDraggedSendingData" onMouseReleased="#onMouseReleasedSendingData" orientation="VERTICAL" prefHeight="167.0" prefWidth="14.0" BorderPane.alignment="CENTER" />
+        <Slider fx:id="throttle" layoutX="14.0" layoutY="170.0" max="1.0" onMouseDragged="#onMouseDraggedSendingData" onMouseReleased="#onMouseReleasedSendingData" prefHeight="26.0" prefWidth="181.0" BorderPane.alignment="CENTER" />
+        <Canvas fx:id="joystick" height="157.0" layoutX="26.0" layoutY="10.0" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" width="167.0" BorderPane.alignment="CENTER" />
+      <ChoiceBox fx:id="agents" layoutX="34.0" layoutY="201.0" prefWidth="150.0" />
 </children>
 </AnchorPane>

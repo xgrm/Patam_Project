@@ -24,15 +24,15 @@ public class Variable {
             model.sendToFG(bindTo,value);
         }
     }
-
+    public void setValue(Float value,boolean fromBind) {
+        this.value = value;
+    }
     public void setBindTo(String bindTo) {
         this.bindTo = bindTo;
     }
-
     public void setModel(AgentModel model) {
         this.model = model;
     }
-
     public float getValue() {
         return value;
     }

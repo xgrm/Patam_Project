@@ -3,12 +3,19 @@ package view;
 
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import viewModel.ViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AirPlane extends BaseController {
+
+
     private String airplaneName;
     private float  height, direction, speed;
     public float imageHeight, imageWidth;
@@ -22,13 +29,23 @@ public class AirPlane extends BaseController {
         this.p = p;
         this.imageHeight=50;
         this.imageWidth=50;
+
+
+
     }
 
 
     @Override
+    public void init(ViewModel vm, Node root) throws Exception {
+
+    }
+
+    @Override
     public void updateUi(Object obj) {}
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 
     public String getAirplaneName() {return airplaneName;}
     public void setAirplaneName(String airplaneName) {this.airplaneName = airplaneName;}

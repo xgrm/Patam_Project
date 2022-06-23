@@ -24,8 +24,8 @@ public class DBQueries {
                 System.out.println("Connection is established!");
             else System.out.println("Connection failed!");
             scanner.close();
-//            createFlightsTable();
-//            createFlightDataTable();
+            createFlightsTable();
+            createFlightDataTable();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -161,6 +161,46 @@ public class DBQueries {
         }
         table.deleteCharAt(table.length()-1);
         return table.toString();
+    }
+    public float getTotalMiles(){
+        Statement statement;
+        ResultSet rs = null;
+        float totalMiles = 0;
+        try {
+            String query = "select count(totalmiles) from flights";
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            totalMiles=rs.getFloat(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return totalMiles;
+    }
+    public String getActiveFlight(){
+        Statement statement;
+        ResultSet rs = null;
+        int active = 0;
+        int notActive = 0;
+        try {
+            String query = "select count(isactive) from flights where isactive = 'no'";
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            notActive = rs.getInt(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String query = "select count(isactive) from flights where isactive = 'yes'";
+            statement = this.db_connection.createStatement();
+            rs = statement.executeQuery(query);
+            active = rs.getInt(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int total = active+notActive;
+        return (active/total)*100+"%-"+(notActive/total)*100+"%";
     }
     public void close(){
         try {

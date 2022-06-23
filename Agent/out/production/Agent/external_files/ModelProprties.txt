@@ -36,6 +36,7 @@ encoder_pressure-alt-ft,set /instrumentation/encoder/pressure-alt-ft
 gps_indicated-altitude-ft,set /instrumentation/gps/indicated-altitude-ft
 gps_indicated-ground-speed-kt,set /instrumentation/gps/indicated-ground-speed-kt
 gps_indicated-vertical-speed,set /instrumentation/gps/indicated-vertical-speed
+indicated-heading-offset-deg, set /instrumentation/heading-indicator/offset-deg
 indicated-heading-deg,set /instrumentation/heading-indicator/indicated-heading-deg
 magnetic-compass_indicated-heading-deg,set /instrumentation/magnetic-compass/indicated-heading-deg
 slip-skid-ball_indicated-slip-skid,set /instrumentation/slip-skid-ball/indicated-slip-skid

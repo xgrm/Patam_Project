@@ -1,138 +1,171 @@
 package view;
 
+import com.sothawo.mapjfx.*;
+import com.sothawo.mapjfx.event.MapViewEvent;
+import com.sothawo.mapjfx.event.MarkerEvent;
+import com.sothawo.mapjfx.offline.OfflineCache;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.util.Duration;
-import org.controlsfx.control.PopOver;
-import view.AirPlane;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javafx.scene.Node;
+import viewModel.ViewModel;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
+
+
 public class WorldMapController extends BaseController {
         @FXML
-        Canvas background;
-        @FXML
-        AnchorPane page;
+        MapView newMap;
+        WMSParam wmsParam;
+        XYZParam xyzParam;
+        private  Marker marker;
 
-        GraphicsContext canvasGc;
-        Image map;
-        Image airplane;
-        Map<String, AirPlane> planeMap;
-        Double heightMap;
-        Double widthMap;
-        Button bt;
-
+        HashMap<Integer,Marker> markers;
 
         @Override
-        public void updateUi(Object obj) {}
+        public void init(ViewModel vm, Node root) throws Exception {
+                viewModel =vm;
+                markers = new HashMap<>();
+        }
+
+        @Override
+        public void updateUi(Object obj) {
+                SerializableCommand command = (SerializableCommand) obj;
+                if(command.getCommandName().intern()=="mapData"){
+                        HashMap<Integer,SerializableCommand> agentsRowData = (HashMap<Integer, SerializableCommand>) command.getObject();
+                        addMarkers(agentsRowData);
+                }
+                else if(command.getCommandName().intern()=="noAgent" && !markers.isEmpty()){
+                        markers.forEach((k,v)->{
+                                Platform.runLater(()->newMap.removeMarker(v));
+                                markers.remove(k);
+                        });
+                }
+
+        }
+
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                planeMap=new HashMap<>();
-                this.canvasGc=this.background.getGraphicsContext2D();
-                widthMap=background.getWidth();
-                heightMap=background.getHeight();
+                wmsParam = new WMSParam()
+                        .setUrl("http://ows.terrestris.de/osm/service")
+                        .addParam("layers", "OSM-WMS");
 
-                airplane=null;
-                map=null;
-                try {
-                        airplane=new Image(new FileInputStream("src/main/resources/images/airplane.png"));
-                        map=new Image(new FileInputStream("src/main/resources/images/world-map.jpeg"));
-                        AirPlane plane1=new AirPlane("noy", 50, 50,50, new Position(100,100));
-                        AirPlane plane2=new AirPlane("maayan", 50, 50,50, new Position(50,200));
-                        AirPlane plane3=new AirPlane("maya", 50, 50,50, new Position(200,250));
-                        AirPlane plane4=new AirPlane("saar", 50, 50,50, new Position(500,300));
-                        AirPlane plane5=new AirPlane("oz", 50, 50,50, new Position(200,520));
-                        planeMap.put("noy",plane1);
-                        planeMap.put("maayan",plane2);
-                        planeMap.put("maya",plane3);
-                        planeMap.put("saar",plane4);
-                        planeMap.put("oz",plane5);
-                        this.drawAirplane(background.getHeight(), background.getWidth());
-
-                        Label lblName = new Label();
-                        Label lblDirection = new Label( "");
-                        Label lblHeight = new Label("");
-                        Label lblSpeed = new Label("");
-                        VBox vBox = new VBox(lblName, lblDirection, lblHeight,lblSpeed);
-                        PopOver popOver = new PopOver(vBox);
-
-                        page.setOnMouseClicked(mouseEvent -> {
-                                boolean found = false;
-                                for (AirPlane ap: this.planeMap.values()) {
-                                        if(mouseEvent.getX() >= ap.getP().getX()-5 &&mouseEvent.getX() <= ap.getP().getX()+40
-                                                && mouseEvent.getY() >= ap.getP().getY()-5 && mouseEvent.getY() <= ap.getP().getY()+40) {
-                                                found = true;
-                                                lblName.setText(" name: " +ap.getAirplaneName());
-                                                lblDirection.setText(" direction: " + ap.getDir()+"");
-                                                lblHeight.setText(" height: " +ap.getHeight()+"");
-                                                lblSpeed.setText(" speed: " + ap.getSpeed()+"");
-                                                popOver.show(this.background, mouseEvent.getX()+190, mouseEvent.getY()+60);
-                                        }
-                                }
-                                if (!found) popOver.hide();
-                        });
-
-//                        this.background.setOnMouseExited(mouseEvent -> { if (popOver.isShowing()) popOver.hide(Duration.millis(5000)); });
-
-                } catch(FileNotFoundException e){
-                        e.printStackTrace();
-                }
+                xyzParam = new XYZParam()
+                        .withUrl("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x})")
+                        .withAttributions("'Tiles &copy; <a href=\"https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer\">ArcGIS</a>'");
         }
-        public void drawMap(Double height, Double width){
-                System.out.println("draw map");
-                this.canvasGc.drawImage(this.map,0,0,height, width);
-        }
+        public void initMapAndControls(Projection projection) {
+                //need to check the offline option.
+//                final OfflineCache offlineCache = newMap.getOfflineCache();
+//                final String cacheDir = System.getProperty("java.io.tmpdir") + "/mapjfx-cache";
 
-        public void drawAirplane( Double height, Double width) {
-                System.out.println("draw airplane");
-                this.drawMap(height, width);
-                if (planeMap.isEmpty()) {
-                        System.out.println("no airplanes");
-                } else {
-                        for (AirPlane p : planeMap.values()) {
-                                this.canvasGc.drawImage(this.airplane, p.getP().getX(), p.getP().getY(), p.imageHeight, p.imageWidth);
+                marker = new Marker(getClass().getResource("images/aircraft.png"), 30, 30).setPosition(new Coordinate(63.991837, -22.605427))
+                        .setVisible(false);
+                AirCraftLabel t = new AirCraftLabel("test");
+                marker.attachLabel(t);
+                t.visibleProperty().unbind();
+                t.setVisible(false);
+                marker.setRotation(-5);
+                newMap.initializedProperty().addListener((observable, oldValue, newValue) -> {
+                        if (newValue) {
+                                afterMapIsInitialized();
                         }
-                }
+                });
+                newMap.setMapType(MapType.OSM);
+                setupEventHandlers();
+                newMap.setAnimationDuration(0);
+               newMap.initialize(Configuration.builder()
+                        .projection(projection)
+                        .showZoomControls(true)
+                        .build());
         }
-
-        public void zoomIn(){
-                System.out.println("zoom in");
-                heightMap+=50;
-                widthMap+=50;
-                this.canvasGc.clearRect(0,0,1000,1000);
-                for (AirPlane p : planeMap.values()) {
-                p.imageWidth+=5;
-                p.imageHeight+=5;
-                p.setP(new Position(p.getP().getX()+25,p.getP().getY()+25));
-                }
-                this.drawAirplane(heightMap,widthMap);
-
-        }
-
-        public void zoomOut(){
-                System.out.println("zoom out");
-
-                this.canvasGc.clearRect(0,0,1000,1000);
-                if(heightMap==0 || widthMap==0) return;
-                heightMap-=50;
-                widthMap-=50;
-                for (AirPlane p : planeMap.values()) {
-                        p.imageWidth-=5;
-                        p.imageHeight-=5;
-                        p.setP(new Position(p.getP().getX()-10,p.getP().getY()-25));
-                }
-                this.drawAirplane(heightMap,widthMap);
+        private void afterMapIsInitialized() {
+                newMap.setZoom(14);
+                newMap.setCenter(new Coordinate(63.991837, -22.605427));
+                newMap.addMarker(marker);
+                newMap.addMapCircle(new MapCircle(new Coordinate(63.991837, -22.605427), 1_000).setVisible(true));
 
         }
+        private void setupEventHandlers() {
+                // add an event handler for singleclicks, set the click marker to the new position when it's visible
+                newMap.addEventHandler(MapViewEvent.MAP_CLICKED, event -> {
+                        event.consume();
+                        final Coordinate newPosition = event.getCoordinate().normalize();
+                        System.out.println("Event: map clicked at: " + newPosition);
+//                        if (checkDrawPolygon.isSelected()) {
+//                                handlePolygonClick(event);
+//                        }
+//                        if (markerClick.getVisible()) {
+//                                final Coordinate oldPosition = markerClick.getPosition();
+//                                if (oldPosition != null) {
+//                                        animateClickMarker(oldPosition, newPosition);
+//                                } else {
+//                                        markerClick.setPosition(newPosition);
+//                                        // adding can only be done after coordinate is set
+//                                        mapView.addMarker(markerClick);
+//                                }
+//                        }
+                });
+
+                newMap.addEventHandler(MarkerEvent.MARKER_CLICKED, event -> {
+                        event.consume();
+                        MapLabel label = event.getMarker().getMapLabel().get();
+                        label.setVisible(!label.getVisible());
+                });
+                newMap.addEventHandler(MarkerEvent.MARKER_DOUBLECLICKED, event -> {
+                        event.consume();
+                        Marker tempMarker = event.getMarker();
+                        markers.forEach((k,v)->{
+                                if(v.equals(tempMarker)){
+                                        SerializableCommand command = new SerializableCommand("moveTab","");
+                                        command.setId(k);
+                                        viewModel.exe(command);
+                                }
+                        });
+                });
+        }
+        private void addMarkers(HashMap<Integer,SerializableCommand> agentsRowData){
+                agentsRowData.forEach((k,v)->addUpdateMarkers(k,v));
+                markers.forEach((k,v)->{
+                        if(!agentsRowData.containsKey(k)){
+                                Platform.runLater(()->newMap.removeMarker(v));
+                                markers.remove(k);
+                        }
+                });
+        }
+        private void addUpdateMarkers(Integer id, SerializableCommand data){
+                if(data.getData()==null)
+                        return;
+                String[] tokens = data.getData().split(",");
+                Marker onMapMarker;
+                if((onMapMarker = markers.get(id))!=null){
+                        Platform.runLater(()->{
+                                onMapMarker.setPosition(new Coordinate((double) Float.parseFloat(tokens[13]), (double) Float.parseFloat(tokens[14])))
+                                        .setRotation((int) Float.parseFloat(tokens[18]));
+                                AirCraftLabel tempLabel = (AirCraftLabel) onMapMarker.getMapLabel().get();
+                                tempLabel.setNewText(data.getCommandName()+"\n\r"+
+                                        "Hd: "+tokens[18]+"\n\r"+
+                                        "alt: "+(Float.parseFloat(tokens[15])/1000)+"kf\n\r"
+                                        +"A.speed: "+tokens[20]+"Kn"
+                                );
+                        });
+                        return;
+                }
+                Marker tempMarker = new Marker(getClass().getResource("images/aircraft.png"), 5, 5)
+                        .setPosition(new Coordinate((double) Float.parseFloat(tokens[13]), (double) Float.parseFloat(tokens[14])))
+                        .setRotation((int) Float.parseFloat(tokens[18]));
+                tempMarker.setVisible(true);
+                AirCraftLabel label = (AirCraftLabel) new AirCraftLabel(
+                        data.getCommandName()+"\n\r"+
+                                "Hd: "+tokens[18]+"\n\r"+
+                                "alt: "+(Float.parseFloat(tokens[15])/1000)+"kf\n\r"
+                                +"A.speed: "+tokens[20]+"Kn"
+                        , 10, -10).setCssClass("black-label");
+                tempMarker.attachLabel(label);
+                label.visibleProperty().unbind();
+                label.setVisible(false);
+                markers.put(id,tempMarker);
+                Platform.runLater(()->newMap.addMarker(tempMarker));
+        }
+
 }
