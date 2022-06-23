@@ -21,7 +21,6 @@ import java.util.concurrent.Executors;
 public class AgentModel extends Observable implements Model {
     String[] symbols;
     ConcurrentHashMap<String,Float> symbolMap;
-
     HashMap<String,String> properties;
     TimeSeries timeSeries;
     IO outToFG;
@@ -30,8 +29,10 @@ public class AgentModel extends Observable implements Model {
     volatile boolean stop;
     DecimalFormat df;
     ExecutorService threadPool;
+    Interpreter interpreter;
     public AgentModel(String propPath,String symbolPath) {
         stop = false;
+        interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
         this.threadPool = Executors.newFixedThreadPool(2); //TODO: NOT HARD CODED
         this.df = df = new DecimalFormat("#.##");
         this.symbolMap = new ConcurrentHashMap<>();
@@ -42,28 +43,24 @@ public class AgentModel extends Observable implements Model {
         this.startServer();
         this.startClient();
     }
-
     @Override
     public void setAileron(double x) {
         outToFG.write(properties.get("aileron")+" "+df.format(x));
     }
-
     @Override
     public void setElevator(double x) {
         outToFG.write(properties.get("elevator")+" "+df.format(x));
     }
-
     @Override
     public void setRudder(double x) {
         outToFG.write(properties.get("rudder")+" "+df.format(x));
     }
-
     @Override
     public void setThrottle(double x) {
         outToFG.write(properties.get("throttle")+" "+df.format(x));
     }
     public void startInterpreter(String code){
-        Interpreter interpreter = new Interpreter(this,"src/external_files/FlightGearParam.txt");
+
         this.threadPool.execute(()->interpreter.run(code));
     }
     public void sendToFG(String path, Float value) {
@@ -73,7 +70,6 @@ public class AgentModel extends Observable implements Model {
     public TimeSeries getTimeSeries() {
         return timeSeries;
     }
-
     @Override
     public void handle(Socket client) {
         this.threadPool.execute(()->inFromFG(client));
@@ -106,7 +102,6 @@ public class AgentModel extends Observable implements Model {
             throw new RuntimeException(e);
         }
     }
-
     private void createMapsFromFiles(String propPath,String symbolPath){
         try {
             Scanner propScanner = new Scanner(new File(propPath));
@@ -142,7 +137,6 @@ public class AgentModel extends Observable implements Model {
             outToFG = new TelnetIO(FlightGear.getInputStream(),FlightGear.getOutputStream());
         } catch (IOException | InterruptedException e) {throw new RuntimeException(e);}
     }
-
     public void closeModel(){
         try {
             this.stop = true;
@@ -153,8 +147,5 @@ public class AgentModel extends Observable implements Model {
             System.out.println("closed");
         } catch (IOException e) {throw new RuntimeException(e);}
     }
-//    @Override
-//    public void finalize(){
-//        this.closeModel();
-//    }
+
 }

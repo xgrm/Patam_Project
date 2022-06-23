@@ -9,7 +9,6 @@ import controller.activeObject.ActiveObject;
 import controller.clientHandler.FrontHandler;
 import model.BackendModel;
 
-import java.beans.XMLDecoder;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;

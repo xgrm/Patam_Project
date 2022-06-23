@@ -32,6 +32,7 @@ public class JoystickController extends BaseController implements Observer {
     double mx,my;
     DoubleProperty aileron,elevator;
     DecimalFormat df;
+    volatile boolean sendingData;
     Node root;
     public JoystickController() {
 
@@ -50,16 +51,19 @@ public class JoystickController extends BaseController implements Observer {
         gc.strokeOval(x-50,y-50,100,100);
     }
     public void onMouseDragged(MouseEvent me){
+        this.sendingData = true;
         paint(me.getX(), me.getY());
     }
     public void onMouseReleased(MouseEvent me){
         paint(mx,my);
+        this.sendingData = false;
     }
 
     @Override
     public void init(ViewModel vm, Node root) throws Exception {
         this.root = root;
         viewModel = vm;
+        this.sendingData = false;
         aileron = new SimpleDoubleProperty(0);
         elevator = new SimpleDoubleProperty(0);
         mx = joystick.getWidth()/2;
@@ -68,7 +72,6 @@ public class JoystickController extends BaseController implements Observer {
         agents.setOnMouseClicked((e)->viewModel.exe(new SerializableCommand("getActiveAgents"," ")));
         agents.setOnAction((e)->setBindAgent());
         this.df = new DecimalFormat("##.##");
-
     }
 
     public void setJoystickDisable(boolean disable){
@@ -81,6 +84,7 @@ public class JoystickController extends BaseController implements Observer {
         viewModel.aileron.bind(aileron);
         viewModel.throttle.bind(throttle.valueProperty());
         viewModel.rudder.bind(rudder.valueProperty());
+        viewModel.exe(new SerializableCommand("getBindAgent",""));
     }
 
     @Override
@@ -94,10 +98,20 @@ public class JoystickController extends BaseController implements Observer {
             });
         }
         else if(command.getCommandName().intern() == "agentData"){
+            if(sendingData)
+                return;
             ConcurrentHashMap<String,Float> symbolMap = new ConcurrentHashMap<>(command.getDataMap());
             this.throttle.setValue(symbolMap.get("throttle"));
             this.rudder.setValue(symbolMap.get("rudder"));
             paint((mx*symbolMap.get("aileron"))+mx,(my*symbolMap.get("elevator"))+my);
+        } else if (command.getCommandName().intern() == "bindAgent") {
+            Platform.runLater(()->{
+                String[] tokens = command.getData().split(",");
+                agents.getItems().clear();
+                agents.getItems().addAll(tokens);
+                System.out.println(tokens[0]);
+                agents.getSelectionModel().select(0);
+            });
         }
     }
 
@@ -108,6 +122,12 @@ public class JoystickController extends BaseController implements Observer {
             viewModel.exe(command);
         }
 
+    }
+    public void onMouseDraggedSendingData(MouseEvent me){
+        sendingData = true;
+    }
+    public void onMouseReleasedSendingData(MouseEvent me){
+        sendingData = false;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
