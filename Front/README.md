@@ -1,5 +1,6 @@
 <h1>FRONT- MVVM</h1>
-![front1](https://user-images.githubusercontent.com/94534918/175486815-d3924807-d495-4dc8-9b09-8e0aef84f0a8.png)
+![front1](https://user-images.githubusercontent.com/94534918/175487823-77860c7b-1d8c-4d32-b1f8-8055ca9cf011.png)
+
 <h1>View Model</h1>
 ![front2](https://user-images.githubusercontent.com/94534918/175486817-63554aad-39e7-4dff-9f83-de2c3589944e.png)
 <h1>Model</h1>
