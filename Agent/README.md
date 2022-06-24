@@ -11,6 +11,6 @@
 
 ![agent6](https://user-images.githubusercontent.com/94534918/175485055-b0e9882f-0138-4e50-bbae-a08a183ddcc8.png)
 
-![agent7](https://user-images.githubusercontent.com/94534918/175485075-70557991-680c-4bd3-a37c-922f98054a90.png)
+![agent7](https://user-images.githubusercontent.com/94534918/175485601-199d8e25-57fd-47de-8f8b-31ca45d0cf37.png)
 
 ![agent8](https://user-images.githubusercontent.com/94534918/175485085-36dcb795-5807-465e-9263-cf2636854a40.png)
