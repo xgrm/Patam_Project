@@ -25,7 +25,7 @@ Stores the information collected from the fleet (on a DB server) and provides th
 
 <img alt="BackEnd architecture" src="./images/architecture/BackEnd.svg">
 
-<h2>Agent -</h2>
+<h2>Agent-</h2>
 
 Installed on any aircraft (on any computer on which we run a flight simulator instance),
 Collects information about aircraft activity,
