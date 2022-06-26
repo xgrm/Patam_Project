@@ -1,3 +1,7 @@
+<h2>Agent</h2>
+The main design pattern we used are: MVC, Command Factory, Class adapter.
+
+
 
 ![agent1](https://user-images.githubusercontent.com/94534918/175484975-dd9ab67d-d701-4603-b581-2b81f5be8c9d.png)
 
