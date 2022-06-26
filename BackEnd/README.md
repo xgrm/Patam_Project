@@ -1,3 +1,6 @@
+<h2>Backend</h2>
+The main design pattern we used are: MVC, ActiveObject and Command pattern, Class adapter.
+
 ![back1](https://user-images.githubusercontent.com/94534918/175492877-18a863e1-2907-4438-a3bb-090f67dbda60.png)
 
 ![back2](https://user-images.githubusercontent.com/94534918/175492900-55b326b8-2503-4903-a66a-483976ec06d8.png)
